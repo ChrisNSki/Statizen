@@ -14,7 +14,10 @@ const getPlayerUrl = (name) => `https://robertsspaceindustries.com/en/citizens/$
 
 const getOutlawRankTitle = (level) => {
   const ranks = ['Drifter', 'Rogue', 'Gunner', 'Marauder', 'Ravager', 'Skullbrand', 'Void Reaper', 'Ash Warden', 'Hellbringer', 'Death Harbinger'];
-  return ranks[Math.min(level, ranks.length - 1)];
+  // Calculate rank based on level within current prestige cycle (1-100)
+  const levelInCycle = ((level - 1) % 100) + 1; // 1-100
+  const rankIndex = Math.floor((levelInCycle - 1) / 10); // 0-9
+  return ranks[Math.min(rankIndex, ranks.length - 1)];
 };
 
 const getOutlawPrestigeTitle = (prestige) => {
@@ -24,7 +27,10 @@ const getOutlawPrestigeTitle = (prestige) => {
 
 const getPeacekeeperRankTitle = (level) => {
   const ranks = ['Recruit', 'Sentinel', 'Marksman', 'Enforcer', 'Vanguard', 'Ironbrand', 'Void Warden', 'Starseeker', 'Lightbringer', 'Peacebringer'];
-  return ranks[Math.min(level, ranks.length - 1)];
+  // Calculate rank based on level within current prestige cycle (1-100)
+  const levelInCycle = ((level - 1) % 100) + 1; // 1-100
+  const rankIndex = Math.floor((levelInCycle - 1) / 10); // 0-9
+  return ranks[Math.min(rankIndex, ranks.length - 1)];
 };
 
 const getPeacekeeperPrestigeTitle = (prestige) => {

@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "statizen",
-  "version": "1.0.4-0",
+  "version": "1.0.4-1",
   "identifier": "com.statizen.app",
   "build": {
     "frontendDist": "../dist",

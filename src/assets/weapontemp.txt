@@ -1,2 +1,1 @@
-ksar_rifle_energy_01 - Karna Rifle
-klwe_sniper_energy_01 - Arrowhead Sniper Rifle
+ Karna "Ascension" Rifle - ksar_rifle_energy_01_iae2023

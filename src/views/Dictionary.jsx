@@ -433,6 +433,10 @@ function WeaponDetails({ weaponKey }) {
               <td className='px-4 py-2 text-foreground'>{weapon.class || 'Unknown'}</td>
             </tr>
             <tr className='odd:bg-muted/60 even:bg-muted/40 border-b border-border last:border-none'>
+              <td className='px-4 py-2 font-semibold text-muted-foreground'>Weapon Type</td>
+              <td className='px-4 py-2 text-foreground'>{weapon.weapon_type || 'Unknown'}</td>
+            </tr>
+            <tr className='odd:bg-muted/60 even:bg-muted/40 border-b border-border last:border-none'>
               <td className='px-4 py-2 font-semibold text-muted-foreground'>Cost</td>
               <td className='px-4 py-2 text-foreground'>{weapon.cost === 'Not purchasable' ? <span className='text-red-500 font-semibold'>Not purchasable</span> : weapon.cost ? `${weapon.cost.toLocaleString()} aUEC` : 'Unknown'}</td>
             </tr>

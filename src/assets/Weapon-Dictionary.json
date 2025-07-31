@@ -7,6 +7,7 @@
       "manufacturer": "",
       "item_type": "",
       "class": "",
+      "weapon_type": "",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -16,6 +17,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -23,10 +25,10 @@
     "behr_rifle_ballistic_02_civilian": {
       "name": "P8-AR Rifle",
       "volume": 13000,
-      "cost": "Not purchasable",
       "manufacturer": "Behring",
       "item_type": "Assault Rifle",
       "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 15,
       "rate_of_fire": "475 rpm",
       "effective_range": "100 m",
@@ -36,37 +38,67 @@
         "underbarrel_size": "2"
       },
       "description": "The direct descendant of the UEE Marines standard issue weapon, Behring has crafted the semi-automatic P8-AR to provide civilians across the empire a straight-forward and dependable weapon to defend themselves against aggressive hostiles.",
+      "where-to-buy": [
+        {
+          "location": "Centermass, Port Olisar",
+          "price": "15,000 aUEC"
+        },
+        {
+          "location": "Dumper's Depot, Grim HEX",
+          "price": "18,000 aUEC"
+        }
+      ],
       "verified": true,
       "kills": 0,
       "deaths": 0
     },
     "behr_smg_ballistic_01": {
       "name": "P8-SC",
-      "volume": 0,
-      "cost": 0,
-      "manufacturer": "Behr",
-      "item_type": "Weapon",
-      "class": "SMG",
-      "magazine_size": 0,
-      "rate_of_fire": "",
-      "effective_range": "",
+      "volume": 7500,
+      "manufacturer": "Behring",
+      "item_type": "SMG",
+      "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 45,
+      "rate_of_fire": "800 rpm",
+      "effective_range": "30 m",
       "attachments": {
-        "optics_size": "",
-        "barrel_size": "",
-        "underbarrel_size": ""
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
       },
-      "description": "",
-      "verified": false,
+      "description": "When the top fighting force in the universe chooses a weapon as their standard, it pays to stand up and take notice. The Behring-crafted P8-SC has been the ballistic submachine gun of choice for the UEE Marines since it first came off the production line, but since then, many have come to rely on this weapon for their own personal safety and protection.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "behr_smg_ballistic_01_white01": {
+      "name": "P8-SC \"Stormfall\" SMG",
+      "volume": 7500,
+      "manufacturer": "Behring",
+      "item_type": "SMG",
+      "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 45,
+      "rate_of_fire": "800 rpm",
+      "effective_range": "30 m",
+      "attachments": {
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
+      },
+      "description": "When the top fighting force in the universe chooses a weapon as their standard, it pays to stand up and take notice. The Behring-crafted P8-SC has been the ballistic submachine gun of choice for the UEE Marines since it first came off the production line, but since then, many have come to rely on this weapon for their own personal safety and protection.",
+      "verified": true,
       "kills": 0,
       "deaths": 0
     },
     "behr_shotgun_ballistic_01": {
       "name": "BR-2 Shotgun",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Behr",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -76,17 +108,38 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
+      "kills": 0,
+      "deaths": 0
+    },
+    "none_shotgun_ballistic_01": {
+      "name": "Deadrig Shotgun",
+      "volume": 16000,
+      "manufacturer": "Unknown",
+      "item_type": "Shotgun",
+      "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 8,
+      "rate_of_fire": "120 rpm",
+      "effective_range": "0-10 m",
+      "attachments": {
+        "optics_size": "N/A",
+        "barrel_size": "N/A",
+        "underbarrel_size": "N/A"
+      },
+      "description": "The Deadrig is a high powered, double-barreled shotgun with a simple design pieced together from junkyard scraps. Prioritizing power above all else, the Deadrig lacks the refinement of mass-produced weapons and suffers from heavy recoil.",
+      "verified": true,
       "kills": 0,
       "deaths": 0
     },
     "gmni_pistol_ballistic_01": {
       "name": "LH86",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "Pistol",
+      "weapon_type": "Sidearm",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -96,6 +149,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -103,10 +157,10 @@
     "gmni_shotgun_ballistic_01": {
       "name": "R97 Shotgun",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -116,6 +170,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -123,10 +178,10 @@
     "behr_rifle_ballistic_01_black02": {
       "name": "P4-AR \"Nightstalker\" Rifle",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Behr",
       "item_type": "Weapon",
       "class": "Rifle",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -136,6 +191,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -143,10 +199,10 @@
     "ksar_shotgun_ballistic_01": {
       "name": "Ravager-212 Twin Shotgun",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "KSAR",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -156,6 +212,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -163,10 +220,10 @@
     "behr_pistol_ballistic_01": {
       "name": "S-38 Pistol",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Behr",
       "item_type": "Weapon",
       "class": "Pistol",
+      "weapon_type": "Sidearm",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -176,6 +233,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -183,10 +241,10 @@
     "ksar_shotgun_ballistic_01_iae2201": {
       "name": "Ravager-212 \"Red Alert\" Twin Shotgun",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "KSAR",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -196,6 +254,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -203,10 +262,10 @@
     "gmni_lmg_ballistic_01": {
       "name": "F55 LMG",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "LMG",
+      "weapon_type": "Heavy Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -216,6 +275,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -223,10 +283,10 @@
     "gmni_smg_ballistic_01_firerats01": {
       "name": "C54 \"Scorched\" SMG",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "SMG",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -236,6 +296,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -243,10 +304,10 @@
     "gmni_shotgun_ballistic_01_firerats01": {
       "name": "R97 \"Scorched\" Shotgun",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -256,17 +317,39 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
+      "kills": 0,
+      "deaths": 0
+    },
+    "ksar_rifle_energy_01_iae2023": {
+      "name": "Karna \"Ascension\" Rifle",
+      "volume": 13000,
+      "manufacturer": "Kastak Arms",
+      "item_type": "Assault Rifle",
+      "class": "Energy (Plasma)",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 35,
+      "rate_of_fire": "500 rpm",
+      "effective_range": "50 m",
+      "attachments": {
+        "optics_size": "S2",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
+      },
+      "description": "The Karna is a classic Kastak Arms plasma assault rifle. This mid-range mauler features charged and full-auto fire modes to allow for quick and easy situational adjustments. Besides its renowned firepower, the Karna's rugged looks and reliability have made it one of Kastak Arms' most popular weapons. Designed in honor of IAE 2953, the Ascension edition has steel and copper accents inspired by Gatac Manufacture's Syulen.",
+      "where-to-buy": null,
+      "verified": true,
       "kills": 0,
       "deaths": 0
     },
     "ksar_rifle_energy_01_red01": {
       "name": "Karna \"Brimstone\" Rifle",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "KSAR",
       "item_type": "Weapon",
       "class": "Rifle",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -276,6 +359,7 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
       "kills": 0,
       "deaths": 0
@@ -283,10 +367,10 @@
     "ksar_shotgun_energy_01_black_purple01": {
       "name": "Devastator \"Rager\" Shotgun",
       "volume": 0,
-      "cost": 0,
       "manufacturer": "KSAR",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -296,27 +380,48 @@
         "underbarrel_size": ""
       },
       "description": "",
+      "where-to-buy": null,
       "verified": false,
+      "kills": 0,
+      "deaths": 0
+    },
+    "lbco_pistol_energy_01": {
+      "name": "Yubarev Pistol",
+      "volume": 2500,
+      "manufacturer": "Lightning Bolt Co. (LBCO)",
+      "item_type": "Pistol",
+      "class": "Electron",
+      "weapon_type": "Sidearm",
+      "magazine_size": 10,
+      "rate_of_fire": "350 rpm",
+      "effective_range": "25 m",
+      "attachments": {
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
+      },
+      "description": "The Yubarev Pistol, produced by Lightning Bolt Co., is a semi-automatic electron pistol with a range of 25 meters. The engineering of this firearm is only the beginning of its unique features. Irina Arkadova, a former mercenary turned weapon manufacturer, oversaw every aspect of the gun's production, imbuing it with power, practicality, and style. The Yubarev boasts a state-of-the-art barrel design that enables it to fire a charged electron shot that not only hits the intended target but also affects other conductive targets within range. This innovative technology sets the Yubarev Pistol apart from other firearms on the market.",
+      "verified": true,
       "kills": 0,
       "deaths": 0
     },
     "lbco_pistol_energy_01_acid01": {
       "name": "Yubarev \"Venom\" Pistol",
-      "volume": 0,
-      "cost": 0,
-      "manufacturer": "LBCO",
-      "item_type": "Weapon",
-      "class": "Pistol",
-      "magazine_size": 0,
-      "rate_of_fire": "",
-      "effective_range": "",
+      "volume": 2500,
+      "manufacturer": "Lightning Bolt Co. (LBCO)",
+      "item_type": "Pistol",
+      "class": "Electron",
+      "weapon_type": "Sidearm",
+      "magazine_size": 10,
+      "rate_of_fire": "350 rpm",
+      "effective_range": "25 m",
       "attachments": {
-        "optics_size": "",
-        "barrel_size": "",
-        "underbarrel_size": ""
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
       },
-      "description": "",
-      "verified": false,
+      "description": "The Yubarev Pistol, produced by Lightning Bolt Co., is a semi-automatic electron pistol with a range of 25 meters. The engineering of this firearm is only the beginning of its unique features. Irina Arkadova, a former mercenary turned weapon manufacturer, oversaw every aspect of the gun's production, imbuing it with power, practicality, and style. The Yubarev boasts a state-of-the-art barrel design that enables it to fire a charged electron shot that not only hits the intended target but also affects other conductive targets within range. This innovative technology sets the Yubarev Pistol apart from other firearms on the market.",
+      "verified": true,
       "kills": 0,
       "deaths": 0
     },
@@ -327,6 +432,7 @@
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -340,6 +446,27 @@
       "kills": 0,
       "deaths": 0
     },
+    "gmni_sniper_ballistic_01": {
+      "name": "A03 Sniper Rifle",
+      "volume": 19000,
+      "manufacturer": "Gemini",
+      "item_type": "Sniper Rifle",
+      "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 15,
+      "rate_of_fire": "120 rpm",
+      "effective_range": "80 m",
+      "attachments": {
+        "optics_size": "S3",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
+      },
+      "description": "Devastate at distance. Masterfully designed by Gemini's Tevarin co-founder Clem, the A03 balances a stylish and ergonomic design with a powerful ballistic punch. The A03 delivers an impressive rate of fire for a sniper rifle that sacrifices accuracy for urgency when successive shots are required. With its renowned design and unique features, it's easy to see why the A03 has become a favorite of security professionals across the empire.",
+      "where-to-buy": null,
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
     "gmni_sniper_ballistic_01_iae2201": {
       "name": "A03 \"Red Alert\" Sniper Rifle",
       "volume": 0,
@@ -347,6 +474,7 @@
       "manufacturer": "Gmni",
       "item_type": "Weapon",
       "class": "Sniper Rifle",
+      "weapon_type": "Heavy Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -367,6 +495,7 @@
       "manufacturer": "KSAR",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -387,6 +516,7 @@
       "manufacturer": "Kastak Arms",
       "item_type": "SMG",
       "class": "Energy (Laser)",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 60,
       "rate_of_fire": "800 rpm",
       "effective_range": "30 m",
@@ -407,6 +537,7 @@
       "manufacturer": "Behr",
       "item_type": "Weapon",
       "class": "SMG",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -422,21 +553,41 @@
     },
     "behr_rifle_ballistic_01": {
       "name": "P4-AR",
-      "volume": 0,
-      "cost": 0,
-      "manufacturer": "Behr",
-      "item_type": "Weapon",
-      "class": "Rifle",
-      "magazine_size": 0,
-      "rate_of_fire": "",
-      "effective_range": "",
+      "volume": 13000,
+      "manufacturer": "Behring",
+      "item_type": "Assault Rifle",
+      "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 40,
+      "rate_of_fire": "550 rpm",
+      "effective_range": "50 m",
       "attachments": {
-        "optics_size": "",
-        "barrel_size": "",
-        "underbarrel_size": ""
+        "optics_size": "S2",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
       },
-      "description": "",
-      "verified": false,
+      "description": "Behring's classic P4-AR rifle features a collapsible stock and shortened barrel, making it an ideal choice for close-quarter firefights. Its accuracy and general ease of use make it universally valued among security, military and civilian users.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "behr_rifle_ballistic_01_tan01": {
+      "name": "P4-AR \"Desert Shadow\" Rifle",
+      "volume": 13000,
+      "manufacturer": "Behring",
+      "item_type": "Assault Rifle",
+      "class": "Ballistic",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 40,
+      "rate_of_fire": "550 rpm",
+      "effective_range": "50 m",
+      "attachments": {
+        "optics_size": "S2",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
+      },
+      "description": "Behring's classic P4-AR rifle features a collapsible stock and shortened barrel, making it an ideal choice for close-quarter firefights. Its accuracy and general ease of use make it universally valued among security, military and civilian users.",
+      "verified": true,
       "kills": 0,
       "deaths": 0
     },
@@ -447,6 +598,7 @@
       "manufacturer": "Behr",
       "item_type": "Weapon",
       "class": "SMG",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -467,6 +619,7 @@
       "manufacturer": "LBCO",
       "item_type": "Weapon",
       "class": "Sniper Rifle",
+      "weapon_type": "Heavy Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -487,6 +640,7 @@
       "manufacturer": "Volt",
       "item_type": "Weapon",
       "class": "SMG",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -507,6 +661,7 @@
       "manufacturer": "Volt",
       "item_type": "Weapon",
       "class": "SMG",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -527,6 +682,7 @@
       "manufacturer": "Volt",
       "item_type": "Weapon",
       "class": "Rifle",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -547,6 +703,7 @@
       "manufacturer": "Volt",
       "item_type": "Weapon",
       "class": "Shotgun",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -567,6 +724,7 @@
       "manufacturer": "Behr",
       "item_type": "Weapon",
       "class": "Grenade Launcher",
+      "weapon_type": "Heavy Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -587,6 +745,7 @@
       "manufacturer": "APAR",
       "item_type": "Weapon",
       "class": "Railgun",
+      "weapon_type": "Heavy Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -600,6 +759,27 @@
       "kills": 0,
       "deaths": 0
     },
+    "apar_special_ballistic_01": {
+      "name": "Scourge Railgun",
+      "volume": 35000,
+      "cost": 0,
+      "manufacturer": "Apocalypse Arms",
+      "item_type": "Railgun",
+      "class": "Ballistic",
+      "weapon_type": "Heavy Weapon",
+      "magazine_size": 5,
+      "rate_of_fire": "60 rpm",
+      "effective_range": "200 m",
+      "attachments": {
+        "optics_size": "N/A",
+        "barrel_size": "N/A",
+        "underbarrel_size": "S4"
+      },
+      "description": "Equally devastating to larger threats and hostile vehicles, this shoulder mounted railgun from Apocalypse Arms uses electromagnets to deliver its payload accurately over great distances, making it the Scourge of land, air and space.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
     "ksar_rifle_energy_01": {
       "name": "Karna Rifle",
       "volume": 0,
@@ -607,6 +787,7 @@
       "manufacturer": "KSAR",
       "item_type": "Weapon",
       "class": "Rifle",
+      "weapon_type": "Primary Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -627,6 +808,7 @@
       "manufacturer": "KLWE",
       "item_type": "Weapon",
       "class": "Sniper Rifle",
+      "weapon_type": "Heavy Weapon",
       "magazine_size": 0,
       "rate_of_fire": "",
       "effective_range": "",
@@ -637,6 +819,190 @@
       },
       "description": "",
       "verified": false,
+      "kills": 0,
+      "deaths": 0
+    },
+    "apar_special_ballistic_02": {
+      "name": "Animus Missle Launcher",
+      "volume": 0,
+      "cost": 0,
+      "manufacturer": "APAR",
+      "item_type": "Weapon",
+      "class": "Missle Launcher",
+      "weapon_type": "Heavy Weapon",
+      "magazine_size": 0,
+      "rate_of_fire": "",
+      "effective_range": "",
+      "attachments": {
+        "optics_size": "",
+        "barrel_size": "",
+        "underbarrel_size": ""
+      },
+      "description": "",
+      "verified": false,
+      "kills": 0,
+      "deaths": 0
+    },
+    "volt_rifle_energy_01_tint02": {
+      "name": "Parallax \"Sanguine\" Energy Assault Rifle",
+      "volume": 0,
+      "cost": 0,
+      "manufacturer": "VOLT",
+      "item_type": "Assault Rifle",
+      "class": "Energy",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 0,
+      "rate_of_fire": "",
+      "effective_range": "",
+      "attachments": {
+        "optics_size": "",
+        "barrel_size": "",
+        "underbarrel_size": ""
+      },
+      "description": "",
+      "verified": false,
+      "kills": 0,
+      "deaths": 0
+    },
+    "gmni_sniper_ballistic_01_imp01": {
+      "name": "A03 \"Wildwood\" Sniper Rifle",
+      "volume": 19000,
+      "cost": 0,
+      "manufacturer": "Gemini",
+      "item_type": "Sniper Rifle",
+      "class": "Ballistic",
+      "weapon_type": "Heavy Weapon",
+      "magazine_size": 15,
+      "rate_of_fire": "120 rpm",
+      "effective_range": "80 m",
+      "attachments": {
+        "optics_size": "S3",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
+      },
+      "description": "Devastate at distance with the A03 sniper rifle. Masterfully designed by Gemini's Tevarin co-founder Clem, the weapon balances a stylish and ergonomic design with a powerful ballistic punch. The A03 delivers an impressive rate of fire for a sniper rifle that sacrifices accuracy for urgency when successive shots are required. Considering its renowned design and unique features, it's easy to see why the A03 has become a favorite of security professionals across the empire.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "klwe_pistol_energy_01": {
+      "name": "Arclight Pistol",
+      "volume": 2500,
+      "cost": 0,
+      "manufacturer": "Klaus & Werner",
+      "item_type": "Pistol",
+      "class": "Energy (Laser)",
+      "weapon_type": "Sidearm",
+      "magazine_size": 30,
+      "rate_of_fire": "300 rpm",
+      "effective_range": "30 m",
+      "attachments": {
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
+      },
+      "description": "A handheld laser made famous as Kyle Fenris' sidearm on the hit vid show The Frontier, the Klaus & Werner Model II Arclight has become extremely popular on the civilian market. Despite its media appeal, the Model II offers a higher rate of fire than any of its ballistic counterparts. While that may diminish the weapon's stopping power, its power cell offers more than enough shots to finish the job.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "klwe_smg_energy_01": {
+      "name": "Lumin V SMG",
+      "volume": 7500,
+      "manufacturer": "Klaus & Werner",
+      "item_type": "SMG",
+      "class": "Laser",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 45,
+      "rate_of_fire": "562.5 rpm",
+      "effective_range": "25m",
+      "attachments": {
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
+      },
+      "description": "Klaus & Werner's expert craftsmanship is once again on full display to make the Lumin V laser compact energy rifle even more deadly and dependable. A new 'interval autofire' mode blasts five-round barrages when the trigger is held down, utilizing the target saturation that comes with autofire while providing breaks to recompensate aim. Even when constantly on the attack, the gun's excellent design provides low recoil and a tight spread.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "klwe_rifle_energy_01": {
+      "name": "Gallant Rifle",
+      "volume": 13000,
+      "manufacturer": "Klaus & Werner",
+      "item_type": "Assault Rifle",
+      "class": "Energy (Laser)",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 45,
+      "rate_of_fire": "450 rpm",
+      "effective_range": "50 m",
+      "attachments": {
+        "optics_size": "S2",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
+      },
+      "description": "Dependable assault weapons never go out of style. Klaus & Werner maintains that tradition by unveiling the Gallant. This energy-based assault rifle is capable of providing accurate and sustained fire at targets up to medium range, while its high-capacity power system allows operators to fire considerably more shots per battery.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "klwe_rifle_energy_01_tan01": {
+      "name": "Gallant \"Desert Shadow\" Rifle",
+      "volume": 13000,
+      "manufacturer": "Klaus & Werner",
+      "item_type": "Assault Rifle",
+      "class": "Energy (Laser)",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 45,
+      "rate_of_fire": "450 rpm",
+      "effective_range": "50 m",
+      "attachments": {
+        "optics_size": "S2",
+        "barrel_size": "S2",
+        "underbarrel_size": "S2"
+      },
+      "description": "Dependable assault weapons never go out of style. Klaus & Werner maintains that tradition by unveiling the Gallant. This energy-based assault rifle is capable of providing accurate and sustained fire at targets up to medium range, while its high-capacity power system allows operators to fire considerably more shots per battery.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "ksar_pistol_ballistic_01": {
+      "name": "Coda Pistol",
+      "volume": 2500,
+      "manufacturer": "Kastak Arms",
+      "item_type": "Pistol",
+      "class": "Ballistic",
+      "weapon_type": "Sidearm",
+      "magazine_size": 6,
+      "rate_of_fire": "180 rpm",
+      "effective_range": "100 m",
+      "attachments": {
+        "optics_size": "S1",
+        "barrel_size": "S1",
+        "underbarrel_size": "S1"
+      },
+      "description": "Often called the Kastak Arms \"hand cannon,\" the Coda can end an engagement with a single .50 caliber round, although the substantial power can make the Coda's recoil hard to handle. Considering its limited magazine size and substantial kick, sustained fire is discouraged in favor of more accurate single shots.",
+      "verified": true,
+      "kills": 0,
+      "deaths": 0
+    },
+    "ksar_shotgun_energy_01": {
+      "name": "Devastator Shotgun",
+      "volume": 16000,
+      "manufacturer": "Kastak Arms",
+      "item_type": "Shotgun",
+      "class": "Energy (Plasma)",
+      "weapon_type": "Primary Weapon",
+      "magazine_size": 12,
+      "rate_of_fire": "60 rpm",
+      "effective_range": "20 m",
+      "attachments": {
+        "optics_size": "S1",
+        "barrel_size": "S3",
+        "underbarrel_size": "S2"
+      },
+      "description": "Kastak Arms' Devastator is a pump-action plasma shotgun capable of delivering sustained medium range, high-impact plasma blasts for close combat, room clearances and other combat operations. If the situation requires a high-power presence, look no further than the Devastator.",
+      "verified": true,
       "kills": 0,
       "deaths": 0
     }

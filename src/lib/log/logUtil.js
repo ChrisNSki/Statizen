@@ -14,6 +14,8 @@ const defaultLogInfo = {
   logDate: '',
   logFileSize: 0,
   lastProcessedLine: 0,
+  lastFileModified: 0,
+  gameDetected: false,
 };
 
 export async function getLogInfoPath() {
@@ -47,6 +49,54 @@ export async function getFileSize(filePath) {
   }
 }
 
+export async function getFileModifiedTime(filePath) {
+  try {
+    const stats = await import('@tauri-apps/plugin-fs').then((fs) => fs.stat(filePath));
+    return stats.mtime;
+  } catch {
+    return 0;
+  }
+}
+
+// New function to detect if Star Citizen is running based on log file activity
+export async function detectGameRunning() {
+  const logPath = await getLogPath();
+
+  try {
+    if (!(await exists(logPath))) {
+      return false;
+    }
+
+    const currentSize = await getFileSize(logPath);
+    const currentModified = await getFileModifiedTime(logPath);
+    const storedLogInfo = await loadLogInfo();
+
+    // Check if file has been modified recently (within last 30 seconds)
+    const thirtySecondsAgo = Date.now() - 30000;
+    const isRecentlyModified = currentModified > thirtySecondsAgo;
+
+    // Check if file size is growing (indicating active logging)
+    const isGrowing = currentSize > storedLogInfo.logFileSize;
+
+    // Game is running if file is being actively written to
+    const gameRunning = isRecentlyModified && isGrowing;
+
+    // Update stored info
+    const updatedLogInfo = {
+      ...storedLogInfo,
+      logFileSize: currentSize,
+      lastFileModified: currentModified,
+      gameDetected: gameRunning,
+    };
+    await saveLogInfo(updatedLogInfo);
+
+    return gameRunning;
+  } catch (error) {
+    console.error('Error detecting game running:', error);
+    return false;
+  }
+}
+
 export async function parseNewLogLines() {
   const logPath = await getLogPath();
 
@@ -74,6 +124,8 @@ export async function parseNewLogLines() {
           logDate: lines[1],
           logFileSize: currentSize,
           lastProcessedLine: 0,
+          lastFileModified: await getFileModifiedTime(logPath),
+          gameDetected: true,
         };
 
         await saveLogInfo(updatedLogInfo);
@@ -95,6 +147,8 @@ export async function parseNewLogLines() {
             logDate: storedLogInfo.logDate,
             logFileSize: currentSize,
             lastProcessedLine: currentLine,
+            lastFileModified: await getFileModifiedTime(logPath),
+            gameDetected: true,
           };
           await saveLogInfo(updatedLogInfo);
         }

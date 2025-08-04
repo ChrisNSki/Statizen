@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MapPin, Target, Skull, User, Zap, Clock, UserCheck, Gamepad2, Rocket, Activity, AlertCircle, Play, Square, FileText, BadgePlus, PersonStanding, CircleOff } from 'lucide-react';
+import { MapPin, Target, Skull, User, Zap, Clock, UserCheck, Gamepad2, Rocket, Activity, AlertCircle, Play, Square, FileText, BadgePlus, PersonStanding, CircleOff, Settings } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useLogProcessor } from '@/lib/context/logProcessor/logProcessorContext';
 import { useData } from '@/lib/context/data/dataContext';
 import { useSettings } from '@/lib/context/settings/settingsContext';
 import { initializeLog } from '@/lib/initialization/initializeLog';
 import { formatTimeAgo } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 // Copy the exact same functions from Discord utility
 const getOutlawRankTitle = (level) => {

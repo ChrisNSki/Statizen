@@ -58,7 +58,11 @@ export async function saveSettings(data) {
 export async function setRunAtStartup(enable) {
   try {
     const { invoke } = await import('@tauri-apps/api/core');
-    await invoke('set_run_at_startup', { enable });
+    if (enable) {
+      await invoke('enable_auto_startup');
+    } else {
+      await invoke('disable_auto_startup');
+    }
     return true;
   } catch (error) {
     console.error('❌ Failed to manage startup:', error);
@@ -69,7 +73,7 @@ export async function setRunAtStartup(enable) {
 export async function checkRunAtStartup() {
   try {
     const { invoke } = await import('@tauri-apps/api/core');
-    const isEnabled = await invoke('check_run_at_startup');
+    const isEnabled = await invoke('check_auto_startup');
     return isEnabled;
   } catch (error) {
     console.error('❌ Failed to check startup status:', error);

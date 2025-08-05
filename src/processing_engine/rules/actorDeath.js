@@ -10,6 +10,9 @@ import NPCDictionary from '../../assets/NPC-Dictionary.json';
 import shipDictionary from '../../assets/Ship-Dictionary.json';
 import weaponDictionary from '../../assets/Weapon-Dictionary.json';
 
+// Debug flag - set to false to disable console logging
+const consoleDebugging = false;
+
 // Helper function to extract weapon information from log line
 function extractWeaponInfo(line) {
   const weaponMatch = line.match(/(?<=using\s').*?(?=_\d+'\s\[Class\s)/);
@@ -25,6 +28,7 @@ function extractWeaponInfo(line) {
 }
 
 export async function actorDeath(line) {
+  if (consoleDebugging) console.log('🔍 Processing actorDeath line:', line);
   const pveData = await loadPVE();
   const pvpData = await loadPVP();
   const weaponData = await loadWeapon();
@@ -32,10 +36,22 @@ export async function actorDeath(line) {
     let userData = await loadUser();
     const userName = userData.userName;
     const currentShipClass = userData.currentShipClass;
+    if (consoleDebugging) console.log('👤 Current user:', userName);
 
     // === Suicide Handler ===
-    if (line.includes("'" + userName + "' [Class Player] with damage type 'Suicide'")) {
-      console.log('you committed suicide');
+    if (consoleDebugging) console.log('🔍 Checking for suicide pattern...');
+    if (consoleDebugging) console.log('🔍 Looking for pattern:', "damage type 'Suicide'");
+    if (consoleDebugging) console.log('🔍 Line contains userName:', line.includes(userName));
+    if (consoleDebugging) console.log('🔍 Line contains [Class Player]:', line.includes('[Class Player]'));
+    if (consoleDebugging) console.log('🔍 Line contains damage type Suicide:', line.includes("damage type 'Suicide'"));
+    if (consoleDebugging) console.log('🔍 Line contains "killed by \'' + userName + '\'":', line.includes("killed by '" + userName + "'"));
+
+    // Extract and log the actual damage type
+    const damageTypeMatch = line.match(/with damage type '([^']+)'/);
+    if (consoleDebugging) console.log('🔍 Actual damage type in line:', damageTypeMatch ? damageTypeMatch[1] : 'none found');
+
+    if (line.includes("damage type 'Suicide'") && line.includes("killed by '" + userName + "'")) {
+      if (consoleDebugging) console.log('✅ Suicide detected!');
       addPVELogEntry('suicide', 'loss');
 
       await queueKDUpdate(async () => {
@@ -50,12 +66,19 @@ export async function actorDeath(line) {
     }
 
     // === PVE KILL HANDLER ===
+    if (consoleDebugging) console.log('🔍 Checking for PVE kill pattern...');
+    if (consoleDebugging) console.log('🔍 Looking for "killed by \'' + userName + '\'":', line.includes("killed by '" + userName + "'"));
+    if (consoleDebugging) console.log('🔍 Line does NOT contain "<Actor Death> CActor::Kill: \'' + userName + '\'":', !line.includes("<Actor Death> CActor::Kill: '" + userName + "'"));
+
     if (line.includes("killed by '" + userName + "'") && !line.includes("<Actor Death> CActor::Kill: '" + userName + "'")) {
-      console.log('🔍 Processing PVE kill line:', line);
+      if (consoleDebugging) console.log('✅ PVE KILL DETECTED!');
+      if (consoleDebugging) console.log('🔍 Processing PVE kill line:', line);
       const npcClass = line.match(/(?<=CActor::Kill:\s').*?(?=_\d{11,14}'\s\[\d+\]\sin\szone)/);
-      console.log('🎯 NPC Class match result:', npcClass);
+      if (consoleDebugging) console.log('🎯 NPC Class match result:', npcClass);
+      if (consoleDebugging) console.log('🎯 NPC Class key:', npcClass ? npcClass[0] : 'null');
       if (npcClass && npcClass[0]) {
         const npcClassKey = npcClass[0];
+        if (consoleDebugging) console.log('✅ NPC Class key extracted:', npcClassKey);
 
         // Extract weapon information
         const weaponInfo = extractWeaponInfo(line);
@@ -73,35 +96,59 @@ export async function actorDeath(line) {
           await updateWeaponStats(weaponClassKey, 'win');
           addWeaponLogEntry(weaponClassKey, 'win', 'npc');
 
-          console.log('you killed with weapon: ' + (weaponDictionary.dictionary[weaponClassKey]?.name || weaponClassKey));
+          if (consoleDebugging) console.log('you killed with weapon: ' + (weaponDictionary.dictionary[weaponClassKey]?.name || weaponClassKey));
         }
 
         if (NPCDictionary.dictionary[npcClassKey]) {
-          console.log('you killed a ' + NPCDictionary.dictionary[npcClassKey].name);
+          if (consoleDebugging) console.log('you killed a ' + NPCDictionary.dictionary[npcClassKey].name);
         } else {
           submitNPCtoDictionary(npcClassKey);
         }
 
         addPVELogEntry(npcClassKey, 'win', weaponClassKey);
 
-        await queueKDUpdate(async () => {
-          const updatedPVE = { ...pveData };
-          updatedPVE.kills += 1;
-          updatedPVE.currentMonth.kills += 1;
-          updatedPVE.xp = (updatedPVE.xp || 0) + 10; // 🎯 XP GAIN
-          console.log('PVE XP Update:', { oldXP: pveData.xp || 0, newXP: updatedPVE.xp, npcClass: npcClassKey });
-          await savePVE(updatedPVE);
-        });
+        if (consoleDebugging) console.log('🔄 Starting queueKDUpdate for PVE kill...');
+        try {
+          await queueKDUpdate(async () => {
+            const updatedPVE = { ...pveData };
+            updatedPVE.kills += 1;
+            updatedPVE.currentMonth.kills += 1;
+            updatedPVE.xp = (updatedPVE.xp || 0) + 10; // 🎯 XP GAIN
+            if (consoleDebugging) console.log('PVE XP Update:', { oldXP: pveData.xp || 0, newXP: updatedPVE.xp, npcClass: npcClassKey });
+            if (consoleDebugging) console.log('💾 About to save PVE data...');
+            try {
+              await savePVE(updatedPVE);
+              if (consoleDebugging) console.log('✅ PVE data saved successfully');
+            } catch (saveError) {
+              console.error('❌ Failed to save PVE data:', saveError);
+              throw saveError;
+            }
+          });
+          if (consoleDebugging) console.log('✅ queueKDUpdate completed for PVE kill');
+        } catch (error) {
+          console.error('❌ queueKDUpdate failed for PVE kill:', error);
+        }
 
-        console.log('📡 Calling Discord PVE kill report with:', { npcClassKey, currentShipClass, weaponClassKey });
-        await reportPVEKill(npcClassKey, currentShipClass && currentShipClass !== '' ? currentShipClass : null, weaponClassKey);
+        if (consoleDebugging) console.log('🔍 About to call Discord PVE kill report...');
+        if (consoleDebugging) console.log('📡 Calling Discord PVE kill report with:', { npcClassKey, currentShipClass, weaponClassKey });
+        try {
+          const discordResult = await reportPVEKill(npcClassKey, currentShipClass && currentShipClass !== '' ? currentShipClass : null, weaponClassKey);
+          if (consoleDebugging) console.log('📡 Discord PVE kill result:', discordResult);
+        } catch (error) {
+          console.error('❌ Discord PVE kill error:', error);
+        }
+        return; // 🎯 FIX: Add return to prevent fallthrough to PVE death handler
       } else {
         // === PVP KILL HANDLER ===
+        console.log('🔍 Checking for PVP kill pattern...');
         const playerKill = line.match(/(?<=CActor::Kill:\s').*?(?='\s\[\d{9,12})/);
         const shipClass = line.match(/(?<=\]\sin\szone\s').*(?=_[0-9]{9,14}'\skilled\sby)/);
+        console.log('🎯 Player kill match result:', playerKill);
+        console.log('🎯 Ship class match result:', shipClass);
+
         if (playerKill && playerKill[0]) {
           const playerKillName = playerKill[0];
-          console.log('you killed the player ' + playerKillName);
+          console.log('✅ PVP KILL DETECTED! Player:', playerKillName);
 
           // Extract weapon information
           const weaponInfo = extractWeaponInfo(line);
@@ -149,13 +196,20 @@ export async function actorDeath(line) {
     }
 
     // === PVE DEATH HANDLER ===
+    console.log('🔍 Checking for PVE death pattern...');
+    console.log('🔍 Looking for "CActor::Kill: \'' + userName + '\'":', line.includes("CActor::Kill: '" + userName + "'"));
+    console.log('🔍 Line does NOT contain "with damage type \'Suicide\'":', !line.includes("with damage type 'Suicide'"));
+    console.log('🔍 Line does NOT contain "killed by \'' + userName + '\'":', !line.includes("killed by '" + userName + "'"));
+
     if (line.includes("CActor::Kill: '" + userName + "'") && !line.includes("with damage type 'Suicide'") && !line.includes("killed by '" + userName + "'")) {
+      console.log('✅ PVE DEATH DETECTED!');
       // Check if killed by NPC (includes debris, AI ships, etc.)
       const enemyPlayer = line.match(/(?<=killed\sby\s').*?(?='\s\[\d{9,13}\]\susing)/);
+      console.log('🎯 Enemy player match result:', enemyPlayer);
 
       // If we can't find a player name pattern, or if the killer has a long ID (like debris/AI), treat as PVE death
       if (!enemyPlayer || !enemyPlayer[0] || enemyPlayer[0].length > 20 || enemyPlayer[0].includes('SCItem_') || enemyPlayer[0].includes('AI_')) {
-        console.log('you were killed by NPC/environment');
+        console.log('✅ Confirmed PVE death - killed by NPC/environment');
 
         await queueKDUpdate(async () => {
           const updatedPVE = { ...pveData };
@@ -171,7 +225,7 @@ export async function actorDeath(line) {
       // === PVP DEATH HANDLER ===
       if (enemyPlayer && enemyPlayer[0]) {
         const enemyPlayerName = enemyPlayer[0];
-        console.log('you were killed by player ' + enemyPlayerName);
+        console.log('✅ PVP DEATH DETECTED! Killed by player:', enemyPlayerName);
 
         // Extract killer's weapon information
         const weaponInfo = extractWeaponInfo(line);

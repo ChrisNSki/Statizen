@@ -1,17 +1,18 @@
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { handleOpenFile } from '@/lib/handleOpenFile';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSettings } from '@/lib/context/settings/settingsContext';
+import { setRunAtStartup } from '@/lib/settings/settingsUtil';
+import { InfoIcon, AlertCircle } from 'lucide-react';
+import { createStartupShortcut } from '@/lib/utils/startupUtil';
+import Modal from '@/components/ui/modal';
+import { Input } from '@/components/ui/input';
 import { useData } from '@/lib/context/data/dataContext';
 import { useLogProcessor } from '@/lib/context/logProcessor/logProcessorContext';
-import { setRunAtStartup } from '@/lib/settings/settingsUtil';
-
-import { InfoIcon } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { handleOpenFile } from '@/lib/handleOpenFile';
 
 // Helper function for player URLs
 const getPlayerUrl = (name) => `https://robertsspaceindustries.com/en/citizens/${encodeURIComponent(name)}`;
@@ -22,6 +23,7 @@ function Settings() {
   const { startAutoLogging, stopAutoLogging } = useLogProcessor();
   const [testing, setTesting] = useState(false);
   const [testingEvent, setTestingEvent] = useState('');
+  const [showFallbackDialog, setShowFallbackDialog] = useState(false);
 
   // Debug: Monitor settings changes
   useEffect(() => {
@@ -38,6 +40,19 @@ function Settings() {
       updateSettings('logPath', path);
     }
   };
+
+  const handleRunAtStartupFallback = async () => {
+    try {
+      await createStartupShortcut();
+      alert('Statizen has been added to your startup programs. Please restart your computer for the changes to take effect.');
+      setShowFallbackDialog(false);
+    } catch (error) {
+      console.error('Failed to create startup shortcut:', error);
+      alert('Failed to add Statizen to startup programs. Please try again or manually add it.');
+    }
+  };
+
+
 
   const testDiscordWebhook = async () => {
     if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
@@ -311,7 +326,7 @@ function Settings() {
                 </div>
                 <div className='flex flex-row gap-1 items-center pt-2 pl-2'>
                   <InfoIcon className='w-3 h-3' />
-                  <span className='text-xs text-muted-foreground'>Automatically start and stop logging based on Star Citizen process detection</span>
+                  <span className='text-xs text-muted-foreground'>Monitors your Star Citizen game log file for activity. When the game launches and creates a new log file, Statizen automatically starts logging. When the game closes and log activity stops, logging automatically stops.</span>
                 </div>
               </div>
             </div>
@@ -323,15 +338,23 @@ function Settings() {
                     checked={settings.runAtStartup}
                     onCheckedChange={async (val) => {
                       updateSettings('runAtStartup', val);
-                      await setRunAtStartup(val);
+                      if (val) {
+                        const result = await setRunAtStartup(val);
+                        if (!result) {
+                          setShowFallbackDialog(true);
+                        }
+                      } else {
+                        await setRunAtStartup(val);
+                      }
                     }}
                   />
                   <p className='text-sm text-muted-foreground'>Run at Windows startup</p>
                 </div>
                 <div className='flex flex-row gap-1 items-center pt-2 pl-2'>
                   <InfoIcon className='w-3 h-3' />
-                  <span className='text-xs text-muted-foreground'>Automatically launch Statizen when Windows starts</span>
+                  <span className='text-xs text-muted-foreground'>Attempts to create a Windows Task Scheduler task (requires admin privileges). If that fails, adds Statizen to your Windows startup folder as a fallback method.</span>
                 </div>
+
               </div>
             </div>
 
@@ -597,6 +620,30 @@ function Settings() {
           </Card>
         </div>
       </div>
+
+      <Modal
+        isOpen={showFallbackDialog}
+        onClose={() => setShowFallbackDialog(false)}
+        title="Failed to Create Task Scheduler"
+        actions={
+          <>
+            <Button variant="outline" onClick={() => setShowFallbackDialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleRunAtStartupFallback}>
+              Add to Startup Folder
+            </Button>
+          </>
+        }
+      >
+        <p className="text-sm text-muted-foreground">
+          Statizen failed to create a Task Scheduler task. This might be due to missing permissions.
+          Would you like to add Statizen to your startup folder instead? This is a simpler method that works for most users.
+        </p>
+        <p className="text-xs text-muted-foreground mt-2">
+          For detailed error information, check the startup_debug.log file in your Statizen data folder.
+        </p>
+      </Modal>
     </div>
   );
 }

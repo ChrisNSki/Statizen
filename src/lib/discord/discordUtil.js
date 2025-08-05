@@ -14,7 +14,10 @@ const getPlayerUrl = (name) => `https://robertsspaceindustries.com/en/citizens/$
 
 const getOutlawRankTitle = (level) => {
   const ranks = ['Drifter', 'Rogue', 'Gunner', 'Marauder', 'Ravager', 'Skullbrand', 'Void Reaper', 'Ash Warden', 'Hellbringer', 'Death Harbinger'];
-  return ranks[Math.min(level, ranks.length - 1)];
+  // Calculate rank based on level within current prestige cycle (1-100)
+  const levelInCycle = ((level - 1) % 100) + 1; // 1-100
+  const rankIndex = Math.floor((levelInCycle - 1) / 10); // 0-9
+  return ranks[Math.min(rankIndex, ranks.length - 1)];
 };
 
 const getOutlawPrestigeTitle = (prestige) => {
@@ -24,7 +27,10 @@ const getOutlawPrestigeTitle = (prestige) => {
 
 const getPeacekeeperRankTitle = (level) => {
   const ranks = ['Recruit', 'Sentinel', 'Marksman', 'Enforcer', 'Vanguard', 'Ironbrand', 'Void Warden', 'Starseeker', 'Lightbringer', 'Peacebringer'];
-  return ranks[Math.min(level, ranks.length - 1)];
+  // Calculate rank based on level within current prestige cycle (1-100)
+  const levelInCycle = ((level - 1) % 100) + 1; // 1-100
+  const rankIndex = Math.floor((levelInCycle - 1) / 10); // 0-9
+  return ranks[Math.min(rankIndex, ranks.length - 1)];
 };
 
 const getPeacekeeperPrestigeTitle = (prestige) => {
@@ -157,20 +163,28 @@ export const reportPVPKill = async (victimName, victimShipClass, currentShipClas
     { name: 'Target', value: `[${victimName}](${getPlayerUrl(victimName)})`, inline: true },
   ];
 
-  // Only add ship fields if ship data is available
-  if (currentShipClass && currentShipClass !== '') {
-    fields.push({ name: 'Ship Used', value: getShipName(currentShipClass), inline: true });
-  }
+  // Row 2: Victim Ship | Weapon Used | (placeholder)
+  const row2Fields = [];
+
   if (victimShipClass && victimShipClass.trim() !== '') {
-    fields.push({ name: 'Victim Ship', value: getShipName(victimShipClass), inline: true });
+    row2Fields.push({ name: 'Victim Ship', value: getShipName(victimShipClass), inline: true });
+  } else {
+    row2Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
   }
 
-  // Add weapon information if available
   if (weaponClass && weaponClass.trim() !== '') {
-    fields.push({ name: 'Weapon Used', value: getWeaponName(weaponClass), inline: true });
+    row2Fields.push({ name: 'Weapon Used', value: getWeaponName(weaponClass), inline: true });
+  } else {
+    row2Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
   }
 
-  // Add K/D Ratio
+  // Always add a third placeholder field to complete the row
+  row2Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
+
+  // Add Row 2 (always 3 fields)
+  fields.push(...row2Fields);
+
+  // Row 3: K/D Ratio (full width)
   fields.push({ name: 'K/D Ratio', value: calculateKDRatio(pvp.kills || 0, pvp.deaths || 0) });
 
   const embed = {
@@ -181,8 +195,12 @@ export const reportPVPKill = async (victimName, victimShipClass, currentShipClas
 
   // Add RPG fields if level data is enabled
   if (settings.discordLevelData) {
-    // Add Rank and Prestige after K/D Ratio
-    embed.fields.push({ name: 'Rank', value: `${rankTitle} (${level})`, inline: true }, { name: 'Prestige', value: `${prestigeTitle} (${prestige})`, inline: true });
+    // Row 4: Rank | Prestige | (placeholder)
+    embed.fields.push(
+      { name: 'Rank', value: `${rankTitle} (${level})`, inline: true },
+      { name: 'Prestige', value: `${prestigeTitle} (${prestige})`, inline: true },
+      { name: '\u200b', value: '\u200b', inline: true } // Zero-width space placeholder
+    );
 
     // Add Progress to Next Level after Rank and Prestige
     embed.fields.push({
@@ -214,8 +232,7 @@ export const reportPVPKill = async (victimName, victimShipClass, currentShipClas
   return killResult;
 };
 
-export const reportPVEKill = async (npcClass, currentShipClass, weaponClass = null) => {
-  console.log('🎯 reportPVEKill called with:', { npcClass, currentShipClass, weaponClass });
+export const reportPVEKill = async (npcClass, currentShipClass, weaponClass = null, killedShipClass = null) => {
   const settings = await loadSettings();
   console.log('⚙️ Discord settings:', {
     discordEnabled: settings.discordEnabled,
@@ -245,22 +262,46 @@ export const reportPVEKill = async (npcClass, currentShipClass, weaponClass = nu
 
   // Build fields array dynamically
   const fields = [
+    // Row 1: Player | Empty Placeholder | Target
     { name: 'Player', value: `[${name}](${getPlayerUrl(name)})`, inline: true },
+    { name: '\u200b', value: '\u200b', inline: true }, // Zero-width space placeholder
     { name: 'Target', value: getNPCName(npcClass) || 'Unknown NPC', inline: true },
   ];
 
-  // Only add ship field if ship data is available
+  // Row 2: Ship Used | Empty Placeholder | Target Ship
+  const row2Fields = [];
+
   if (currentShipClass && currentShipClass !== '') {
-    fields.push({ name: 'Ship Used', value: getShipName(currentShipClass), inline: true });
+    row2Fields.push({ name: 'Ship Used', value: getShipName(currentShipClass), inline: true });
+  } else {
+    row2Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
   }
 
-  // Add weapon information if available
+  row2Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
+
+  if (killedShipClass && killedShipClass.trim() !== '') {
+    row2Fields.push({ name: 'Target Ship', value: getShipName(killedShipClass), inline: true });
+  } else {
+    row2Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
+  }
+
+  // Add Row 2 (always 3 fields)
+  fields.push(...row2Fields);
+
+  // Row 3: K/D Ratio | Empty Placeholder | Weapon Used
+  const row3Fields = [];
+
+  row3Fields.push({ name: 'K/D Ratio', value: calculateKDRatio(pve.kills || 0, pve.deaths || 0), inline: true });
+  row3Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
+
   if (weaponClass && weaponClass.trim() !== '') {
-    fields.push({ name: 'Weapon Used', value: getWeaponName(weaponClass), inline: true });
+    row3Fields.push({ name: 'Weapon Used', value: getWeaponName(weaponClass), inline: true });
+  } else {
+    row3Fields.push({ name: '\u200b', value: '\u200b', inline: true }); // Zero-width space placeholder
   }
 
-  // Add K/D Ratio
-  fields.push({ name: 'K/D Ratio', value: calculateKDRatio(pve.kills || 0, pve.deaths || 0) });
+  // Add Row 3 (always 3 fields)
+  fields.push(...row3Fields);
 
   const embed = {
     title: '🎯 NPC Eliminated (PVE)',
@@ -270,8 +311,12 @@ export const reportPVEKill = async (npcClass, currentShipClass, weaponClass = nu
 
   // Add RPG fields if level data is enabled
   if (settings.discordLevelData) {
-    // Add Rank and Prestige after K/D Ratio
-    embed.fields.push({ name: 'Rank', value: `${rankTitle} (${level})`, inline: true }, { name: 'Prestige', value: `${prestigeTitle} (${prestige})`, inline: true });
+    // Row 4: Rank | Empty Placeholder | Prestige
+    embed.fields.push(
+      { name: 'Rank', value: `${rankTitle} (${level})`, inline: true },
+      { name: '\u200b', value: '\u200b', inline: true }, // Zero-width space placeholder
+      { name: 'Prestige', value: `${prestigeTitle} (${prestige})`, inline: true }
+    );
 
     // Add Progress to Next Level after Rank and Prestige
     embed.fields.push({

@@ -27,6 +27,63 @@ function extractWeaponInfo(line) {
   return null;
 }
 
+// Helper function to extract ship weapon information from log line
+function extractShipWeaponInfo(line) {
+  const weaponMatch = line.match(/(?<=using\s').*?(?=_\d+'\s\[Class\s)/);
+  const weaponClassMatch = line.match(/(?<=\[Class\s).*?(?=\]\swith\sdamage\stype)/);
+
+  if (weaponMatch && weaponMatch[0]) {
+    // For ship weapons, use the weapon ID as the class when class is "unknown"
+    let weaponClass = 'unknown';
+    if (weaponClassMatch && weaponClassMatch[0] && weaponClassMatch[0].trim() !== 'unknown') {
+      weaponClass = weaponClassMatch[0].trim();
+    } else {
+      // Use weapon ID as class for ship weapons
+      weaponClass = weaponMatch[0].trim();
+    }
+
+    return {
+      weaponClass: weaponClass,
+      weaponId: weaponMatch[0].trim(),
+    };
+  }
+  return null;
+}
+
+// Helper function to extract ship class from zone information
+function extractShipClassFromZone(line) {
+  const zoneMatch = line.match(/(?<=in\szone\s').*?(?=_[0-9]{9,14}'\s)/);
+
+  if (zoneMatch && zoneMatch[0]) {
+    const zoneString = zoneMatch[0];
+
+    // Check if any ship class from the dictionary exists in the zone string
+    for (const shipClass in shipDictionary.dictionary) {
+      if (zoneString.includes(shipClass)) {
+        return shipClass;
+      }
+    }
+
+    // If no exact match found, try to extract common ship patterns
+    const shipPatterns = [
+      /([A-Z]{2,5}_[A-Za-z0-9_]+)/, // Pattern like ORIG_100i, MISC_Prospector, etc.
+      /([A-Z]{2,5}_[A-Za-z0-9]+_[A-Za-z0-9]+)/, // Pattern like AEGS_Vanguard_Sentinel
+    ];
+
+    for (const pattern of shipPatterns) {
+      const match = zoneString.match(pattern);
+      if (match && match[1]) {
+        // Check if this extracted pattern exists in ship dictionary
+        if (shipDictionary.dictionary[match[1]]) {
+          return match[1];
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
 export async function actorDeath(line) {
   if (consoleDebugging) console.log('🔍 Processing actorDeath line:', line);
   const pveData = await loadPVE();
@@ -80,9 +137,20 @@ export async function actorDeath(line) {
         const npcClassKey = npcClass[0];
         if (consoleDebugging) console.log('✅ NPC Class key extracted:', npcClassKey);
 
-        // Extract weapon information
-        const weaponInfo = extractWeaponInfo(line);
+        // Check if this is a ship kill (has VehicleDestruction damage type)
+        const isShipKill = line.includes("with damage type 'VehicleDestruction'");
+
+        // Extract weapon information based on kill type
+        let weaponInfo = null;
         let weaponClassKey = null;
+
+        if (isShipKill) {
+          // Use ship weapon extraction for ship kills
+          weaponInfo = extractShipWeaponInfo(line);
+        } else {
+          // Use regular weapon extraction for ground kills
+          weaponInfo = extractWeaponInfo(line);
+        }
 
         if (weaponInfo) {
           weaponClassKey = weaponInfo.weaponClass;
@@ -97,6 +165,15 @@ export async function actorDeath(line) {
           addWeaponLogEntry(weaponClassKey, 'win', 'npc');
 
           if (consoleDebugging) console.log('you killed with weapon: ' + (weaponDictionary.dictionary[weaponClassKey]?.name || weaponClassKey));
+        }
+
+        // Extract ship class if this is a ship kill
+        let killedShipClass = null;
+        if (isShipKill) {
+          killedShipClass = extractShipClassFromZone(line);
+          if (killedShipClass) {
+            console.log('you killed a ship: ' + (shipDictionary.dictionary[killedShipClass]?.name || killedShipClass));
+          }
         }
 
         if (NPCDictionary.dictionary[npcClassKey]) {
@@ -150,9 +227,20 @@ export async function actorDeath(line) {
           const playerKillName = playerKill[0];
           console.log('✅ PVP KILL DETECTED! Player:', playerKillName);
 
-          // Extract weapon information
-          const weaponInfo = extractWeaponInfo(line);
+          // Check if this is a ship kill (has VehicleDestruction damage type)
+          const isShipKill = line.includes("with damage type 'VehicleDestruction'");
+
+          // Extract weapon information based on kill type
+          let weaponInfo = null;
           let weaponClassKey = null;
+
+          if (isShipKill) {
+            // Use ship weapon extraction for ship kills
+            weaponInfo = extractShipWeaponInfo(line);
+          } else {
+            // Use regular weapon extraction for ground kills
+            weaponInfo = extractWeaponInfo(line);
+          }
 
           if (weaponInfo) {
             weaponClassKey = weaponInfo.weaponClass;
@@ -227,9 +315,20 @@ export async function actorDeath(line) {
         const enemyPlayerName = enemyPlayer[0];
         console.log('✅ PVP DEATH DETECTED! Killed by player:', enemyPlayerName);
 
-        // Extract killer's weapon information
-        const weaponInfo = extractWeaponInfo(line);
+        // Check if this is a ship kill (has VehicleDestruction damage type)
+        const isShipKill = line.includes("with damage type 'VehicleDestruction'");
+
+        // Extract killer's weapon information based on kill type
+        let weaponInfo = null;
         let killerWeaponClassKey = null;
+
+        if (isShipKill) {
+          // Use ship weapon extraction for ship kills
+          weaponInfo = extractShipWeaponInfo(line);
+        } else {
+          // Use regular weapon extraction for ground kills
+          weaponInfo = extractWeaponInfo(line);
+        }
 
         if (weaponInfo) {
           killerWeaponClassKey = weaponInfo.weaponClass;

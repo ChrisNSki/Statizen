@@ -13,7 +13,10 @@ import { useState, useEffect } from 'react';
 // Copy the exact same functions from Discord utility
 const getOutlawRankTitle = (level) => {
   const ranks = ['Drifter', 'Rogue', 'Gunner', 'Marauder', 'Ravager', 'Skullbrand', 'Void Reaper', 'Ash Warden', 'Hellbringer', 'Death Harbinger'];
-  return ranks[Math.min(level, ranks.length - 1)];
+  // Calculate rank based on level within current prestige cycle (1-100)
+  const levelInCycle = ((level - 1) % 100) + 1; // 1-100
+  const rankIndex = Math.floor((levelInCycle - 1) / 10); // 0-9
+  return ranks[Math.min(rankIndex, ranks.length - 1)];
 };
 
 const getOutlawPrestigeTitle = (prestige) => {
@@ -23,7 +26,10 @@ const getOutlawPrestigeTitle = (prestige) => {
 
 const getPeacekeeperRankTitle = (level) => {
   const ranks = ['Recruit', 'Sentinel', 'Marksman', 'Enforcer', 'Vanguard', 'Ironbrand', 'Void Warden', 'Starseeker', 'Lightbringer', 'Peacebringer'];
-  return ranks[Math.min(level, ranks.length - 1)];
+  // Calculate rank based on level within current prestige cycle (1-100)
+  const levelInCycle = ((level - 1) % 100) + 1; // 1-100
+  const rankIndex = Math.floor((levelInCycle - 1) / 10); // 0-9
+  return ranks[Math.min(rankIndex, ranks.length - 1)];
 };
 
 const getPeacekeeperPrestigeTitle = (prestige) => {
@@ -100,11 +106,11 @@ function Dashboard() {
   const isInShip = userData?.currentShip && userData.currentShip.trim() !== '';
 
   return (
-    <div className='flex flex-col gap-2 p-5'>
-      <div className='flex flex-row w-full gap-2'>
-        <div className='flex flex-col gap-2 w-1/3'>
+    <div className='flex flex-col gap-2 p-5 h-full'>
+      <div className='flex flex-row w-full gap-2 flex-1'>
+        <div className='flex flex-col gap-2 w-1/3 min-w-0'>
           {/* Main Stats Cards */}
-          <Card>
+          <Card className='flex-1'>
             <CardHeader>
               <div className='flex items-center gap-2'>
                 <Rocket className='w-5 h-5 text-blue-600' />
@@ -115,7 +121,7 @@ function Dashboard() {
               <span className={`flex text-nowrap font-bold ${(userData?.currentShip?.length || 0) > 28 ? 'text-xs' : (userData?.currentShip?.length || 0) > 22 ? 'text-md' : 'text-xl'}`}>{isInShip ? userData.currentShip : 'On Foot'}</span>
             </CardContent>
           </Card>
-          <Card>
+          <Card className='flex-1'>
             <CardHeader>
               <div className='flex items-center gap-2'>
                 <Target className='w-5 h-5 text-green-600' />
@@ -129,7 +135,7 @@ function Dashboard() {
               </CardDescription>
             </CardContent>
           </Card>
-          <Card>
+          <Card className='flex-1'>
             <CardHeader>
               <div className='flex items-center gap-2'>
                 <Skull className='w-5 h-5 text-orange-600' />
@@ -145,8 +151,8 @@ function Dashboard() {
           </Card>
         </div>
         {/* Recent Activity */}
-        <div className='flex flex-col gap-2 w-2/3'>
-          <Card>
+        <div className='flex flex-col gap-2 w-2/3 min-w-0'>
+          <Card className='flex-1'>
             <CardContent className='space-y-3'>
               <div className='flex items-center justify-between p-2 rounded-lg'>
                 <div className='flex items-center gap-3'>
@@ -178,7 +184,7 @@ function Dashboard() {
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className='flex-1'>
             <CardContent className='space-y-3'>
               <div className='flex justify-between px-2 rounded-lg min-h-33'>
                 <div className='flex p-0'>
@@ -218,9 +224,9 @@ function Dashboard() {
       </div>
 
       {/* System Information */}
-      <Card>
+      <Card className='flex-shrink-0'>
         <CardContent>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-2 gap-4 max-w-2xl mx-auto'>
             <div className='flex items-center gap-3 p-3 border rounded-lg'>
               <Gamepad2 className='w-5 h-5 text-blue-600' />
               <div>
@@ -256,9 +262,9 @@ function Dashboard() {
         </CardContent>
       </Card>
       {/* Logging Control */}
-      <div className={`flex flex-row w-full ${settings?.rpgEnabled ? 'justify-between' : 'justify-end'}`}>
+      <div className={`flex flex-row w-full flex-shrink-0 ${settings?.rpgEnabled ? 'justify-between' : 'justify-end'}`}>
         {settings?.rpgEnabled && (
-          <Card className='py-2'>
+          <Card className='py-2 flex-shrink-0'>
             <CardContent>
               <div className='flex flex-wrap pt-1 text-sm text-muted-foreground'>
                 <>

@@ -16,6 +16,25 @@ Download the latest Statizen Installer
 
 The installation can be ran from either the msi or the exe. Once installed you will be prompted to select your Game.log file which is located in the Star Citizen directory (The current default is: C:\Program Files\Roberts Space Industries\StarCitizen\LIVE)
 
+### Windows Defender Exclusions
+
+Statizen may be flagged by Windows Defender due to its auto-startup and file monitoring features. This is a **false positive** - Statizen is completely safe and open source.
+
+**Recommended Action**: Add Statizen to Windows Defender exclusions to prevent future detections:
+
+1. Open Windows Security (Windows Defender)
+2. Go to "Virus & threat protection"
+3. Click "Manage settings" under "Virus & threat protection settings"
+4. Scroll down to "Exclusions" and click "Add or remove exclusions"
+5. Click "Add an exclusion" → "Folder"
+6. Add the Statizen installation folder (typically: `C:\Users\%USERNAME%\AppData\Local\statizen`)
+
+**Why This Happens**:
+- Auto-startup functionality (for convenience)
+- File monitoring (to detect game activity)
+- Discord webhook integration (for notifications)
+- These are all legitimate features for a game tracking app
+
 ## About
 
 Statizen is a free, open-source desktop application designed to help Star Citizen players track their combat performance, mission statistics, and gameplay metrics. The application provides detailed insights into PVP and PVE activities, helping players analyze their performance and improve their gameplay.

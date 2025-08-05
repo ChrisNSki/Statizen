@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSettings } from '@/lib/context/settings/settingsContext';
 import { setRunAtStartup } from '@/lib/settings/settingsUtil';
-import { InfoIcon, AlertCircle } from 'lucide-react';
+import { InfoIcon, AlertCircle, Shield, ExternalLink } from 'lucide-react';
 import { createStartupShortcut } from '@/lib/utils/startupUtil';
 import Modal from '@/components/ui/modal';
 import { Input } from '@/components/ui/input';
@@ -198,13 +198,13 @@ function Settings() {
     }
   };
 
-    const testSuicide = async () => {
+  const testSuicide = async () => {
     if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
-    
+
     setTestingEvent('suicide');
     try {
       console.log('🧪 Testing Suicide Discord webhook...');
-      
+
       // Create a test embed without calling the real function
       const testEmbed = {
         title: '🪦 Suicide Recorded - TEST',
@@ -237,11 +237,11 @@ function Settings() {
 
   const testLevelUp = async () => {
     if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
-    
+
     setTestingEvent('levelup');
     try {
       console.log('🧪 Testing Level Up Discord webhook...');
-      
+
       // Create a test embed without calling the real function
       const testEmbed = {
         title: 'RANK UP! - TEST',
@@ -590,22 +590,22 @@ function Settings() {
                       >
                         {testingEvent === 'death' ? 'Testing...' : 'Test PVP Death'}
                       </Button>
-                                             <Button
-                         onClick={testSuicide}
-                         disabled={testing || testingEvent !== ''}
-                         variant="outline"
-                         size="sm"
-                       >
-                         {testingEvent === 'suicide' ? 'Testing...' : 'Test Suicide'}
-                       </Button>
-                       <Button
-                         onClick={testLevelUp}
-                         disabled={testing || testingEvent !== ''}
-                         variant="outline"
-                         size="sm"
-                       >
-                         {testingEvent === 'levelup' ? 'Testing...' : 'Test Level Up'}
-                       </Button>
+                      <Button
+                        onClick={testSuicide}
+                        disabled={testing || testingEvent !== ''}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {testingEvent === 'suicide' ? 'Testing...' : 'Test Suicide'}
+                      </Button>
+                      <Button
+                        onClick={testLevelUp}
+                        disabled={testing || testingEvent !== ''}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {testingEvent === 'levelup' ? 'Testing...' : 'Test Level Up'}
+                      </Button>
                     </div>
                     <div className='flex flex-row gap-1 items-center pt-2'>
                       <InfoIcon className='w-3 h-3' />

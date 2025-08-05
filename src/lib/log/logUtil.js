@@ -98,11 +98,13 @@ export async function detectGameRunning() {
 }
 
 export async function parseNewLogLines() {
+  console.log('🔄 parseNewLogLines called');
   const logPath = await getLogPath();
 
   try {
     // Get current log file info
     const currentSize = await getFileSize(logPath);
+    console.log('📊 Current log file size:', currentSize);
 
     // Load stored log info
     const storedLogInfo = await loadLogInfo();
@@ -161,7 +163,10 @@ export async function parseNewLogLines() {
 }
 
 async function processLogLine(_line) {
+  console.log('🔍 Processing log line:', _line);
+
   if (_line.includes('<Actor Death>')) {
+    console.log('✅ Actor Death detected, calling engineRunner');
     await engineRunner(_line, 'actorDeath');
   } else if (_line.includes('<AccountLoginCharacterStatus_Character>')) {
     await engineRunner(_line, 'initializeLog');

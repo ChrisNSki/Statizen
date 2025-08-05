@@ -54,10 +54,15 @@ export async function loadPVELog() {
   }
 }
 
-export async function savePVE(data) {
-  await checkMonthChange();
+// Internal function to write PVE data without triggering month change check
+async function writePVEData(data) {
   const path = await getPVEPath();
   await writeTextFile(path, JSON.stringify(data, null, 2));
+}
+
+export async function savePVE(data) {
+  await checkMonthChange();
+  await writePVEData(data);
 }
 
 export async function addPVELogEntry(npcClass, action, weaponClass = null) {
@@ -90,6 +95,6 @@ export async function checkMonthChange() {
     };
     // Preserve XP across months
     if (!pve.xp) pve.xp = 0;
-    await savePVE(pve);
+    await writePVEData(pve); // 🎯 FIX: Use internal function to avoid recursion
   }
 }

@@ -14,12 +14,15 @@ import { useData } from '@/lib/context/data/dataContext';
 import { useLogProcessor } from '@/lib/context/logProcessor/logProcessorContext';
 import { handleOpenFile } from '@/lib/handleOpenFile';
 
+// Helper function for player URLs
+const getPlayerUrl = (name) => `https://robertsspaceindustries.com/en/citizens/${encodeURIComponent(name)}`;
 
 function Settings() {
   const { settings, loading, updateSettings, updateEventTypes, batchUpdateSettings } = useSettings();
   const { userData } = useData();
   const { startAutoLogging, stopAutoLogging } = useLogProcessor();
   const [testing, setTesting] = useState(false);
+  const [testingEvent, setTestingEvent] = useState('');
   const [showFallbackDialog, setShowFallbackDialog] = useState(false);
 
   // Debug: Monitor settings changes
@@ -73,6 +76,200 @@ function Settings() {
       console.error('Error sending test Discord webhook:', error);
     } finally {
       setTesting(false);
+    }
+  };
+
+  const testPVEKill = async () => {
+    if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
+
+    setTestingEvent('pve');
+    try {
+      console.log('🧪 Testing PVE Kill Discord webhook...');
+
+      // Create a test embed without calling the real function
+      const testEmbed = {
+        title: '🎯 NPC Eliminated (PVE) - TEST',
+        color: 0x00ccff,
+        fields: [
+          { name: 'Player', value: `[${userData?.userName || 'TestUser'}](${getPlayerUrl(userData?.userName || 'TestUser')})`, inline: true },
+          { name: 'Target', value: 'Test NPC Pilot', inline: true },
+          { name: 'Ship Used', value: 'Test Ship Class', inline: true },
+          { name: 'Weapon Used', value: 'Test Weapon Class', inline: true },
+          { name: 'K/D Ratio', value: '0.00', inline: true },
+        ],
+      };
+
+      // Send test webhook directly
+      const response = await fetch(settings.discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [testEmbed] }),
+      });
+
+      if (!response.ok) {
+        console.error('❌ PVE Kill test failed:', response.status, response.statusText);
+      } else {
+        console.log('✅ PVE Kill test completed');
+      }
+    } catch (error) {
+      console.error('❌ PVE Kill test failed:', error);
+    } finally {
+      setTestingEvent('');
+    }
+  };
+
+  const testPVPKill = async () => {
+    if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
+
+    setTestingEvent('pvp');
+    try {
+      console.log('🧪 Testing PVP Kill Discord webhook...');
+
+      // Create a test embed without calling the real function
+      const testEmbed = {
+        title: '💀 Player Eliminated (PVP) - TEST',
+        color: 0xffcc00,
+        fields: [
+          { name: 'Player', value: `[${userData?.userName || 'TestUser'}](${getPlayerUrl(userData?.userName || 'TestUser')})`, inline: true },
+          { name: 'Target', value: '[TestPlayer](https://robertsspaceindustries.com/en/citizens/TestPlayer)', inline: true },
+          { name: 'Ship Used', value: 'Test Player Ship', inline: true },
+          { name: 'Victim Ship', value: 'Test Victim Ship', inline: true },
+          { name: 'Weapon Used', value: 'Test Weapon', inline: true },
+          { name: 'K/D Ratio', value: '0.00', inline: true },
+        ],
+      };
+
+      // Send test webhook directly
+      const response = await fetch(settings.discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [testEmbed] }),
+      });
+
+      if (!response.ok) {
+        console.error('❌ PVP Kill test failed:', response.status, response.statusText);
+      } else {
+        console.log('✅ PVP Kill test completed');
+      }
+    } catch (error) {
+      console.error('❌ PVP Kill test failed:', error);
+    } finally {
+      setTestingEvent('');
+    }
+  };
+
+  const testPVPDeath = async () => {
+    if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
+
+    setTestingEvent('death');
+    try {
+      console.log('🧪 Testing PVP Death Discord webhook...');
+
+      // Create a test embed without calling the real function
+      const testEmbed = {
+        title: '☠️ You Were Eliminated (PVP) - TEST',
+        color: 0xff4444,
+        fields: [
+          { name: 'Victim', value: `[${userData?.userName || 'TestUser'}](${getPlayerUrl(userData?.userName || 'TestUser')})`, inline: true },
+          { name: 'Killer', value: '[TestKiller](https://robertsspaceindustries.com/en/citizens/TestKiller)', inline: true },
+          { name: 'Your Ship', value: 'Test Victim Ship', inline: true },
+          { name: 'Killer Ship', value: 'Test Killer Ship', inline: true },
+          { name: 'Killer Weapon', value: 'Test Weapon', inline: true },
+          { name: 'K/D Ratio', value: '0.00', inline: true },
+        ],
+      };
+
+      // Send test webhook directly
+      const response = await fetch(settings.discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [testEmbed] }),
+      });
+
+      if (!response.ok) {
+        console.error('❌ PVP Death test failed:', response.status, response.statusText);
+      } else {
+        console.log('✅ PVP Death test completed');
+      }
+    } catch (error) {
+      console.error('❌ PVP Death test failed:', error);
+    } finally {
+      setTestingEvent('');
+    }
+  };
+
+    const testSuicide = async () => {
+    if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
+    
+    setTestingEvent('suicide');
+    try {
+      console.log('🧪 Testing Suicide Discord webhook...');
+      
+      // Create a test embed without calling the real function
+      const testEmbed = {
+        title: '🪦 Suicide Recorded - TEST',
+        color: 0x23272a,
+        fields: [
+          { name: 'Player', value: `[${userData?.userName || 'TestUser'}](${getPlayerUrl(userData?.userName || 'TestUser')})`, inline: false },
+          { name: 'Status', value: 'Self-terminated during operation. (TEST)', inline: false },
+          { name: 'K/D Ratio', value: '0.00', inline: true },
+        ],
+      };
+
+      // Send test webhook directly
+      const response = await fetch(settings.discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [testEmbed] }),
+      });
+
+      if (!response.ok) {
+        console.error('❌ Suicide test failed:', response.status, response.statusText);
+      } else {
+        console.log('✅ Suicide test completed');
+      }
+    } catch (error) {
+      console.error('❌ Suicide test failed:', error);
+    } finally {
+      setTestingEvent('');
+    }
+  };
+
+  const testLevelUp = async () => {
+    if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
+    
+    setTestingEvent('levelup');
+    try {
+      console.log('🧪 Testing Level Up Discord webhook...');
+      
+      // Create a test embed without calling the real function
+      const testEmbed = {
+        title: 'RANK UP! - TEST',
+        color: 0x00ff00,
+        fields: [
+          { name: 'Player', value: `[${userData?.userName || 'TestUser'}](${getPlayerUrl(userData?.userName || 'TestUser')})`, inline: false },
+          { name: 'Old Rank', value: 'Test Rank (5)', inline: true },
+          { name: 'New Rank', value: 'Test Rank (6)', inline: true },
+          { name: 'Prestige', value: '0', inline: true },
+        ],
+      };
+
+      // Send test webhook directly
+      const response = await fetch(settings.discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [testEmbed] }),
+      });
+
+      if (!response.ok) {
+        console.error('❌ Level Up test failed:', response.status, response.statusText);
+      } else {
+        console.log('✅ Level Up test completed');
+      }
+    } catch (error) {
+      console.error('❌ Level Up test failed:', error);
+    } finally {
+      setTestingEvent('');
     }
   };
 
@@ -358,10 +555,64 @@ function Settings() {
                     </div>
                   </div>
 
-                  <div className='flex gap-2 w-full justify-end'>
-                    <Button onClick={testDiscordWebhook} disabled={testing}>
-                      {testing ? 'Testing...' : 'Test Discord Webhook'}
-                    </Button>
+                  <div className='space-y-2'>
+                    <Label>Test Discord Events</Label>
+                    <div className='flex flex-wrap gap-2'>
+                      <Button
+                        onClick={testDiscordWebhook}
+                        disabled={testing || testingEvent !== ''}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {testing ? 'Testing...' : 'Basic Test'}
+                      </Button>
+                      <Button
+                        onClick={testPVEKill}
+                        disabled={testing || testingEvent !== ''}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {testingEvent === 'pve' ? 'Testing...' : 'Test PVE Kill'}
+                      </Button>
+                      <Button
+                        onClick={testPVPKill}
+                        disabled={testing || testingEvent !== ''}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {testingEvent === 'pvp' ? 'Testing...' : 'Test PVP Kill'}
+                      </Button>
+                      <Button
+                        onClick={testPVPDeath}
+                        disabled={testing || testingEvent !== ''}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {testingEvent === 'death' ? 'Testing...' : 'Test PVP Death'}
+                      </Button>
+                                             <Button
+                         onClick={testSuicide}
+                         disabled={testing || testingEvent !== ''}
+                         variant="outline"
+                         size="sm"
+                       >
+                         {testingEvent === 'suicide' ? 'Testing...' : 'Test Suicide'}
+                       </Button>
+                       <Button
+                         onClick={testLevelUp}
+                         disabled={testing || testingEvent !== ''}
+                         variant="outline"
+                         size="sm"
+                       >
+                         {testingEvent === 'levelup' ? 'Testing...' : 'Test Level Up'}
+                       </Button>
+                    </div>
+                    <div className='flex flex-row gap-1 items-center pt-2'>
+                      <InfoIcon className='w-3 h-3' />
+                      <span className='text-xs text-muted-foreground'>
+                        Test buttons will send sample Discord notifications using your current settings. Check the browser console for detailed logs.
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}

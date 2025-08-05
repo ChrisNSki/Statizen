@@ -220,6 +220,13 @@ async fn store_app_path() -> Result<(), String> {
     store_installation_path()
 }
 
+// Get app data directory for installer warnings
+#[tauri::command]
+async fn get_app_data_dir() -> Result<String, String> {
+    let app_data = env::var("APPDATA").map_err(|e| e.to_string())?;
+    Ok(app_data)
+}
+
 // Check if Task Scheduler is available
 #[tauri::command]
 async fn check_task_scheduler_available() -> Result<bool, String> {
@@ -262,6 +269,7 @@ pub fn run() {
             check_task_scheduler_available,
             check_startup_folder_available,
             store_app_path,
+            get_app_data_dir,
             minimize_window
         ])
         .setup(|app| {

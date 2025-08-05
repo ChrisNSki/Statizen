@@ -37,6 +37,7 @@ function App() {
           </Router>
         </DataProvider>
       </LogProcessorProvider>
+
     </SettingsProvider>
   );
 }

@@ -51,7 +51,9 @@ export async function actorDeath(line) {
 
     // === PVE KILL HANDLER ===
     if (line.includes("killed by '" + userName + "'") && !line.includes("<Actor Death> CActor::Kill: '" + userName + "'")) {
-      const npcClass = line.match(/(?<=CActor::Kill:\s').*?(?=_[0-9]{11,13}'\s\[[0-9]+\]\sin\szone)/);
+      console.log('🔍 Processing PVE kill line:', line);
+      const npcClass = line.match(/(?<=CActor::Kill:\s').*?(?=_\d{11,14}'\s\[\d+\]\sin\szone)/);
+      console.log('🎯 NPC Class match result:', npcClass);
       if (npcClass && npcClass[0]) {
         const npcClassKey = npcClass[0];
 
@@ -91,6 +93,7 @@ export async function actorDeath(line) {
           await savePVE(updatedPVE);
         });
 
+        console.log('📡 Calling Discord PVE kill report with:', { npcClassKey, currentShipClass, weaponClassKey });
         await reportPVEKill(npcClassKey, currentShipClass && currentShipClass !== '' ? currentShipClass : null, weaponClassKey);
       } else {
         // === PVP KILL HANDLER ===

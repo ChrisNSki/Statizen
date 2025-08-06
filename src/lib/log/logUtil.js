@@ -169,6 +169,12 @@ async function processLogLine(_line) {
   if (_line.includes('<Actor Death>')) {
     console.log('✅ Actor Death detected, calling engineRunner');
     await engineRunner(_line, 'actorDeath');
+  } else if (_line.includes('<FatalCollision>')) {
+    console.log('💥 Fatal Collision detected, calling engineRunner');
+    await engineRunner(_line, 'crashEvent');
+  } else if (_line.includes('<Vehicle Destruction>')) {
+    console.log('💥 Vehicle Destruction detected, calling engineRunner');
+    await engineRunner(_line, 'crashEvent');
   } else if (_line.includes('<AccountLoginCharacterStatus_Character>')) {
     console.log('✅ AccountLoginCharacterStatus_Character detected, processing directly');
     await processNameAndID(_line);

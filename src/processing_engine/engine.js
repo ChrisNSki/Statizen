@@ -4,6 +4,7 @@ import { loadSettings } from '../lib/settings/settingsUtil.js';
 import { spawnFlow } from './rules/spawnFlow.js';
 import { stallFlow } from './rules/stallFlow.js';
 import { corpse } from './rules/corpse.js';
+import { crashEvent } from './rules/crashEvent.js';
 
 export async function engineRunner(_line, type) {
   const settings = loadSettings();
@@ -14,6 +15,11 @@ export async function engineRunner(_line, type) {
     case 'actorDeath': {
       console.log('actorDeath');
       await actorDeath(_line);
+      break;
+    }
+    case 'crashEvent': {
+      console.log('crashEvent');
+      await crashEvent(_line);
       break;
     }
     case 'spawnFlow': {

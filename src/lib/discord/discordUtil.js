@@ -418,3 +418,53 @@ export const reportSuicide = async () => {
 
   return sendDiscordWebhook(settings.discordWebhookUrl, embed);
 };
+
+export const reportCrash = async (vehicleName) => {
+  const settings = await loadSettings();
+  if (!settings.discordEnabled || !settings.discordWebhookUrl || !settings.eventTypes?.crashes) return false;
+
+  const user = await loadUser();
+  const pve = await loadPVE();
+  const pvp = await loadPVP();
+  const name = user?.userName || 'Unknown';
+  // Combine PVE and PVP XP for total progression
+  const pveXP = pve?.xp || 0;
+  const pvpXP = pvp?.xp || 0;
+  const xp = pveXP + pvpXP;
+  const isOutlaw = settings.faction === 'outlaw';
+  const { progressBarUrl, percent, level, xpInLevel, xpNeeded } = getXPProgressBar(xp);
+  // Calculate prestige from level: every 100 levels = 1 prestige
+  const prestige = Math.floor(level / 100);
+  const rankTitle = getRankTitle(level, isOutlaw);
+  const prestigeTitle = getPrestigeTitle(prestige, isOutlaw);
+
+  const embed = {
+    title: '💥 Vehicle Crash Detected',
+    color: 0xff6600,
+    fields: [
+      { name: 'Player', value: `[${name}](${getPlayerUrl(name)})`, inline: true },
+      { name: 'Vehicle', value: getShipName(vehicleName) || vehicleName, inline: true },
+      { name: 'Status', value: 'Vehicle destroyed in collision.', inline: false },
+      { name: 'K/D Ratio', value: calculateKDRatio(pvp.kills || 0, pvp.deaths || 0) },
+    ],
+  };
+
+  // Add RPG fields if level data is enabled
+  if (settings.discordLevelData) {
+    // Add Rank and Prestige after K/D Ratio
+    embed.fields.push({ name: 'Rank', value: `${rankTitle} (${level})`, inline: true }, { name: 'Prestige', value: `${prestigeTitle} (${prestige})`, inline: true });
+
+    // Add Progress to Next Level after Rank and Prestige
+    embed.fields.push({
+      name: `${percent}% Progress to Next Level (${Math.floor(xpInLevel)} / ${Math.floor(xpNeeded)})`,
+      value: ' ',
+    });
+
+    // Add the progress bar image
+    embed.image = {
+      url: progressBarUrl,
+    };
+  }
+
+  return sendDiscordWebhook(settings.discordWebhookUrl, embed);
+};

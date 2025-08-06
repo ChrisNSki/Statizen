@@ -1,7 +1,7 @@
 {
   "name": "statizen",
   "private": true,
-  "version": "1.0.4-beta",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite",

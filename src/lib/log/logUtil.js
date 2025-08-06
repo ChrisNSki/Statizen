@@ -3,6 +3,7 @@ import { exists, mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-f
 import { loadSettings } from '@/lib/settings/settingsUtil';
 import { resetUserShip } from '@/lib/user/userUtil';
 import { engineRunner } from '@/processing_engine/engine';
+import { processNameAndID } from '@/lib/initialization/processNameandID';
 
 async function getLogPath() {
   const settings = await loadSettings();
@@ -169,7 +170,8 @@ async function processLogLine(_line) {
     console.log('✅ Actor Death detected, calling engineRunner');
     await engineRunner(_line, 'actorDeath');
   } else if (_line.includes('<AccountLoginCharacterStatus_Character>')) {
-    await engineRunner(_line, 'initializeLog');
+    console.log('✅ AccountLoginCharacterStatus_Character detected, processing directly');
+    await processNameAndID(_line);
   } else if (_line.includes('<Spawn Flow>')) {
     await engineRunner(_line, 'spawnFlow');
   } else if (_line.includes('<Actor Stall>')) {

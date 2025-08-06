@@ -1,6 +1,5 @@
 import { vehicleControlFlow } from './rules/vehicleControlFlow.js';
 import { actorDeath } from './rules/actorDeath.js';
-import { initializeLog } from './rules/initalizeLog.js';
 import { loadSettings } from '../lib/settings/settingsUtil.js';
 import { spawnFlow } from './rules/spawnFlow.js';
 import { stallFlow } from './rules/stallFlow.js';
@@ -41,11 +40,6 @@ export async function engineRunner(_line, type) {
       break;
     }
     case 'endMission': {
-      break;
-    }
-    case 'initializeLog': {
-      console.log('initializeLog');
-      await initializeLog(settings);
       break;
     }
     default: {

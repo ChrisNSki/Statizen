@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { useLogProcessor } from '@/lib/context/logProcessor/logProcessorContext';
 import { useData } from '@/lib/context/data/dataContext';
 import { useSettings } from '@/lib/context/settings/settingsContext';
-import { initializeLog } from '@/lib/initialization/initializeLog';
 import { formatTimeAgo } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
@@ -76,7 +75,6 @@ function Dashboard() {
   const startLogging = async () => {
     if (!isWatching) {
       try {
-        await initializeLog(settings);
         await toggleLogging();
       } catch (error) {
         console.error('Failed to start logging:', error);

@@ -24,19 +24,6 @@ export function LogProcessorProvider({ children }) {
     }
   }, [isProcessing]);
 
-  // Check if Star Citizen is running
-  const checkStarCitizen = useCallback(async () => {
-    try {
-      const isRunning = await invoke('check_process_running', {
-        processName: 'StarCitizen.exe',
-      });
-      return isRunning;
-    } catch (error) {
-      console.error('Error checking Star Citizen process:', error);
-      return false;
-    }
-  }, []);
-
   // Start cleanup interval when component mounts
   useEffect(() => {
     // Start cleanup interval for nearby players immediately

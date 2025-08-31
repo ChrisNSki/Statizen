@@ -1,27 +1,10 @@
-use std::process::Command;
 use std::env;
-use std::os::windows::process::CommandExt;
 
 
 
 
 
-#[tauri::command]
-async fn check_process_running(process_name: String) -> Result<bool, String> {    
-    let output = Command::new("tasklist")
-        .arg("/FI")
-        .arg(format!("IMAGENAME eq {}", process_name))
-        .arg("/FO")
-        .arg("CSV")
-        .creation_flags(0x08000000) // CREATE_NO_WINDOW flag to prevent command prompt from showing
-        .output()
-        .map_err(|e| e.to_string())?;
-    
-    let output_str = String::from_utf8_lossy(&output.stdout);
-    let is_running = output_str.contains(&process_name);
-    
-    Ok(is_running)
-}
+
 
 
 
@@ -50,7 +33,6 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .invoke_handler(tauri::generate_handler![
-            check_process_running, 
             get_app_data_dir,
             minimize_window
         ])

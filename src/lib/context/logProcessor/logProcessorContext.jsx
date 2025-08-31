@@ -9,9 +9,7 @@ const LogProcessorContext = createContext();
 export function LogProcessorProvider({ children }) {
   const [isWatching, setIsWatching] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [autoLogEnabled, setAutoLogEnabled] = useState(false);
   const intervalRef = useRef(null);
-  const autoLogIntervalRef = useRef(null);
 
   const processLog = useCallback(async () => {
     if (isProcessing) return; // Prevent overlapping processing
@@ -39,57 +37,16 @@ export function LogProcessorProvider({ children }) {
     }
   }, []);
 
-  // Auto-logging logic
-  const startAutoLogging = useCallback(async () => {
-    const settings = await loadSettings();
-
-    if (settings.autoLogEnabled) {
-      setAutoLogEnabled(true);
-
-      // Check immediately
-      const isRunning = await checkStarCitizen();
-
-      if (isRunning && !isWatching) {
-        setIsWatching(true);
-      } else if (!isRunning && isWatching) {
-        setIsWatching(false);
-      }
-
-      // Set up polling every 30 seconds
-      autoLogIntervalRef.current = setInterval(async () => {
-        const isRunning = await checkStarCitizen();
-
-        if (isRunning && !isWatching) {
-          setIsWatching(true);
-        } else if (!isRunning && isWatching) {
-          setIsWatching(false);
-        }
-      }, 30000);
-    }
-  }, [isWatching, checkStarCitizen]);
-
-  const stopAutoLogging = useCallback(() => {
-    setAutoLogEnabled(false);
-    if (autoLogIntervalRef.current) {
-      clearInterval(autoLogIntervalRef.current);
-      autoLogIntervalRef.current = null;
-    }
-  }, []);
-
   // Start cleanup interval when component mounts
   useEffect(() => {
     // Start cleanup interval for nearby players immediately
     startCleanupInterval();
 
-    // Start auto-logging if enabled
-    startAutoLogging();
-
     // Cleanup on unmount
     return () => {
       stopCleanupInterval();
-      stopAutoLogging();
     };
-  }, [startAutoLogging, stopAutoLogging]);
+  }, []);
 
   useEffect(() => {
     // Clear any existing interval first
@@ -136,9 +93,6 @@ export function LogProcessorProvider({ children }) {
     startLogging,
     stopLogging,
     toggleLogging,
-    autoLogEnabled,
-    startAutoLogging,
-    stopAutoLogging,
   };
 
   return <LogProcessorContext.Provider value={value}>{children}</LogProcessorContext.Provider>;

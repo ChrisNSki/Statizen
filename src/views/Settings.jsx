@@ -5,13 +5,11 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSettings } from '@/lib/context/settings/settingsContext';
-import { setRunAtStartup } from '@/lib/settings/settingsUtil';
 import { InfoIcon, AlertCircle, Shield, ExternalLink } from 'lucide-react';
-import { createStartupShortcut } from '@/lib/utils/startupUtil';
 import Modal from '@/components/ui/modal';
 import { Input } from '@/components/ui/input';
 import { useData } from '@/lib/context/data/dataContext';
-import { useLogProcessor } from '@/lib/context/logProcessor/logProcessorContext';
+
 import { handleOpenFile } from '@/lib/handleOpenFile';
 
 // Helper function for player URLs
@@ -20,10 +18,9 @@ const getPlayerUrl = (name) => `https://robertsspaceindustries.com/en/citizens/$
 function Settings() {
   const { settings, loading, updateSettings, updateEventTypes, batchUpdateSettings } = useSettings();
   const { userData } = useData();
-  const { startAutoLogging, stopAutoLogging } = useLogProcessor();
+
   const [testing, setTesting] = useState(false);
   const [testingEvent, setTestingEvent] = useState('');
-  const [showFallbackDialog, setShowFallbackDialog] = useState(false);
 
   // Debug: Monitor settings changes
   useEffect(() => {
@@ -40,19 +37,6 @@ function Settings() {
       updateSettings('logPath', path);
     }
   };
-
-  const handleRunAtStartupFallback = async () => {
-    try {
-      await createStartupShortcut();
-      alert('Statizen has been added to your startup programs. Please restart your computer for the changes to take effect.');
-      setShowFallbackDialog(false);
-    } catch (error) {
-      console.error('Failed to create startup shortcut:', error);
-      alert('Failed to add Statizen to startup programs. Please try again or manually add it.');
-    }
-  };
-
-
 
   const testDiscordWebhook = async () => {
     if (!settings?.discordEnabled || !settings?.discordWebhookUrl) return;
@@ -311,56 +295,6 @@ function Settings() {
             <div className='flex items-center justify-between'>
               <div>
                 <div className='flex items-center space-x-2'>
-                  <Switch
-                    checked={settings.autoLogEnabled}
-                    onCheckedChange={async (val) => {
-                      updateSettings('autoLogEnabled', val);
-                      if (val) {
-                        await startAutoLogging();
-                      } else {
-                        stopAutoLogging();
-                      }
-                    }}
-                  />
-                  <p className='text-sm text-muted-foreground'>Auto-start logging when Star Citizen launches</p>
-                </div>
-                <div className='flex flex-row gap-1 items-center pt-2 pl-2'>
-                  <InfoIcon className='w-3 h-3' />
-                  <span className='text-xs text-muted-foreground'>Monitors your Star Citizen game log file for activity. When the game launches and creates a new log file, Statizen automatically starts logging. When the game closes and log activity stops, logging automatically stops.</span>
-                </div>
-              </div>
-            </div>
-
-            <div className='flex items-center justify-between'>
-              <div>
-                <div className='flex items-center space-x-2'>
-                  <Switch
-                    checked={settings.runAtStartup}
-                    onCheckedChange={async (val) => {
-                      updateSettings('runAtStartup', val);
-                      if (val) {
-                        const result = await setRunAtStartup(val);
-                        if (!result) {
-                          setShowFallbackDialog(true);
-                        }
-                      } else {
-                        await setRunAtStartup(val);
-                      }
-                    }}
-                  />
-                  <p className='text-sm text-muted-foreground'>Run at Windows startup</p>
-                </div>
-                <div className='flex flex-row gap-1 items-center pt-2 pl-2'>
-                  <InfoIcon className='w-3 h-3' />
-                  <span className='text-xs text-muted-foreground'>Attempts to create a Windows Task Scheduler task (requires admin privileges). If that fails, adds Statizen to your Windows startup folder as a fallback method.</span>
-                </div>
-
-              </div>
-            </div>
-
-            <div className='flex items-center justify-between'>
-              <div>
-                <div className='flex items-center space-x-2'>
                   <Switch checked={settings.minimizeOnLaunch} onCheckedChange={(val) => updateSettings('minimizeOnLaunch', val)} />
                   <p className='text-sm text-muted-foreground'>Minimize on launch</p>
                 </div>
@@ -558,60 +492,28 @@ function Settings() {
                   <div className='space-y-2'>
                     <Label>Test Discord Events</Label>
                     <div className='flex flex-wrap gap-2'>
-                      <Button
-                        onClick={testDiscordWebhook}
-                        disabled={testing || testingEvent !== ''}
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Button onClick={testDiscordWebhook} disabled={testing || testingEvent !== ''} variant='outline' size='sm'>
                         {testing ? 'Testing...' : 'Basic Test'}
                       </Button>
-                      <Button
-                        onClick={testPVEKill}
-                        disabled={testing || testingEvent !== ''}
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Button onClick={testPVEKill} disabled={testing || testingEvent !== ''} variant='outline' size='sm'>
                         {testingEvent === 'pve' ? 'Testing...' : 'Test PVE Kill'}
                       </Button>
-                      <Button
-                        onClick={testPVPKill}
-                        disabled={testing || testingEvent !== ''}
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Button onClick={testPVPKill} disabled={testing || testingEvent !== ''} variant='outline' size='sm'>
                         {testingEvent === 'pvp' ? 'Testing...' : 'Test PVP Kill'}
                       </Button>
-                      <Button
-                        onClick={testPVPDeath}
-                        disabled={testing || testingEvent !== ''}
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Button onClick={testPVPDeath} disabled={testing || testingEvent !== ''} variant='outline' size='sm'>
                         {testingEvent === 'death' ? 'Testing...' : 'Test PVP Death'}
                       </Button>
-                      <Button
-                        onClick={testSuicide}
-                        disabled={testing || testingEvent !== ''}
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Button onClick={testSuicide} disabled={testing || testingEvent !== ''} variant='outline' size='sm'>
                         {testingEvent === 'suicide' ? 'Testing...' : 'Test Suicide'}
                       </Button>
-                      <Button
-                        onClick={testLevelUp}
-                        disabled={testing || testingEvent !== ''}
-                        variant="outline"
-                        size="sm"
-                      >
+                      <Button onClick={testLevelUp} disabled={testing || testingEvent !== ''} variant='outline' size='sm'>
                         {testingEvent === 'levelup' ? 'Testing...' : 'Test Level Up'}
                       </Button>
                     </div>
                     <div className='flex flex-row gap-1 items-center pt-2'>
                       <InfoIcon className='w-3 h-3' />
-                      <span className='text-xs text-muted-foreground'>
-                        Test buttons will send sample Discord notifications using your current settings. Check the browser console for detailed logs.
-                      </span>
+                      <span className='text-xs text-muted-foreground'>Test buttons will send sample Discord notifications using your current settings. Check the browser console for detailed logs.</span>
                     </div>
                   </div>
                 </div>
@@ -620,30 +522,6 @@ function Settings() {
           </Card>
         </div>
       </div>
-
-      <Modal
-        isOpen={showFallbackDialog}
-        onClose={() => setShowFallbackDialog(false)}
-        title="Failed to Create Task Scheduler"
-        actions={
-          <>
-            <Button variant="outline" onClick={() => setShowFallbackDialog(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleRunAtStartupFallback}>
-              Add to Startup Folder
-            </Button>
-          </>
-        }
-      >
-        <p className="text-sm text-muted-foreground">
-          Statizen failed to create a Task Scheduler task. This might be due to missing permissions.
-          Would you like to add Statizen to your startup folder instead? This is a simpler method that works for most users.
-        </p>
-        <p className="text-xs text-muted-foreground mt-2">
-          For detailed error information, check the startup_debug.log file in your Statizen data folder.
-        </p>
-      </Modal>
     </div>
   );
 }

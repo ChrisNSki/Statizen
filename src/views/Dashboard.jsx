@@ -68,7 +68,7 @@ const getXPProgressBar = (xp) => {
 };
 
 function Dashboard() {
-  const { isWatching, toggleLogging, autoLogEnabled } = useLogProcessor();
+  const { isWatching, toggleLogging } = useLogProcessor();
   const { settings } = useSettings();
   const { userData, logInfo, PVEData, PVPData, OrgData, lastKilledBy, lastKilledActor, nearbyPlayers } = useData();
 
@@ -307,25 +307,19 @@ function Dashboard() {
           </Card>
         )}
         <div className={`flex flex-row ${settings?.rpgEnabled ? 'flex-1 justify-center' : ''} items-center`}>
-          {autoLogEnabled ? (
-            <div className='flex items-center gap-3 px-4 py-2 border-2 border-green-500 rounded-lg animate-pulse'>
-              <span className='text-sm font-medium text-green-600'>Auto Logging</span>
-            </div>
-          ) : (
-            <Button onClick={startLogging} variant={isWatching ? 'destructive' : 'default'} className='flex items-center gap-2'>
-              {isWatching ? (
-                <>
-                  <Square className='w-4 h-4' />
-                  Stop Logging
-                </>
-              ) : (
-                <>
-                  <Play className='w-4 h-4' />
-                  Start Logging
-                </>
-              )}
-            </Button>
-          )}
+          <Button onClick={startLogging} variant={isWatching ? 'destructive' : 'default'} className='flex items-center gap-2'>
+            {isWatching ? (
+              <>
+                <Square className='w-4 h-4' />
+                Stop Logging
+              </>
+            ) : (
+              <>
+                <Play className='w-4 h-4' />
+                Start Logging
+              </>
+            )}
+          </Button>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "statizen",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "identifier": "com.statizen.app",
   "build": {
     "frontendDist": "../dist",
@@ -28,6 +28,9 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "resources": {
+      "exclude": ["db-builder/**/*"]
+    }
   }
 }

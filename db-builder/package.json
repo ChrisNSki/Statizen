@@ -1,0 +1,15 @@
+{
+  "name": "statizen-db-api",
+  "version": "1.0.0",
+  "description": "Star Citizen ship database builder",
+  "main": "ship-db-builder.js",
+  "scripts": {
+    "phase1": "node ship-db-builder/phase-1-build-structure.js",
+    "phase2": "node ship-db-builder/phase-2-fetch-details.js",
+    "build-ships": "npm run phase1 && npm run phase2"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "type": "module"
+}

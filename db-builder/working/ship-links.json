@@ -1,0 +1,1216 @@
+{
+  "version": "1.0.5",
+  "totalShips": 241,
+  "ships": [
+    {
+      "name": "100i",
+      "uuid": "6135a874-4cb1-4f49-9f29-5781e5991f2b",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/6135a874-4cb1-4f49-9f29-5781e5991f2b"
+    },
+    {
+      "name": "125a",
+      "uuid": "e7eeba8d-b108-48a1-a332-d9edbab2b9c1",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e7eeba8d-b108-48a1-a332-d9edbab2b9c1"
+    },
+    {
+      "name": "135c",
+      "uuid": "2f231daa-95e5-4cb2-a32e-4db8f29a30d6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/2f231daa-95e5-4cb2-a32e-4db8f29a30d6"
+    },
+    {
+      "name": "300i",
+      "uuid": "ce937681-caa2-4cfa-ab80-f5bf2a5b9a6c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ce937681-caa2-4cfa-ab80-f5bf2a5b9a6c"
+    },
+    {
+      "name": "315p",
+      "uuid": "dc537d66-2abb-43aa-9d37-4e963fc6e9e2",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/dc537d66-2abb-43aa-9d37-4e963fc6e9e2"
+    },
+    {
+      "name": "325a",
+      "uuid": "039a2768-1aff-4969-b2a4-ed8aeb21dae1",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/039a2768-1aff-4969-b2a4-ed8aeb21dae1"
+    },
+    {
+      "name": "350r",
+      "uuid": "316c6601-b405-4a3a-abac-394c655718f8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/316c6601-b405-4a3a-abac-394c655718f8"
+    },
+    {
+      "name": "400i",
+      "uuid": "718f4435-628b-4436-bb80-bf9cfef9a945",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/718f4435-628b-4436-bb80-bf9cfef9a945"
+    },
+    {
+      "name": "600i Explorer",
+      "uuid": "f8ac4c26-8f4d-4cb3-9be2-7d867a95a877",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f8ac4c26-8f4d-4cb3-9be2-7d867a95a877"
+    },
+    {
+      "name": "600i Touring",
+      "uuid": "11b660a2-c77c-490b-9e85-ee70400c5cf8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/11b660a2-c77c-490b-9e85-ee70400c5cf8"
+    },
+    {
+      "name": "85X",
+      "uuid": "9dc9c257-c413-416a-ab9b-06fbadf18d1e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9dc9c257-c413-416a-ab9b-06fbadf18d1e"
+    },
+    {
+      "name": "890 Jump",
+      "uuid": "50ddaf5e-a8e3-42fe-a1d3-7267f39b39b0",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/50ddaf5e-a8e3-42fe-a1d3-7267f39b39b0"
+    },
+    {
+      "name": "A1 Spirit",
+      "uuid": "c0b86c69-55ac-4af3-a722-d46282813e91",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c0b86c69-55ac-4af3-a722-d46282813e91"
+    },
+    {
+      "name": "A2 Hercules",
+      "uuid": "3bee9f2d-4494-4560-b9f8-463bc90695cb",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3bee9f2d-4494-4560-b9f8-463bc90695cb"
+    },
+    {
+      "name": "Anvil Ballista Dunestalker",
+      "uuid": "50f551e3-3435-4cbe-9ecf-8712855a8e27",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/50f551e3-3435-4cbe-9ecf-8712855a8e27"
+    },
+    {
+      "name": "Anvil Ballista Snowblind",
+      "uuid": "aaeb976b-7a79-4a9c-91ee-07ed05d4a399",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/aaeb976b-7a79-4a9c-91ee-07ed05d4a399"
+    },
+    {
+      "name": "Apollo Medivac",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Apollo+Medivac"
+    },
+    {
+      "name": "Apollo Triage",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Apollo+Triage"
+    },
+    {
+      "name": "Ares Inferno",
+      "uuid": "04571d49-0680-4b84-bdb1-dbebeb22c898",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/04571d49-0680-4b84-bdb1-dbebeb22c898"
+    },
+    {
+      "name": "Ares Ion",
+      "uuid": "30aab266-9131-4a07-808b-61c868cb404f",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/30aab266-9131-4a07-808b-61c868cb404f"
+    },
+    {
+      "name": "Argo Mole Carbon Edition",
+      "uuid": "9c49ab88-43a0-4ea7-b159-1f1dd44b49b2",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9c49ab88-43a0-4ea7-b159-1f1dd44b49b2"
+    },
+    {
+      "name": "Argo Mole Talus Edition",
+      "uuid": "31eaaac4-b1ee-4430-a01c-b4ef0470715d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/31eaaac4-b1ee-4430-a01c-b4ef0470715d"
+    },
+    {
+      "name": "Arrastra",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Arrastra"
+    },
+    {
+      "name": "Arrow",
+      "uuid": "eaeb562d-d4ac-43bd-a843-e8a6d69fad82",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/eaeb562d-d4ac-43bd-a843-e8a6d69fad82"
+    },
+    {
+      "name": "Asgard",
+      "uuid": "8ffde65b-ee9b-4a50-b386-3111175736b2",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8ffde65b-ee9b-4a50-b386-3111175736b2"
+    },
+    {
+      "name": "ATLS",
+      "uuid": "09c9fa95-5b5a-4200-9ff8-3b288df9925b",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/09c9fa95-5b5a-4200-9ff8-3b288df9925b"
+    },
+    {
+      "name": "ATLS GEO",
+      "uuid": "a10bcff6-7985-431f-b0ea-bdb51e6d3f98",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/a10bcff6-7985-431f-b0ea-bdb51e6d3f98"
+    },
+    {
+      "name": "Aurora CL",
+      "uuid": "7cab9bbc-3d67-4ee7-99ef-fe41991f8a3b",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/7cab9bbc-3d67-4ee7-99ef-fe41991f8a3b"
+    },
+    {
+      "name": "Aurora ES",
+      "uuid": "42b72b92-7880-446d-8770-b158e4b0fd10",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/42b72b92-7880-446d-8770-b158e4b0fd10"
+    },
+    {
+      "name": "Aurora LN",
+      "uuid": "984283ce-dd5f-4807-a7b0-f6fbf053716c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/984283ce-dd5f-4807-a7b0-f6fbf053716c"
+    },
+    {
+      "name": "Aurora LX",
+      "uuid": "bb8e3cdf-7f35-4bdb-bc2d-a15b8b859359",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/bb8e3cdf-7f35-4bdb-bc2d-a15b8b859359"
+    },
+    {
+      "name": "Aurora MR",
+      "uuid": "c596f592-1196-4378-8583-18ff13962b85",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c596f592-1196-4378-8583-18ff13962b85"
+    },
+    {
+      "name": "Avenger Stalker",
+      "uuid": "97648869-5fa5-42da-b804-4d9314289539",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/97648869-5fa5-42da-b804-4d9314289539"
+    },
+    {
+      "name": "Avenger Titan",
+      "uuid": "0079c5d5-1678-4f8c-85ba-18ca8f642af6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/0079c5d5-1678-4f8c-85ba-18ca8f642af6"
+    },
+    {
+      "name": "Avenger Titan Renegade",
+      "uuid": "d9bc09ce-4c74-4f72-892e-a833c094f4e6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d9bc09ce-4c74-4f72-892e-a833c094f4e6"
+    },
+    {
+      "name": "Avenger Warlock",
+      "uuid": "9474f571-8467-4d83-b1fe-f64103d363f4",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9474f571-8467-4d83-b1fe-f64103d363f4"
+    },
+    {
+      "name": "Ballista",
+      "uuid": "a04a1503-ac5c-4520-bc22-4b1a1a198eff",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/a04a1503-ac5c-4520-bc22-4b1a1a198eff"
+    },
+    {
+      "name": "Blade",
+      "uuid": "0d4c5000-ffdb-41f5-9de1-d64252dfef21",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/0d4c5000-ffdb-41f5-9de1-d64252dfef21"
+    },
+    {
+      "name": "Buccaneer",
+      "uuid": "efec4d48-77ab-4cba-9add-a3d96c5be8d8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/efec4d48-77ab-4cba-9add-a3d96c5be8d8"
+    },
+    {
+      "name": "C1 Spirit",
+      "uuid": "9611b8ed-cc96-4b5c-aa1e-baefe7d5bb1c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9611b8ed-cc96-4b5c-aa1e-baefe7d5bb1c"
+    },
+    {
+      "name": "C2 Hercules",
+      "uuid": "7533ff77-836c-4bd2-9171-487d9c63863c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/7533ff77-836c-4bd2-9171-487d9c63863c"
+    },
+    {
+      "name": "C8 Pisces",
+      "uuid": "20d5f617-147a-4530-a753-a7afd1875fd1",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/20d5f617-147a-4530-a753-a7afd1875fd1"
+    },
+    {
+      "name": "C8R Pisces",
+      "uuid": "1bed9058-e284-4c0f-b561-6ba57ab4f99d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/1bed9058-e284-4c0f-b561-6ba57ab4f99d"
+    },
+    {
+      "name": "C8X Pisces Expedition",
+      "uuid": "831fdcfc-337a-4350-967d-e693d19efeee",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/831fdcfc-337a-4350-967d-e693d19efeee"
+    },
+    {
+      "name": "Carrack",
+      "uuid": "f6d606c9-b324-4efa-814f-15a59047a6a5",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f6d606c9-b324-4efa-814f-15a59047a6a5"
+    },
+    {
+      "name": "Carrack Expedition",
+      "uuid": "f1b224dd-273e-488f-9dee-fbf73f44f462",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f1b224dd-273e-488f-9dee-fbf73f44f462"
+    },
+    {
+      "name": "Carrack Expedition w/C8X",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Carrack+Expedition+w%2FC8X"
+    },
+    {
+      "name": "Carrack w/C8X",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Carrack+w%2FC8X"
+    },
+    {
+      "name": "Caterpillar",
+      "uuid": "dc39ca6b-1d76-4db5-9346-356f49954978",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/dc39ca6b-1d76-4db5-9346-356f49954978"
+    },
+    {
+      "name": "Caterpillar Best In Show Edition 2949",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Caterpillar+Best+In+Show+Edition+2949"
+    },
+    {
+      "name": "Caterpillar Pirate Edition",
+      "uuid": "565d8121-50a9-4920-af50-f176caef0431",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/565d8121-50a9-4920-af50-f176caef0431"
+    },
+    {
+      "name": "Centurion",
+      "uuid": "27515ffd-04df-413f-8533-34612d906c7d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/27515ffd-04df-413f-8533-34612d906c7d"
+    },
+    {
+      "name": "Constellation Andromeda",
+      "uuid": "d95fb013-60d5-43ac-ab2d-daa082f45411",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d95fb013-60d5-43ac-ab2d-daa082f45411"
+    },
+    {
+      "name": "Constellation Aquila",
+      "uuid": "e7b40f5c-4099-4aa6-b226-b5b08bd68413",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e7b40f5c-4099-4aa6-b226-b5b08bd68413"
+    },
+    {
+      "name": "Constellation Phoenix",
+      "uuid": "ecadf2b2-a404-4776-9289-04af91538d76",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ecadf2b2-a404-4776-9289-04af91538d76"
+    },
+    {
+      "name": "Constellation Phoenix Emerald",
+      "uuid": "daf936a1-689f-4edb-980a-96947e2727c4",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/daf936a1-689f-4edb-980a-96947e2727c4"
+    },
+    {
+      "name": "Constellation Taurus",
+      "uuid": "d1c3fa10-b2d9-421e-8301-97dbf4d0c115",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d1c3fa10-b2d9-421e-8301-97dbf4d0c115"
+    },
+    {
+      "name": "Corsair",
+      "uuid": "e1afb014-fe71-4da9-89ae-c30fcf9c0782",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e1afb014-fe71-4da9-89ae-c30fcf9c0782"
+    },
+    {
+      "name": "Crucible",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Crucible"
+    },
+    {
+      "name": "CSV-SM",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/CSV-SM"
+    },
+    {
+      "name": "Cutlass Black",
+      "uuid": "b58f7735-9454-4a0a-b724-2bc8d61961d7",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b58f7735-9454-4a0a-b724-2bc8d61961d7"
+    },
+    {
+      "name": "Cutlass Black Best In Show Edition 2949",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Cutlass+Black+Best+In+Show+Edition+2949"
+    },
+    {
+      "name": "Cutlass Blue",
+      "uuid": "13c3f610-7bbd-4464-bd36-d716de49a125",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/13c3f610-7bbd-4464-bd36-d716de49a125"
+    },
+    {
+      "name": "Cutlass Red",
+      "uuid": "7780e93d-1cc3-43b4-9b32-9923af19775a",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/7780e93d-1cc3-43b4-9b32-9923af19775a"
+    },
+    {
+      "name": "Cutlass Steel",
+      "uuid": "384d7e27-daec-4554-a8e9-6920a10a86c1",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/384d7e27-daec-4554-a8e9-6920a10a86c1"
+    },
+    {
+      "name": "Cutter",
+      "uuid": "3ea9bcd8-1ddd-4714-a537-7b2675e8c2d2",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3ea9bcd8-1ddd-4714-a537-7b2675e8c2d2"
+    },
+    {
+      "name": "Cutter Rambler",
+      "uuid": "93b13680-9aa6-4c21-b998-e4f8880f7c12",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/93b13680-9aa6-4c21-b998-e4f8880f7c12"
+    },
+    {
+      "name": "Cutter Scout",
+      "uuid": "887cd720-7337-44ae-9708-828ccf808649",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/887cd720-7337-44ae-9708-828ccf808649"
+    },
+    {
+      "name": "Cyclone",
+      "uuid": "8dbb42e4-e127-4153-9694-2845142c3e51",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8dbb42e4-e127-4153-9694-2845142c3e51"
+    },
+    {
+      "name": "Cyclone AA",
+      "uuid": "0194943d-1164-4b5f-a85e-79ebc0ebe621",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/0194943d-1164-4b5f-a85e-79ebc0ebe621"
+    },
+    {
+      "name": "Cyclone MT",
+      "uuid": "bda93768-c01f-40b4-a92e-f31876cd33d0",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/bda93768-c01f-40b4-a92e-f31876cd33d0"
+    },
+    {
+      "name": "Cyclone RC",
+      "uuid": "064951d7-3dd0-49c2-8b88-d2d7f809633e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/064951d7-3dd0-49c2-8b88-d2d7f809633e"
+    },
+    {
+      "name": "Cyclone RN",
+      "uuid": "b389839d-fdf9-4c41-850a-4e7461250304",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b389839d-fdf9-4c41-850a-4e7461250304"
+    },
+    {
+      "name": "Cyclone TR",
+      "uuid": "f80914cf-643e-4b7e-b715-eaf9aa572954",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f80914cf-643e-4b7e-b715-eaf9aa572954"
+    },
+    {
+      "name": "Defender",
+      "uuid": "081236f5-9549-4a60-9123-6ae21f0cd261",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/081236f5-9549-4a60-9123-6ae21f0cd261"
+    },
+    {
+      "name": "Dragonfly Black",
+      "uuid": "37659ff0-a803-4a4f-97ff-ad59822061ed",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/37659ff0-a803-4a4f-97ff-ad59822061ed"
+    },
+    {
+      "name": "Dragonfly Yellowjacket",
+      "uuid": "533b9b62-33eb-4b34-95eb-d43fe3e020ff",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/533b9b62-33eb-4b34-95eb-d43fe3e020ff"
+    },
+    {
+      "name": "E1 Spirit",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/E1+Spirit"
+    },
+    {
+      "name": "Eclipse",
+      "uuid": "c9b3ef78-9c47-4052-bf70-ecf32c55c001",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c9b3ef78-9c47-4052-bf70-ecf32c55c001"
+    },
+    {
+      "name": "Endeavor",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Endeavor"
+    },
+    {
+      "name": "Expanse",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Expanse"
+    },
+    {
+      "name": "F7A Hornet Mk I",
+      "uuid": "8b7e0d33-21c1-4057-8e5b-bf391b5091b2",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8b7e0d33-21c1-4057-8e5b-bf391b5091b2"
+    },
+    {
+      "name": "F7A Hornet Mk II",
+      "uuid": "6759360c-8b2f-4a89-b7c6-82e94b873c1b",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/6759360c-8b2f-4a89-b7c6-82e94b873c1b"
+    },
+    {
+      "name": "F7C Hornet Mk I",
+      "uuid": "933ca746-3c36-470f-8245-a247a3776455",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/933ca746-3c36-470f-8245-a247a3776455"
+    },
+    {
+      "name": "F7C Hornet Mk II",
+      "uuid": "fb231ba1-dba1-4c9f-823a-746c772ae92f",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/fb231ba1-dba1-4c9f-823a-746c772ae92f"
+    },
+    {
+      "name": "F7C Hornet Wildfire Mk I",
+      "uuid": "0af2064a-c02d-4801-a434-09d802ba6573",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/0af2064a-c02d-4801-a434-09d802ba6573"
+    },
+    {
+      "name": "F7C-M Super Hornet Heartseeker Mk I",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b140e32f-a96b-462f-8c7b-e7243577b2f4"
+    },
+    {
+      "name": "F7C-M Super Hornet Heartseeker Mk II",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/6f8bfcc3-2ade-4976-a8e9-fd07de5c3601"
+    },
+    {
+      "name": "F7C-M Super Hornet Mk I",
+      "uuid": "4f83f89d-480b-4d1b-867a-13772742d828",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/4f83f89d-480b-4d1b-867a-13772742d828"
+    },
+    {
+      "name": "F7C-M Super Hornet Mk II",
+      "uuid": "8c2eefb6-d880-47c9-8fd0-1f88865d5511",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8c2eefb6-d880-47c9-8fd0-1f88865d5511"
+    },
+    {
+      "name": "F7C-R Hornet Tracker Mk I",
+      "uuid": "95b11c76-31ea-4bf3-9894-fb29caecb927",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/95b11c76-31ea-4bf3-9894-fb29caecb927"
+    },
+    {
+      "name": "F7C-R Hornet Tracker Mk II",
+      "uuid": "3fbff8f5-90f0-4c97-93f2-62d180aa8736",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3fbff8f5-90f0-4c97-93f2-62d180aa8736"
+    },
+    {
+      "name": "F7C-S Hornet Ghost Mk I",
+      "uuid": "63b90c8d-459c-4a27-8cf6-db706ffc49ae",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/63b90c8d-459c-4a27-8cf6-db706ffc49ae"
+    },
+    {
+      "name": "F7C-S Hornet Ghost Mk II",
+      "uuid": "6fa37a02-3d65-448c-a989-02d42d9574dc",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/6fa37a02-3d65-448c-a989-02d42d9574dc"
+    },
+    {
+      "name": "F8C Lightning",
+      "uuid": "663b6047-5b06-489c-a906-bc91fb7d6e63",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/663b6047-5b06-489c-a906-bc91fb7d6e63"
+    },
+    {
+      "name": "F8C Lightning Executive Edition",
+      "uuid": "b67123fd-72b3-43e7-bfb3-069d59ba6190",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b67123fd-72b3-43e7-bfb3-069d59ba6190"
+    },
+    {
+      "name": "Fortune",
+      "uuid": "3d371fd4-50e2-4b5e-859f-1086e905c946",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3d371fd4-50e2-4b5e-859f-1086e905c946"
+    },
+    {
+      "name": "Freelancer",
+      "uuid": "b4791030-9d64-4f98-85cb-ca106f868c5e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b4791030-9d64-4f98-85cb-ca106f868c5e"
+    },
+    {
+      "name": "Freelancer DUR",
+      "uuid": "34821163-e32e-42bf-99df-8f42ba66ef34",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/34821163-e32e-42bf-99df-8f42ba66ef34"
+    },
+    {
+      "name": "Freelancer MAX",
+      "uuid": "6c6e9731-3d70-4f1b-84c2-9dbf3c1f97c7",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/6c6e9731-3d70-4f1b-84c2-9dbf3c1f97c7"
+    },
+    {
+      "name": "Freelancer MIS",
+      "uuid": "4b6700e5-38bd-4d8d-9281-ef82996b135f",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/4b6700e5-38bd-4d8d-9281-ef82996b135f"
+    },
+    {
+      "name": "Fury",
+      "uuid": "96b11061-68ce-4896-9424-fc8804a410ae",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/96b11061-68ce-4896-9424-fc8804a410ae"
+    },
+    {
+      "name": "Fury LX",
+      "uuid": "83a450d1-e6b1-437e-9aee-18316ed34c29",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/83a450d1-e6b1-437e-9aee-18316ed34c29"
+    },
+    {
+      "name": "Fury MX",
+      "uuid": "469d850e-b86b-47fc-9ee2-df81d775ccc8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/469d850e-b86b-47fc-9ee2-df81d775ccc8"
+    },
+    {
+      "name": "G12",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/G12"
+    },
+    {
+      "name": "G12a",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/G12a"
+    },
+    {
+      "name": "G12r",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/G12r"
+    },
+    {
+      "name": "Galaxy",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Galaxy"
+    },
+    {
+      "name": "Genesis",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Genesis"
+    },
+    {
+      "name": "Geotack Planetary Beacon",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Geotack+Planetary+Beacon"
+    },
+    {
+      "name": "Geotack-X Planetary Beacon",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Geotack-X+Planetary+Beacon"
+    },
+    {
+      "name": "Gladiator",
+      "uuid": "f3f7b2e8-1e11-4649-82c6-3106ec966655",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f3f7b2e8-1e11-4649-82c6-3106ec966655"
+    },
+    {
+      "name": "Gladius",
+      "uuid": "b6b59889-7226-458e-a6b0-1c9392128a3c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b6b59889-7226-458e-a6b0-1c9392128a3c"
+    },
+    {
+      "name": "Gladius Valiant",
+      "uuid": "d6cb3db3-b1e0-47a5-8c62-a64285dbb675",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d6cb3db3-b1e0-47a5-8c62-a64285dbb675"
+    },
+    {
+      "name": "Glaive",
+      "uuid": "e379e38c-459a-4705-be7d-49a5f5d7a928",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e379e38c-459a-4705-be7d-49a5f5d7a928"
+    },
+    {
+      "name": "Golem",
+      "uuid": "b616b3ad-123c-40f2-80bd-b8f4109633aa",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b616b3ad-123c-40f2-80bd-b8f4109633aa"
+    },
+    {
+      "name": "Guardian",
+      "uuid": "30e0f7ac-26fc-4d31-a231-af625511e37e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/30e0f7ac-26fc-4d31-a231-af625511e37e"
+    },
+    {
+      "name": "Guardian MX",
+      "uuid": "aaa0cdcd-907c-4533-b3fc-181ede06076d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/aaa0cdcd-907c-4533-b3fc-181ede06076d"
+    },
+    {
+      "name": "Guardian QI",
+      "uuid": "e98521b6-ea2f-4c10-9050-abc29d89d0e8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e98521b6-ea2f-4c10-9050-abc29d89d0e8"
+    },
+    {
+      "name": "Hammerhead",
+      "uuid": "d46f4de1-8dc1-473b-9739-88c9ba7e75a6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d46f4de1-8dc1-473b-9739-88c9ba7e75a6"
+    },
+    {
+      "name": "Hammerhead Best In Show Edition 2949",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Hammerhead+Best+In+Show+Edition+2949"
+    },
+    {
+      "name": "Hawk",
+      "uuid": "c0f1d217-388c-453a-b6c1-3cb5c2cfc4d8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c0f1d217-388c-453a-b6c1-3cb5c2cfc4d8"
+    },
+    {
+      "name": "Herald",
+      "uuid": "36726a9f-7e14-4942-bc4f-1a398b5bef6a",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/36726a9f-7e14-4942-bc4f-1a398b5bef6a"
+    },
+    {
+      "name": "HoverQuad",
+      "uuid": "16ff4365-ac34-4b09-a132-d52d51f688d4",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/16ff4365-ac34-4b09-a132-d52d51f688d4"
+    },
+    {
+      "name": "Hull A",
+      "uuid": "6ec72f64-2002-481c-b7c9-b132476ba6aa",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/6ec72f64-2002-481c-b7c9-b132476ba6aa"
+    },
+    {
+      "name": "Hull B",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Hull+B"
+    },
+    {
+      "name": "Hull C",
+      "uuid": "c4ceff45-d851-44b1-921b-bfef93a6cd6a",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c4ceff45-d851-44b1-921b-bfef93a6cd6a"
+    },
+    {
+      "name": "Hull D",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Hull+D"
+    },
+    {
+      "name": "Hull E",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Hull+E"
+    },
+    {
+      "name": "Hurricane",
+      "uuid": "3a586d52-4829-4504-8e3a-4ee300bb40cc",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3a586d52-4829-4504-8e3a-4ee300bb40cc"
+    },
+    {
+      "name": "Idris-M",
+      "uuid": "f0caa993-4c6b-4402-8ef1-d91879060f3b",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f0caa993-4c6b-4402-8ef1-d91879060f3b"
+    },
+    {
+      "name": "Idris-P",
+      "uuid": "4b0585b0-b60b-4c52-a744-d812e5e9ad58",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/4b0585b0-b60b-4c52-a744-d812e5e9ad58"
+    },
+    {
+      "name": "Intrepid",
+      "uuid": "16aa514f-12ac-43a4-b51d-44447252186e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/16aa514f-12ac-43a4-b51d-44447252186e"
+    },
+    {
+      "name": "Ironclad",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Ironclad"
+    },
+    {
+      "name": "Ironclad Assault",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Ironclad+Assault"
+    },
+    {
+      "name": "Javelin",
+      "uuid": "05a4f566-36a4-495c-99a4-dbedc5105cb6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/05a4f566-36a4-495c-99a4-dbedc5105cb6"
+    },
+    {
+      "name": "Khartu-Al",
+      "uuid": "8f61dc58-74ca-4dc6-aa95-c3105f10bba4",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8f61dc58-74ca-4dc6-aa95-c3105f10bba4"
+    },
+    {
+      "name": "Kraken",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Kraken"
+    },
+    {
+      "name": "Kraken Privateer",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Kraken+Privateer"
+    },
+    {
+      "name": "L-21 Wolf",
+      "uuid": "1b201ef2-b4dd-46c2-978e-47a13e0a7f81",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/1b201ef2-b4dd-46c2-978e-47a13e0a7f81"
+    },
+    {
+      "name": "Legionnaire",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Legionnaire"
+    },
+    {
+      "name": "Liberator",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Liberator"
+    },
+    {
+      "name": "Lynx",
+      "uuid": "4c034eef-329c-4336-850e-49bfb1f06a15",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/4c034eef-329c-4336-850e-49bfb1f06a15"
+    },
+    {
+      "name": "M2 Hercules",
+      "uuid": "5cf39b3b-41d8-45c1-8ef2-d4678c7a7b85",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/5cf39b3b-41d8-45c1-8ef2-d4678c7a7b85"
+    },
+    {
+      "name": "M50",
+      "uuid": "1b57cdac-693b-410b-8343-68fa194c94ae",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/1b57cdac-693b-410b-8343-68fa194c94ae"
+    },
+    {
+      "name": "Mantis",
+      "uuid": "43f4f9c3-70ad-4549-8a10-0045afbbda10",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/43f4f9c3-70ad-4549-8a10-0045afbbda10"
+    },
+    {
+      "name": "Merchantman",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Merchantman"
+    },
+    {
+      "name": "Mercury",
+      "uuid": "c8e10f09-38a0-4730-9dd3-eb0a510c9e43",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c8e10f09-38a0-4730-9dd3-eb0a510c9e43"
+    },
+    {
+      "name": "Meteor",
+      "uuid": "3155e6fd-e1c8-4c15-9bd1-f8e3c2c7174f",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3155e6fd-e1c8-4c15-9bd1-f8e3c2c7174f"
+    },
+    {
+      "name": "MOLE",
+      "uuid": "ecdfd0df-6c5f-4183-a24b-9e1546e00a4e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ecdfd0df-6c5f-4183-a24b-9e1546e00a4e"
+    },
+    {
+      "name": "MPUV Cargo",
+      "uuid": "e19fc6c3-f5fa-4623-9a17-b00a29b71500",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e19fc6c3-f5fa-4623-9a17-b00a29b71500"
+    },
+    {
+      "name": "MPUV Personnel",
+      "uuid": "e17ccf62-f2d2-4c4e-a132-a3000d40fbde",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e17ccf62-f2d2-4c4e-a132-a3000d40fbde"
+    },
+    {
+      "name": "MPUV Tractor",
+      "uuid": "674e0a52-4469-4b55-ba0d-6aecc44d1728",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/674e0a52-4469-4b55-ba0d-6aecc44d1728"
+    },
+    {
+      "name": "MTC",
+      "uuid": "91c9418e-6240-4fb1-a18a-1e22ebfb7747",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/91c9418e-6240-4fb1-a18a-1e22ebfb7747"
+    },
+    {
+      "name": "Mule",
+      "uuid": "fb484074-f33f-4977-a052-2937e8508acc",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/fb484074-f33f-4977-a052-2937e8508acc"
+    },
+    {
+      "name": "Mustang Alpha",
+      "uuid": "a852bb00-e395-468f-9adc-78b3df9c82f6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/a852bb00-e395-468f-9adc-78b3df9c82f6"
+    },
+    {
+      "name": "Mustang Alpha Vindicator",
+      "uuid": "439c5671-acad-4eb6-9f09-ba54165d1cb5",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/439c5671-acad-4eb6-9f09-ba54165d1cb5"
+    },
+    {
+      "name": "Mustang Beta",
+      "uuid": "973bc147-4422-48a6-99c8-6ff0ead25bdf",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/973bc147-4422-48a6-99c8-6ff0ead25bdf"
+    },
+    {
+      "name": "Mustang Delta",
+      "uuid": "f8c8fe5c-1aa3-41d7-86b0-6bb54b249541",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f8c8fe5c-1aa3-41d7-86b0-6bb54b249541"
+    },
+    {
+      "name": "Mustang Gamma",
+      "uuid": "968249b2-ca7c-4b41-8f58-730673fefc8c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/968249b2-ca7c-4b41-8f58-730673fefc8c"
+    },
+    {
+      "name": "Mustang Omega",
+      "uuid": "1164be4d-623e-4ef7-bc3d-4cdb45c22ec5",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/1164be4d-623e-4ef7-bc3d-4cdb45c22ec5"
+    },
+    {
+      "name": "Nautilus",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Nautilus"
+    },
+    {
+      "name": "Nautilus Solstice Edition",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Nautilus+Solstice+Edition"
+    },
+    {
+      "name": "Nomad",
+      "uuid": "34506e83-b7b8-4804-a7bb-f31f11bb9214",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/34506e83-b7b8-4804-a7bb-f31f11bb9214"
+    },
+    {
+      "name": "Nova",
+      "uuid": "b8a352bb-74a8-415b-9e08-77f684ac91b8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b8a352bb-74a8-415b-9e08-77f684ac91b8"
+    },
+    {
+      "name": "Nox",
+      "uuid": "daddeefa-fef0-4146-b630-a33d6e8904d3",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/daddeefa-fef0-4146-b630-a33d6e8904d3"
+    },
+    {
+      "name": "Nox Kue",
+      "uuid": "204a6ce4-1634-4f87-9955-04c70e44c8af",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/204a6ce4-1634-4f87-9955-04c70e44c8af"
+    },
+    {
+      "name": "Odyssey",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Odyssey"
+    },
+    {
+      "name": "Orion",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Orion"
+    },
+    {
+      "name": "P-52 Merlin",
+      "uuid": "a5a8e4e5-939c-4f7b-ab48-5f7db556d5a4",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/a5a8e4e5-939c-4f7b-ab48-5f7db556d5a4"
+    },
+    {
+      "name": "P-72 Archimedes",
+      "uuid": "70580bce-2347-4e96-9260-dee6394f483d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/70580bce-2347-4e96-9260-dee6394f483d"
+    },
+    {
+      "name": "P-72 Archimedes Emerald",
+      "uuid": "ebee8a7f-8e4a-4bed-9e5d-76822724c9f0",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ebee8a7f-8e4a-4bed-9e5d-76822724c9f0"
+    },
+    {
+      "name": "Paladin",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Paladin"
+    },
+    {
+      "name": "Perseus",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Perseus"
+    },
+    {
+      "name": "Pioneer",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Pioneer"
+    },
+    {
+      "name": "Pirate Gladius",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Pirate+Gladius"
+    },
+    {
+      "name": "Polaris",
+      "uuid": "565ffdd6-8122-4c24-a690-85aa5aade0ff",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/polaris"
+    },
+    {
+      "name": "Prospector",
+      "uuid": "f68ee841-88d1-46f3-a1e2-5dc71d9d5d97",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f68ee841-88d1-46f3-a1e2-5dc71d9d5d97"
+    },
+    {
+      "name": "Prowler",
+      "uuid": "087b2253-2fc7-4fae-9f9d-97f64b7c43db",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/087b2253-2fc7-4fae-9f9d-97f64b7c43db"
+    },
+    {
+      "name": "Prowler Utility",
+      "uuid": "528fdddc-c97f-4ae8-a00e-11a59fc3662d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/528fdddc-c97f-4ae8-a00e-11a59fc3662d"
+    },
+    {
+      "name": "PTV",
+      "uuid": "41ff82e7-ce4e-4dbc-ad7c-7ef52fbe569c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/41ff82e7-ce4e-4dbc-ad7c-7ef52fbe569c"
+    },
+    {
+      "name": "Pulse",
+      "uuid": "48415834-ac12-4c28-ad01-7c210f30c2da",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/48415834-ac12-4c28-ad01-7c210f30c2da"
+    },
+    {
+      "name": "Pulse LX",
+      "uuid": "d1f27f85-90db-4b5d-8ac2-09a9e9ee1315",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d1f27f85-90db-4b5d-8ac2-09a9e9ee1315"
+    },
+    {
+      "name": "RAFT",
+      "uuid": "cf9aa91e-15bf-435c-a22d-f2cadc4485ce",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/cf9aa91e-15bf-435c-a22d-f2cadc4485ce"
+    },
+    {
+      "name": "Railen",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Railen"
+    },
+    {
+      "name": "Ranger CV",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Ranger+CV"
+    },
+    {
+      "name": "Ranger RC",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Ranger+RC"
+    },
+    {
+      "name": "Ranger TR",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Ranger+TR"
+    },
+    {
+      "name": "Razor",
+      "uuid": "cec2111b-4c71-4968-8035-634de6561cf3",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/cec2111b-4c71-4968-8035-634de6561cf3"
+    },
+    {
+      "name": "Razor EX",
+      "uuid": "b17ef3ab-9518-40fd-803f-c2468175ccf6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b17ef3ab-9518-40fd-803f-c2468175ccf6"
+    },
+    {
+      "name": "Razor LX",
+      "uuid": "203cb135-4f12-4a23-bd53-30910134bac8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/203cb135-4f12-4a23-bd53-30910134bac8"
+    },
+    {
+      "name": "Reclaimer",
+      "uuid": "f05b74b2-06cf-44d0-8607-c09487359384",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f05b74b2-06cf-44d0-8607-c09487359384"
+    },
+    {
+      "name": "Reclaimer Best In Show Edition 2949",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Reclaimer+Best+In+Show+Edition+2949"
+    },
+    {
+      "name": "Redeemer",
+      "uuid": "9a25d006-5706-4c70-9ac6-df795688fe09",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9a25d006-5706-4c70-9ac6-df795688fe09"
+    },
+    {
+      "name": "Reliant Kore",
+      "uuid": "3c9af040-d919-4afc-b768-45821a5b913c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/3c9af040-d919-4afc-b768-45821a5b913c"
+    },
+    {
+      "name": "Reliant Mako",
+      "uuid": "c6cfa4d9-e794-4bb6-8da9-54cb779ea109",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c6cfa4d9-e794-4bb6-8da9-54cb779ea109"
+    },
+    {
+      "name": "Reliant Sen",
+      "uuid": "e32d125f-a3f8-4bc7-b0e6-cb7edf22b7ac",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e32d125f-a3f8-4bc7-b0e6-cb7edf22b7ac"
+    },
+    {
+      "name": "Reliant Tana",
+      "uuid": "c2956880-b82a-42d0-962b-eb736dac1536",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c2956880-b82a-42d0-962b-eb736dac1536"
+    },
+    {
+      "name": "Retaliator",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Retaliator"
+    },
+    {
+      "name": "Retaliator Bomber",
+      "uuid": "93e1a434-f4fa-43ee-a40c-71bcae5073bc",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/93e1a434-f4fa-43ee-a40c-71bcae5073bc"
+    },
+    {
+      "name": "ROC",
+      "uuid": "62e33393-5d68-4191-aba5-3b81ce4f3bf9",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/62e33393-5d68-4191-aba5-3b81ce4f3bf9"
+    },
+    {
+      "name": "ROC-DS",
+      "uuid": "14d6ba03-86ad-47f8-b940-e8a82d2d52b6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/14d6ba03-86ad-47f8-b940-e8a82d2d52b6"
+    },
+    {
+      "name": "Sabre",
+      "uuid": "17276ad3-7636-40b8-969a-877a2b439b37",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/17276ad3-7636-40b8-969a-877a2b439b37"
+    },
+    {
+      "name": "Sabre Comet",
+      "uuid": "9e4b2b2b-1b5a-4d53-84a2-fe6ed1e43172",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9e4b2b2b-1b5a-4d53-84a2-fe6ed1e43172"
+    },
+    {
+      "name": "Sabre Firebird",
+      "uuid": "b9bc6679-81ad-472b-8b98-866c72fe6a89",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b9bc6679-81ad-472b-8b98-866c72fe6a89"
+    },
+    {
+      "name": "Sabre Peregrine",
+      "uuid": "ac7ec306-b272-432e-8284-491da614419c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ac7ec306-b272-432e-8284-491da614419c"
+    },
+    {
+      "name": "Sabre Raven",
+      "uuid": "34615358-6b8e-4c27-b29e-f936e254e2a3",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/34615358-6b8e-4c27-b29e-f936e254e2a3"
+    },
+    {
+      "name": "San'tok.yāi",
+      "uuid": "9634b4d6-9f5a-4ad2-8574-431c15e3bc5d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9634b4d6-9f5a-4ad2-8574-431c15e3bc5d"
+    },
+    {
+      "name": "Scorpius",
+      "uuid": "edc1421b-59ee-4233-b292-abc2c3ea0a1a",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/edc1421b-59ee-4233-b292-abc2c3ea0a1a"
+    },
+    {
+      "name": "Scorpius Antares",
+      "uuid": "2f88be37-7825-4fe1-afae-2ca9d2b01114",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/2f88be37-7825-4fe1-afae-2ca9d2b01114"
+    },
+    {
+      "name": "Scythe",
+      "uuid": "28f22bb8-9f1c-4a46-9a39-20bcb1e5000e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/28f22bb8-9f1c-4a46-9a39-20bcb1e5000e"
+    },
+    {
+      "name": "Spartan",
+      "uuid": "9c26b25a-9285-4074-94d1-163db2aa8cbb",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/9c26b25a-9285-4074-94d1-163db2aa8cbb"
+    },
+    {
+      "name": "SRV",
+      "uuid": "1810d1a7-61e3-4d95-bafb-0f11758c7683",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/1810d1a7-61e3-4d95-bafb-0f11758c7683"
+    },
+    {
+      "name": "Starfarer",
+      "uuid": "13a02a6d-7d67-4d22-8530-d4d2c8443f66",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/13a02a6d-7d67-4d22-8530-d4d2c8443f66"
+    },
+    {
+      "name": "Starfarer Gemini",
+      "uuid": "c989caf2-84a5-4c01-b99e-5fc9f8d0ce8e",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/c989caf2-84a5-4c01-b99e-5fc9f8d0ce8e"
+    },
+    {
+      "name": "Starlancer MAX",
+      "uuid": "ff873dda-2b79-4fa3-b3ce-535b8adff5e2",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ff873dda-2b79-4fa3-b3ce-535b8adff5e2"
+    },
+    {
+      "name": "Starlancer TAC",
+      "uuid": "14b8caeb-d5e1-4816-9537-86ef19afada8",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/14b8caeb-d5e1-4816-9537-86ef19afada8"
+    },
+    {
+      "name": "Storm",
+      "uuid": "515269d2-fea4-473f-b416-5f6677a54b55",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/515269d2-fea4-473f-b416-5f6677a54b55"
+    },
+    {
+      "name": "Storm AA",
+      "uuid": "8bbcd2cd-1e4b-4b0b-a65c-385bb2a02c32",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8bbcd2cd-1e4b-4b0b-a65c-385bb2a02c32"
+    },
+    {
+      "name": "STV",
+      "uuid": "d4662193-10ab-4912-8ca4-d64ead0e6f3b",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/d4662193-10ab-4912-8ca4-d64ead0e6f3b"
+    },
+    {
+      "name": "Syulen",
+      "uuid": "11ebc47d-4763-4faa-9020-171cf6c2651f",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/11ebc47d-4763-4faa-9020-171cf6c2651f"
+    },
+    {
+      "name": "Talon",
+      "uuid": "41a84db8-062b-4359-ad16-611ad540fbdb",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/41a84db8-062b-4359-ad16-611ad540fbdb"
+    },
+    {
+      "name": "Talon Shrike",
+      "uuid": "2000c8d9-f151-4148-babe-6d9e413e2114",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/2000c8d9-f151-4148-babe-6d9e413e2114"
+    },
+    {
+      "name": "Terrapin",
+      "uuid": "0920e187-515d-466a-9c6a-a7dde9d2b1bc",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/0920e187-515d-466a-9c6a-a7dde9d2b1bc"
+    },
+    {
+      "name": "Terrapin Medic",
+      "uuid": "35f6ad71-01c6-4762-a18b-99c7fdde9760",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/35f6ad71-01c6-4762-a18b-99c7fdde9760"
+    },
+    {
+      "name": "Ursa",
+      "uuid": "8c375d7e-0e44-42e8-b84b-c8d6b2e1256c",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8c375d7e-0e44-42e8-b84b-c8d6b2e1256c"
+    },
+    {
+      "name": "Ursa Fortuna",
+      "uuid": "953f8277-43a5-4f88-b139-ee997ee5c482",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/953f8277-43a5-4f88-b139-ee997ee5c482"
+    },
+    {
+      "name": "Ursa Medivac",
+      "uuid": "ebf015be-7bf9-44e9-ad9c-b5c65f00c530",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/ebf015be-7bf9-44e9-ad9c-b5c65f00c530"
+    },
+    {
+      "name": "Valkyrie",
+      "uuid": "881e3879-a186-44da-8b47-1d8f0a846438",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/881e3879-a186-44da-8b47-1d8f0a846438"
+    },
+    {
+      "name": "Valkyrie Liberator Edition",
+      "uuid": "4e62ae95-d173-4b94-8b91-9d85bc963ba1",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/4e62ae95-d173-4b94-8b91-9d85bc963ba1"
+    },
+    {
+      "name": "Vanguard Harbinger",
+      "uuid": "34295443-da9b-4e6c-9335-69d5f3b29a88",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/34295443-da9b-4e6c-9335-69d5f3b29a88"
+    },
+    {
+      "name": "Vanguard Hoplite",
+      "uuid": "f80d39f3-50fc-4fca-ada1-76de4c237e3f",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/f80d39f3-50fc-4fca-ada1-76de4c237e3f"
+    },
+    {
+      "name": "Vanguard Sentinel",
+      "uuid": "8aa6a16e-6c06-4db8-ac6d-165f97bf2565",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/8aa6a16e-6c06-4db8-ac6d-165f97bf2565"
+    },
+    {
+      "name": "Vanguard Warden",
+      "uuid": "a8208d11-32d4-4a4a-82c4-fd7f498b2ae6",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/a8208d11-32d4-4a4a-82c4-fd7f498b2ae6"
+    },
+    {
+      "name": "Vulcan",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Vulcan"
+    },
+    {
+      "name": "Vulture",
+      "uuid": "34077e67-5e2c-4903-a17c-2d0e163751c7",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/34077e67-5e2c-4903-a17c-2d0e163751c7"
+    },
+    {
+      "name": "X1",
+      "uuid": "829d0525-e67e-4e57-9f52-b4e572a4f73d",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/829d0525-e67e-4e57-9f52-b4e572a4f73d"
+    },
+    {
+      "name": "X1 Force",
+      "uuid": "b416dbbf-53f2-489e-a9dc-456286aa6c70",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/b416dbbf-53f2-489e-a9dc-456286aa6c70"
+    },
+    {
+      "name": "X1 Velocity",
+      "uuid": "58e25524-8bd3-450f-8442-7b58fdfc8a50",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/58e25524-8bd3-450f-8442-7b58fdfc8a50"
+    },
+    {
+      "name": "Zeus Mk II CL",
+      "uuid": "02fe3279-3598-4ce6-96dc-0bc5cb90dfdc",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/02fe3279-3598-4ce6-96dc-0bc5cb90dfdc"
+    },
+    {
+      "name": "Zeus Mk II ES",
+      "uuid": "e4770804-b43a-4c2d-a4e4-fedd410e50fb",
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/e4770804-b43a-4c2d-a4e4-fedd410e50fb"
+    },
+    {
+      "name": "Zeus Mk II MR",
+      "uuid": null,
+      "link": "https://api.star-citizen.wiki/api/v2/vehicles/Zeus+Mk+II+MR"
+    }
+  ]
+}

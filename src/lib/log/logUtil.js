@@ -140,20 +140,35 @@ export async function parseNewLogLines() {
 
       for (let i = currentLine; i < lines.length; i++) {
         const rawLine = lines[i];
-        const line = await rawLine.trim();
+        const line = rawLine.trim();
 
         if (line) {
-          await processLogLine(line);
-          // Only increment and save progress if we processed meaningful content
-          currentLine = i + 1;
-          const updatedLogInfo = {
-            logDate: storedLogInfo.logDate,
-            logFileSize: currentSize,
-            lastProcessedLine: currentLine,
-            lastFileModified: await getFileModifiedTime(logPath),
-            gameDetected: true,
-          };
-          await saveLogInfo(updatedLogInfo);
+          try {
+            await processLogLine(line);
+            // Only increment and save progress if we processed meaningful content
+            currentLine = i + 1;
+            const updatedLogInfo = {
+              logDate: storedLogInfo.logDate,
+              logFileSize: currentSize,
+              lastProcessedLine: currentLine,
+              lastFileModified: await getFileModifiedTime(logPath),
+              gameDetected: true,
+            };
+            await saveLogInfo(updatedLogInfo);
+          } catch (lineError) {
+            console.error(`Error processing line ${i + 1}:`, lineError);
+            console.error('Problematic line:', line);
+            // Continue processing other lines instead of stopping
+            currentLine = i + 1;
+            const updatedLogInfo = {
+              logDate: storedLogInfo.logDate,
+              logFileSize: currentSize,
+              lastProcessedLine: currentLine,
+              lastFileModified: await getFileModifiedTime(logPath),
+              gameDetected: true,
+            };
+            await saveLogInfo(updatedLogInfo);
+          }
         }
         // Don't increment currentLine for blank lines
       }
@@ -164,31 +179,37 @@ export async function parseNewLogLines() {
 }
 
 async function processLogLine(_line) {
-  console.log('🔍 Processing log line:', _line);
+  try {
+    console.log('🔍 Processing log line:', _line);
 
-  if (_line.includes('<Actor Death>')) {
-    console.log('✅ Actor Death detected, calling engineRunner');
-    await engineRunner(_line, 'actorDeath');
-  } else if (_line.includes('<FatalCollision>')) {
-    console.log('💥 Fatal Collision detected, calling engineRunner');
-    await engineRunner(_line, 'crashEvent');
-  } else if (_line.includes('<Vehicle Destruction>')) {
-    console.log('💥 Vehicle Destruction detected, calling engineRunner');
-    await engineRunner(_line, 'crashEvent');
-  } else if (_line.includes('<AccountLoginCharacterStatus_Character>')) {
-    console.log('✅ AccountLoginCharacterStatus_Character detected, processing directly');
-    await processNameAndID(_line);
-  } else if (_line.includes('<Spawn Flow>')) {
-    await engineRunner(_line, 'spawnFlow');
-  } else if (_line.includes('<Actor Stall>')) {
-    await engineRunner(_line, 'stallFlow');
-  } else if (_line.includes('<RequestLocationInventory>')) {
-    await engineRunner(_line, 'requestLocationInventory');
-  } else if (_line.includes('<Vehicle Control Flow>')) {
-    await engineRunner(_line, 'vehicleControlFlow');
-  } else if (_line.includes('<[ActorState] Corpse>')) {
-    await engineRunner(_line, 'corpse');
-  } else if (_line.includes('<EndMission>')) {
-    await engineRunner(_line, 'endMission');
+    if (_line.includes('<Actor Death>')) {
+      console.log('✅ Actor Death detected, calling engineRunner');
+      await engineRunner(_line, 'actorDeath');
+    } else if (_line.includes('<FatalCollision>')) {
+      console.log('💥 Fatal Collision detected, calling engineRunner');
+      await engineRunner(_line, 'crashEvent');
+    } else if (_line.includes('<Vehicle Destruction>')) {
+      console.log('💥 Vehicle Destruction detected, calling engineRunner');
+      await engineRunner(_line, 'crashEvent');
+    } else if (_line.includes('<AccountLoginCharacterStatus_Character>')) {
+      console.log('✅ AccountLoginCharacterStatus_Character detected, processing directly');
+      await processNameAndID(_line);
+    } else if (_line.includes('<Spawn Flow>')) {
+      await engineRunner(_line, 'spawnFlow');
+    } else if (_line.includes('<Actor Stall>')) {
+      await engineRunner(_line, 'stallFlow');
+    } else if (_line.includes('<RequestLocationInventory>')) {
+      await engineRunner(_line, 'requestLocationInventory');
+    } else if (_line.includes('<Vehicle Control Flow>')) {
+      await engineRunner(_line, 'vehicleControlFlow');
+    } else if (_line.includes('<[ActorState] Corpse>')) {
+      await engineRunner(_line, 'corpse');
+    } else if (_line.includes('<EndMission>')) {
+      await engineRunner(_line, 'endMission');
+    }
+  } catch (error) {
+    console.error('Error in processLogLine:', error);
+    console.error('Problematic line:', _line);
+    // Don't re-throw the error, let the calling function handle it
   }
 }

@@ -1,0 +1,37 @@
+{
+  "live": {
+    "ORIG_100i": {
+      "name": "100i",
+      "weapons": [],
+      "components": {
+        "engines": [],
+        "shields": [],
+        "power-plants": [],
+        "coolers": [],
+        "quantum-drives": [],
+        "thrusters": []
+      },
+      "stats": {
+        "ship-size": ""
+      },
+      "missles": [],
+      "image": "400px-100i_Microtech_-_cropped.png.webp",
+      "role": "Starter / Pathfinder",
+      "size": "S1/XXS",
+      "crew": 1,
+      "base-dps": 1091,
+      "HullBody": 1650,
+      "cargo": 2,
+      "shield-type": "WEB",
+      "shield-capacity": 1500,
+      "pilot-guns": "2 x S3",
+      "turret-guns": "",
+      "missles": "2 x S2",
+      "manufacturer": "Origin Jumpworks",
+      "manufacturer-code": "ORIG",
+      "verified": true,
+      "versus-wins": 0,
+      "versus-losses": 0
+    }
+  }
+}

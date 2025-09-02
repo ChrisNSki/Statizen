@@ -224,7 +224,7 @@ function Dashboard() {
       {/* System Information */}
       <Card className='flex-shrink-0'>
         <CardContent>
-          <div className='grid grid-cols-2 gap-4 max-w-2xl mx-auto'>
+          <div className='grid grid-cols-2 gap-4 mx-auto'>
             <div className='flex items-center gap-3 p-3 border rounded-lg'>
               <Gamepad2 className='w-5 h-5 text-blue-600' />
               <div>

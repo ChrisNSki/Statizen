@@ -102,7 +102,10 @@ export async function checkMonthChange() {
     };
     // Preserve XP across months
     if (!pvp.xp) pvp.xp = 0;
-    await savePVP(pvp);
+
+    // Write directly to file instead of calling savePVP() to avoid infinite recursion
+    const path = await getPVPPath();
+    await writeTextFile(path, JSON.stringify(pvp, null, 2));
   }
 }
 

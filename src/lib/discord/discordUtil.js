@@ -71,23 +71,15 @@ const getXPProgressBar = (xp) => {
 
 const sendDiscordWebhook = async (webhookUrl, embed) => {
   try {
-    console.log('📡 Sending Discord webhook to:', webhookUrl);
-    console.log('📦 Embed data:', JSON.stringify(embed, null, 2));
-
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ embeds: [embed] }),
     });
 
-    console.log('📡 Discord webhook response status:', response.status);
-    console.log('📡 Discord webhook response ok:', response.ok);
-
     if (!response.ok) {
       const errorText = await response.text();
       console.error('❌ Discord webhook failed:', errorText);
-    } else {
-      console.log('✅ Discord webhook sent successfully');
     }
 
     return response.ok;
@@ -234,13 +226,8 @@ export const reportPVPKill = async (victimName, victimShipClass, currentShipClas
 
 export const reportPVEKill = async (npcClass, currentShipClass, weaponClass = null, killedShipClass = null) => {
   const settings = await loadSettings();
-  console.log('⚙️ Discord settings:', {
-    discordEnabled: settings.discordEnabled,
-    hasWebhookUrl: !!settings.discordWebhookUrl,
-    pveKillsEnabled: settings.eventTypes?.pveKills
-  });
+
   if (!settings.discordEnabled || !settings.discordWebhookUrl || !settings.eventTypes?.pveKills) {
-    console.log('❌ Discord PVE kill report skipped - settings not enabled');
     return false;
   }
 

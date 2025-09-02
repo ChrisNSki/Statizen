@@ -12,7 +12,6 @@ export async function handleOpenFile() {
   });
 
   if (selectedPath) {
-    console.log('Selected file:', selectedPath);
     return selectedPath;
   }
 }

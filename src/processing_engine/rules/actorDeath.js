@@ -6,6 +6,7 @@ import { loadPVP, savePVP, addPVPLogEntry } from '../../lib/pvp/pvpUtil.js';
 import { loadWeapon, saveWeapon, addWeaponLogEntry, updateWeaponStats } from '../../lib/weapon/weaponUtil.js';
 import { reportPVEKill, reportPVPKill, reportPVPDeath, reportSuicide } from '../../lib/discord/discordUtil.js';
 import { queueKDUpdate } from '../../lib/utils.js';
+import { loadSettings } from '../../lib/settings/settingsUtil.js';
 import NPCDictionary from '../../assets/NPC-Dictionary.json';
 import shipDictionary from '../../assets/Ship-Dictionary.json';
 import weaponDictionary from '../../assets/Weapon-Dictionary.json';
@@ -184,6 +185,10 @@ export async function actorDeath(line) {
 
         addPVELogEntry(npcClassKey, 'win', weaponClassKey);
 
+        // Load settings to check if Discord PVE kills are enabled
+        const settings = await loadSettings();
+        const shouldReportToDiscord = settings.discordEnabled && settings.discordWebhookUrl && settings.eventTypes?.pveKills;
+
         consoleDebugging && console.log('🔄 Starting queueKDUpdate for PVE kill...');
         try {
           await queueKDUpdate(async () => {
@@ -206,13 +211,18 @@ export async function actorDeath(line) {
           console.error('❌ queueKDUpdate failed for PVE kill:', error);
         }
 
-        consoleDebugging && console.log('🔍 About to call Discord PVE kill report...');
-        consoleDebugging && console.log('📡 Calling Discord PVE kill report with:', { npcClassKey, currentShipClass, weaponClassKey });
-        try {
-          const discordResult = await reportPVEKill(npcClassKey, currentShipClass && currentShipClass !== '' ? currentShipClass : null, weaponClassKey);
-          consoleDebugging && console.log('📡 Discord PVE kill result:', discordResult);
-        } catch (error) {
-          console.error('❌ Discord PVE kill error:', error);
+        // Only call Discord if PVE kills are enabled in settings
+        if (shouldReportToDiscord) {
+          consoleDebugging && console.log('🔍 About to call Discord PVE kill report...');
+          consoleDebugging && console.log('📡 Calling Discord PVE kill report with:', { npcClassKey, currentShipClass, weaponClassKey });
+          try {
+            const discordResult = await reportPVEKill(npcClassKey, currentShipClass && currentShipClass !== '' ? currentShipClass : null, weaponClassKey);
+            consoleDebugging && console.log('📡 Discord PVE kill result:', discordResult);
+          } catch (error) {
+            console.error('❌ Discord PVE kill error:', error);
+          }
+        } else {
+          consoleDebugging && console.log('📡 Discord PVE kill report skipped - PVE kills disabled in settings');
         }
         return; // 🎯 FIX: Add return to prevent fallthrough to PVE death handler
       } else {

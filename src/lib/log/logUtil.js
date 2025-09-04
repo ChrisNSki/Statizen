@@ -99,13 +99,11 @@ export async function detectGameRunning() {
 }
 
 export async function parseNewLogLines() {
-  console.log('🔄 parseNewLogLines called');
   const logPath = await getLogPath();
 
   try {
     // Get current log file info
     const currentSize = await getFileSize(logPath);
-    console.log('📊 Current log file size:', currentSize);
 
     // Load stored log info
     const storedLogInfo = await loadLogInfo();

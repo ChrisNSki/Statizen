@@ -6,6 +6,37 @@ import { loadPVP, savePVP, loadPVPLog } from '@/lib/pvp/pvpUtil';
 import { loadNearby } from '@/lib/nearby/nearbyUtil';
 import NPCDictionary from '@/assets/NPC-Dictionary.json';
 
+// Optimized deep comparison function
+const deepEqual = (obj1, obj2) => {
+  if (obj1 === obj2) return true;
+  if (obj1 == null || obj2 == null) return false;
+  if (typeof obj1 !== typeof obj2) return false;
+
+  if (typeof obj1 !== 'object') return obj1 === obj2;
+
+  if (Array.isArray(obj1) !== Array.isArray(obj2)) return false;
+
+  if (Array.isArray(obj1)) {
+    if (obj1.length !== obj2.length) return false;
+    for (let i = 0; i < obj1.length; i++) {
+      if (!deepEqual(obj1[i], obj2[i])) return false;
+    }
+    return true;
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false;
+
+  for (let key of keys1) {
+    if (!keys2.includes(key)) return false;
+    if (!deepEqual(obj1[key], obj2[key])) return false;
+  }
+
+  return true;
+};
+
 const DataContext = createContext();
 
 // Helper function to get NPC name from dictionary
@@ -84,9 +115,14 @@ export function DataProvider({ children }) {
     loadInitialData();
   }, []);
 
-  // Poll for file changes
+  // Poll for file changes with optimized performance
   useEffect(() => {
-    const pollInterval = setInterval(async () => {
+    let isPolling = false;
+
+    const pollData = async () => {
+      if (isPolling) return; // Prevent overlapping polls
+      isPolling = true;
+
       try {
         const currentUserData = await loadUser();
         const currentLogInfoData = await loadLogInfo();
@@ -98,70 +134,66 @@ export function DataProvider({ children }) {
         const currentPveLogData = await loadPVELog();
         const currentPvpLogData = await loadPVPLog();
 
-        const currentUserContent = JSON.stringify(currentUserData);
-        const currentLogInfoContent = JSON.stringify(currentLogInfoData);
-        const currentPVEContent = JSON.stringify(currentPVEData);
-        const currentPVPContent = JSON.stringify(currentPVPData);
-        const currentLastKilledByContent = JSON.stringify(currentLastKilledBy);
-        const currentLastKilledActorContent = JSON.stringify(currentLastKilledActor);
-        const currentNearbyContent = JSON.stringify(currentNearbyData);
-        const currentPveLogContent = JSON.stringify(currentPveLogData);
-        const currentPvpLogContent = JSON.stringify(currentPvpLogData);
+        // Use deep comparison instead of JSON.stringify for better performance
+        const hasUserChanged = !deepEqual(currentUserData, userData);
+        const hasLogInfoChanged = !deepEqual(currentLogInfoData, logInfo);
+        const hasPVEChanged = !deepEqual(currentPVEData, PVEData);
+        const hasPVPChanged = !deepEqual(currentPVPData, PVPData);
+        const hasLastKilledByChanged = !deepEqual(currentLastKilledBy, lastKilledBy);
+        const hasLastKilledActorChanged = !deepEqual(currentLastKilledActor, lastKilledActor);
+        const hasNearbyChanged = !deepEqual(currentNearbyData, nearbyPlayers);
+        const hasPveLogChanged = !deepEqual(currentPveLogData, pveLog);
+        const hasPvpLogChanged = !deepEqual(currentPvpLogData, pvpLog);
 
-        // Check if each file content has changed
-        if (lastUserContent.current !== currentUserContent) {
+        // Only update state if data has actually changed
+        if (hasUserChanged) {
           setUserData(currentUserData);
-          lastUserContent.current = currentUserContent;
         }
 
-        if (lastLogInfoContent.current !== currentLogInfoContent) {
+        if (hasLogInfoChanged) {
           setLogInfo(currentLogInfoData);
-          lastLogInfoContent.current = currentLogInfoContent;
         }
 
-        if (lastPVEContent.current !== currentPVEContent) {
+        if (hasPVEChanged) {
           setPVEData(currentPVEData);
-          lastPVEContent.current = currentPVEContent;
         }
 
-        if (lastPVPContent.current !== currentPVPContent) {
+        if (hasPVPChanged) {
           setPVPData(currentPVPData);
-          lastPVPContent.current = currentPVPContent;
         }
 
-        if (lastLastKilledByContent.current !== currentLastKilledByContent) {
+        if (hasLastKilledByChanged) {
           setLastKilledBy(currentLastKilledBy);
-          lastLastKilledByContent.current = currentLastKilledByContent;
         }
 
-        if (lastLastKilledActorContent.current !== currentLastKilledActorContent) {
+        if (hasLastKilledActorChanged) {
           setLastKilledActor(currentLastKilledActor);
-          lastLastKilledActorContent.current = currentLastKilledActorContent;
         }
 
-        if (lastNearbyContent.current !== currentNearbyContent) {
+        if (hasNearbyChanged) {
           setNearbyPlayers(currentNearbyData);
-          lastNearbyContent.current = currentNearbyContent;
         }
 
-        if (lastPveLogContent.current !== currentPveLogContent) {
+        if (hasPveLogChanged) {
           setPveLog(currentPveLogData);
-          lastPveLogContent.current = currentPveLogContent;
         }
 
-        if (lastPvpLogContent.current !== currentPvpLogContent) {
+        if (hasPvpLogChanged) {
           setPvpLog(currentPvpLogData);
-          lastPvpLogContent.current = currentPvpLogContent;
         }
       } catch (error) {
         console.error('Failed to poll data:', error);
+      } finally {
+        isPolling = false;
       }
-    }, 1000); // Poll every second
+    };
+
+    const pollInterval = setInterval(pollData, 2000); // Reduced to 2 seconds
 
     return () => {
       clearInterval(pollInterval);
     };
-  }, []);
+  }, [userData, logInfo, PVEData, PVPData, lastKilledBy, lastKilledActor, nearbyPlayers, pveLog, pvpLog]);
 
   const updateUserData = async (key, value) => {
     const updated = { ...userData, [key]: value };

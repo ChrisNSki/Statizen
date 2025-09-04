@@ -177,7 +177,7 @@ export async function actorDeath(line) {
           }
         }
 
-        if (NPCDictionary.dictionary[npcClassKey]) {
+        if (NPCDictionary.dictionary[npcClassKey] && npcClassKey !== 'ARGO_ATLS') {
           consoleDebugging && console.log('you killed a ' + NPCDictionary.dictionary[npcClassKey].name);
         } else {
           submitNPCtoDictionary(npcClassKey);

@@ -43,8 +43,8 @@ export function LogProcessorProvider({ children }) {
     }
 
     if (isWatching) {
-      // Start polling every second
-      intervalRef.current = setInterval(processLog, 1000);
+      // Start polling every 2 seconds for better performance
+      intervalRef.current = setInterval(processLog, 2000);
     }
 
     // Cleanup on unmount or when isWatching changes

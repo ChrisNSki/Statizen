@@ -127,7 +127,27 @@ fn get_config_dir(app: tauri::AppHandle) -> Result<String, String> {
 
 #[tauri::command]
 fn set_passthrough(win: tauri::WebviewWindow, pass: bool) -> tauri::Result<()> {
+    println!("🔧 Rust: Setting passthrough to: {}", pass);
     win.set_ignore_cursor_events(pass)?;
+    println!("✅ Rust: Passthrough set successfully to: {}", pass);
+    Ok(())
+}
+
+#[tauri::command]
+fn enable_overlay_interaction(win: tauri::WebviewWindow) -> tauri::Result<()> {
+    println!("🔧 Rust: Enabling overlay interaction");
+    win.set_focus()?;
+    // Force disable cursor event ignoring
+    win.set_ignore_cursor_events(false)?;
+    println!("✅ Rust: Overlay interaction enabled - cursor events should work now");
+    Ok(())
+}
+
+#[tauri::command]
+fn disable_overlay_interaction(win: tauri::WebviewWindow) -> tauri::Result<()> {
+    println!("🔧 Rust: Disabling overlay interaction");
+    win.set_ignore_cursor_events(true)?;
+    println!("✅ Rust: Overlay interaction disabled - clicks will pass through");
     Ok(())
 }
 
@@ -152,7 +172,7 @@ fn position_overlay_window(app: tauri::AppHandle, monitor_id: usize) -> tauri::R
     
     overlay.set_size(tauri::Size::Physical(tauri::PhysicalSize::new(overlay_width, overlay_height)))?;
     overlay.set_position(tauri::Position::Physical(tauri::PhysicalPosition::new(overlay_x, overlay_y)))?;
-    overlay.set_ignore_cursor_events(true)?; // Start with passthrough enabled
+    // Note: passthrough state is now managed by the JavaScript side via set_passthrough command
     
     Ok(())
 }
@@ -169,6 +189,8 @@ fn destroy_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
 fn show_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
     if let Some(overlay) = app.get_webview_window("overlay") {
         overlay.show()?;
+        overlay.set_focus()?;
+        println!("🔧 Debug: Overlay window shown and focused");
     }
     Ok(())
 }
@@ -183,8 +205,39 @@ fn hide_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
 
 #[tauri::command]
 fn broadcast_to_overlay(app: tauri::AppHandle, message: serde_json::Value) -> tauri::Result<()> {
+    println!("🔧 Rust: Broadcasting to overlay: {:?}", message);
     if let Some(overlay) = app.get_webview_window("overlay") {
-        overlay.emit("settings-update", message)?;
+        // Check the message type and emit the appropriate event
+        if let Some(msg_type) = message.get("type").and_then(|v| v.as_str()) {
+            match msg_type {
+                "toggle-edit-mode" => {
+                    println!("🔧 Rust: Emitting toggle-edit-mode event to overlay");
+                    overlay.emit("toggle-edit-mode", message)?;
+                }
+                "settings-update" => {
+                    println!("🔧 Rust: Emitting settings-update event to overlay");
+                    overlay.emit("settings-update", message)?;
+                }
+                _ => {
+                    println!("🔧 Rust: Emitting default settings-update event to overlay");
+                    overlay.emit("settings-update", message)?;
+                }
+            }
+        } else {
+            println!("🔧 Rust: No message type found, emitting settings-update event to overlay");
+            overlay.emit("settings-update", message)?;
+        }
+        println!("✅ Rust: Event emitted successfully to overlay");
+    } else {
+        println!("❌ Rust: Overlay window not found");
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn broadcast_to_main(app: tauri::AppHandle, message: serde_json::Value) -> tauri::Result<()> {
+    if let Some(main) = app.get_webview_window("main") {
+        main.emit("edit-mode-state", message)?;
     }
     Ok(())
 }
@@ -200,11 +253,14 @@ pub fn run() {
             minimize_window,
             get_config_dir,
             set_passthrough,
+            enable_overlay_interaction,
+            disable_overlay_interaction,
             position_overlay_window,
             destroy_overlay_window,
             show_overlay_window,
             hide_overlay_window,
-            broadcast_to_overlay
+            broadcast_to_overlay,
+            broadcast_to_main
         ])
         .setup(|app| {
             if cfg!(debug_assertions) {
@@ -214,6 +270,24 @@ pub fn run() {
                         .build(),
                 )?;
             }
+
+            // Set up cleanup for overlay window when main window closes
+            if let Some(main_window) = app.get_webview_window("main") {
+                let app_handle = app.handle().clone();
+                main_window.on_window_event(move |event| {
+                    if let tauri::WindowEvent::CloseRequested { .. } = event {
+                        println!("🔧 Main window closing, cleaning up overlay...");
+                        if let Some(overlay) = app_handle.get_webview_window("overlay") {
+                            if let Err(e) = overlay.close() {
+                                println!("❌ Failed to close overlay window: {}", e);
+                            } else {
+                                println!("✅ Overlay window closed successfully");
+                            }
+                        }
+                    }
+                });
+            }
+
             Ok(())
         })
         .run(tauri::generate_context!())

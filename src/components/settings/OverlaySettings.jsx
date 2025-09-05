@@ -7,11 +7,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { getMonitorsWithFallback, findMonitorById, getMonitorDisplayName } from '@/lib/monitor/monitorUtil';
 import { invoke } from '@tauri-apps/api/core';
+import { listen } from '@tauri-apps/api/event';
 // Removed shadcn ColorPicker - using native HTML color input instead
 
 function OverlaySettings({ settings, updateSettings }) {
   const [monitors, setMonitors] = useState([]);
   const [loadingMonitors, setLoadingMonitors] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   // Load monitors on component mount with hot-plug detection
   useEffect(() => {
@@ -37,6 +39,31 @@ function OverlaySettings({ settings, updateSettings }) {
 
     loadMonitors();
   }, [settings.targetMonitor, updateSettings]);
+
+  // Listen for edit mode state updates from overlay
+  useEffect(() => {
+    const setupEditModeListener = async () => {
+      try {
+        const unlisten = await listen('edit-mode-state', (event) => {
+          console.log('🎮 Received edit mode state from overlay:', event.payload);
+          setIsEditMode(event.payload.isEditMode);
+        });
+        return unlisten;
+      } catch (error) {
+        console.error('Failed to setup edit mode state listener:', error);
+        return () => {};
+      }
+    };
+
+    let unlisten = () => {};
+    setupEditModeListener().then((cleanup) => {
+      unlisten = cleanup;
+    });
+
+    return () => {
+      unlisten();
+    };
+  }, []);
 
   // Handle overlay toggle
   const handleOverlayToggle = async (showOverlay) => {
@@ -140,6 +167,20 @@ function OverlaySettings({ settings, updateSettings }) {
     }
   };
 
+  const handleToggleEditMode = async () => {
+    try {
+      console.log('🎮 Settings: Sending toggle-edit-mode event to overlay');
+      await invoke('broadcast_to_overlay', {
+        message: {
+          type: 'toggle-edit-mode',
+        },
+      });
+      console.log('🎮 Settings: Event sent successfully');
+    } catch (error) {
+      console.error('❌ Failed to toggle edit mode:', error);
+    }
+  };
+
   return (
     <div className='space-y-6'>
       <div className='space-y-4'>
@@ -234,9 +275,19 @@ function OverlaySettings({ settings, updateSettings }) {
               </div>
             </div>
 
-            <div className='flex flex-row gap-1 items-center pt-2'>
-              <InfoIcon className='w-3 h-3' />
-              <span className='text-xs text-muted-foreground'>Game must be set to borderless window mode for the overlay to work.</span>
+            <div className='flex flex-col gap-2 pt-2'>
+              <div className='flex items-center justify-between'>
+                <Label htmlFor='edit-mode-toggle' className='text-sm font-medium'>
+                  Toggle Edit Mode
+                </Label>
+                <button id='edit-mode-toggle' onClick={handleToggleEditMode} className={`px-3 py-1 text-xs text-white rounded transition-colors ${isEditMode ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'}`}>
+                  {isEditMode ? 'Disable Edit Mode' : 'Enable Edit Mode'}
+                </button>
+              </div>
+              <div className='flex flex-row gap-1 items-center'>
+                <InfoIcon className='w-3 h-3' />
+                <span className='text-xs text-muted-foreground'>Game must be set to borderless window mode for the overlay to work.</span>
+              </div>
             </div>
           </CardContent>
         </Card>

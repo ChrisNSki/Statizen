@@ -107,6 +107,9 @@ function App() {
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
+  // Note: Global shortcut functionality removed due to plugin compatibility issues
+  // The overlay edit mode can be toggled through the overlay settings in the main window
+
   return (
     <SettingsProvider>
       <LogProcessorProvider>

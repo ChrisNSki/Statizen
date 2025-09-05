@@ -5,6 +5,8 @@ import { resetUserShip } from '@/lib/user/userUtil';
 import { engineRunner } from '@/processing_engine/engine';
 import { processNameAndID } from '@/lib/initialization/processNameandID';
 
+const consoleDebugging = false;
+
 async function getLogPath() {
   const settings = await loadSettings();
   const logPath = settings.logPath;
@@ -120,7 +122,7 @@ export async function parseNewLogLines() {
       const lines = logContent.split('\n');
 
       if (lines[1] !== storedLogInfo.logDate || !lines[1]) {
-        console.log('log date has changed');
+        consoleDebugging && console.log('log date has changed');
         const updatedLogInfo = {
           logDate: lines[1],
           logFileSize: currentSize,
@@ -178,19 +180,19 @@ export async function parseNewLogLines() {
 
 async function processLogLine(_line) {
   try {
-    console.log('🔍 Processing log line:', _line);
+    consoleDebugging && console.log('🔍 Processing log line:', _line);
 
     if (_line.includes('<Actor Death>')) {
-      console.log('✅ Actor Death detected, calling engineRunner');
+      consoleDebugging && console.log('✅ Actor Death detected, calling engineRunner');
       await engineRunner(_line, 'actorDeath');
     } else if (_line.includes('<FatalCollision>')) {
-      console.log('💥 Fatal Collision detected, calling engineRunner');
+      consoleDebugging && console.log('💥 Fatal Collision detected, calling engineRunner');
       await engineRunner(_line, 'crashEvent');
     } else if (_line.includes('<Vehicle Destruction>')) {
-      console.log('💥 Vehicle Destruction detected, calling engineRunner');
+      consoleDebugging && console.log('💥 Vehicle Destruction detected, calling engineRunner');
       await engineRunner(_line, 'crashEvent');
     } else if (_line.includes('<AccountLoginCharacterStatus_Character>')) {
-      console.log('✅ AccountLoginCharacterStatus_Character detected, processing directly');
+      consoleDebugging && console.log('✅ AccountLoginCharacterStatus_Character detected, processing directly');
       await processNameAndID(_line);
     } else if (_line.includes('<Spawn Flow>')) {
       await engineRunner(_line, 'spawnFlow');

@@ -4,7 +4,9 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { InfoIcon } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import { getMonitorsWithFallback, findMonitorById, getMonitorDisplayName } from '@/lib/monitor/monitorUtil';
+import { invoke } from '@tauri-apps/api/core';
 // Removed shadcn ColorPicker - using native HTML color input instead
 
 function OverlaySettings({ settings, updateSettings }) {
@@ -35,6 +37,30 @@ function OverlaySettings({ settings, updateSettings }) {
 
     loadMonitors();
   }, [settings.targetMonitor, updateSettings]);
+
+  // Handle overlay toggle
+  const handleOverlayToggle = async (showOverlay) => {
+    updateSettings('showOverlay', showOverlay);
+
+    try {
+      if (showOverlay) {
+        // Show overlay - position it on selected monitor
+        if (settings.targetMonitor) {
+          await invoke('position_overlay_window', { monitorId: settings.targetMonitor.id });
+          await invoke('show_overlay_window');
+          console.log('✅ Overlay window positioned and shown');
+        } else {
+          console.warn('⚠️ No target monitor selected for overlay');
+        }
+      } else {
+        // Hide overlay
+        await invoke('hide_overlay_window');
+        console.log('✅ Overlay window hidden');
+      }
+    } catch (error) {
+      console.error('❌ Failed to toggle overlay:', error);
+    }
+  };
 
   // Get current monitor info
   const currentMonitor = settings.targetMonitor ? findMonitorById(monitors, settings.targetMonitor.id) : null;
@@ -96,11 +122,21 @@ function OverlaySettings({ settings, updateSettings }) {
   };
 
   // Handle monitor selection
-  const handleMonitorChange = (monitorId) => {
+  const handleMonitorChange = async (monitorId) => {
     const selectedMonitor = findMonitorById(monitors, parseInt(monitorId));
     if (selectedMonitor) {
       console.log('🖥️ Monitor selected:', selectedMonitor);
       updateSettings('targetMonitor', selectedMonitor);
+
+      // If overlay is currently shown, reposition it on the new monitor
+      if (settings.showOverlay) {
+        try {
+          await invoke('position_overlay_window', { monitorId: selectedMonitor.id });
+          console.log('🔄 Overlay repositioned to new monitor');
+        } catch (error) {
+          console.error('❌ Failed to reposition overlay:', error);
+        }
+      }
     }
   };
 
@@ -118,18 +154,13 @@ function OverlaySettings({ settings, updateSettings }) {
                 <p className='font-medium'>Show Overlay</p>
                 <p className='text-sm text-muted-foreground'>Display game information overlay</p>
               </div>
-              <Switch checked={settings.showOverlay || false} onCheckedChange={(val) => updateSettings('showOverlay', val)} />
+              <Switch checked={settings.showOverlay || false} onCheckedChange={handleOverlayToggle} />
             </div>
 
             <div className='flex flex-col items-center justify-between w-full gap-2'>
               <div className='flex flex-col w-full'>
                 <div className='font-medium'>Target Monitor</div>
                 <div className='text-sm text-muted-foreground'>Select the monitor to display the overlay on</div>
-                {currentMonitor && (
-                  <div className='text-xs text-muted-foreground mt-1'>
-                    Selected: {currentMonitor.name} ({currentMonitor.width}x{currentMonitor.height})
-                  </div>
-                )}
               </div>
               <Select value={currentMonitor ? String(currentMonitor.id) : undefined} onValueChange={handleMonitorChange} disabled={loadingMonitors || monitors.length === 0}>
                 <SelectTrigger className='w-full'>

@@ -12,13 +12,29 @@
   "app": {
     "windows": [
       {
-        "title": "statizen",
+        "label": "main",
+        "title": "Statizen",
         "width": 900,
         "height": 800,
         "resizable": false,
         "fullscreen": false,
         "decorations": false,
-        "alwaysOnTop": false
+        "alwaysOnTop": false,
+        "url": "index.html"
+      },
+      {
+        "label": "overlay",
+        "title": "Statizen Overlay",
+        "width": 1920,
+        "height": 1080,
+        "resizable": false,
+        "fullscreen": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "transparent": true,
+        "skipTaskbar": true,
+        "visible": false,
+        "url": "/overlay"
       }
     ],
     "security": {

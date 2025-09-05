@@ -6,29 +6,31 @@ import { stallFlow } from './rules/stallFlow.js';
 import { corpse } from './rules/corpse.js';
 import { crashEvent } from './rules/crashEvent.js';
 
+const consoleDebugging = false;
+
 export async function engineRunner(_line, type) {
   const settings = loadSettings();
 
-  console.log('engineRunner called');
+  consoleDebugging && console.log('engineRunner called');
 
   switch (type) {
     case 'actorDeath': {
-      console.log('actorDeath');
+      consoleDebugging && console.log('actorDeath');
       await actorDeath(_line);
       break;
     }
     case 'crashEvent': {
-      console.log('crashEvent');
+      consoleDebugging && console.log('crashEvent');
       await crashEvent(_line);
       break;
     }
     case 'spawnFlow': {
-      console.log('spawnFlow');
+      consoleDebugging && console.log('spawnFlow');
       await spawnFlow(_line);
       break;
     }
     case 'stallFlow': {
-      console.log('stallFlow');
+      consoleDebugging && console.log('stallFlow');
       await stallFlow(_line);
       break;
     }
@@ -36,12 +38,12 @@ export async function engineRunner(_line, type) {
       break;
     }
     case 'vehicleControlFlow': {
-      console.log('vehicleControlFlow');
+      consoleDebugging && console.log('vehicleControlFlow');
       await vehicleControlFlow(_line);
       break;
     }
     case 'corpse': {
-      console.log('corpse');
+      consoleDebugging && console.log('corpse');
       await corpse(_line);
       break;
     }

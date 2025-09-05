@@ -58,15 +58,35 @@ export function LogProcessorProvider({ children }) {
 
   const startLogging = useCallback(async () => {
     setIsWatching(true);
+
+    // Auto-start overlay if enabled in settings
+    try {
+      const settings = await loadSettings();
+      if (settings.showOverlay && settings.targetMonitor) {
+        console.log('🎮 Auto-starting overlay for logging session');
+        await invoke('position_overlay_window', { monitorId: settings.targetMonitor.id });
+        await invoke('show_overlay_window');
+      }
+    } catch (error) {
+      console.error('❌ Failed to auto-start overlay:', error);
+    }
   }, []);
 
-  const stopLogging = useCallback(() => {
+  const stopLogging = useCallback(async () => {
     setIsWatching(false);
+
+    // Auto-hide overlay when logging stops
+    try {
+      await invoke('hide_overlay_window');
+      console.log('🎮 Auto-hiding overlay - logging stopped');
+    } catch (error) {
+      console.error('❌ Failed to hide overlay:', error);
+    }
   }, []);
 
   const toggleLogging = useCallback(async () => {
     if (isWatching) {
-      stopLogging();
+      await stopLogging();
     } else {
       await startLogging();
     }

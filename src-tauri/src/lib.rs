@@ -1,5 +1,5 @@
 use serde::Serialize;
-use tauri::{Manager, PhysicalPosition, PhysicalSize, WebviewWindow};
+use tauri::{Emitter, Manager, PhysicalPosition, PhysicalSize, WebviewWindow};
 
 #[derive(Serialize)]
 struct MonitorInfo {
@@ -125,6 +125,70 @@ fn get_config_dir(app: tauri::AppHandle) -> Result<String, String> {
     Ok(dir.to_string_lossy().into_owned())
 }
 
+#[tauri::command]
+fn set_passthrough(win: tauri::WebviewWindow, pass: bool) -> tauri::Result<()> {
+    win.set_ignore_cursor_events(pass)?;
+    Ok(())
+}
+
+#[tauri::command]
+fn position_overlay_window(app: tauri::AppHandle, monitor_id: usize) -> tauri::Result<()> {
+    let overlay = app.get_webview_window("overlay").ok_or_else(|| tauri::Error::from(std::io::Error::new(std::io::ErrorKind::NotFound, "Overlay window not found")))?;
+    
+    let monitors = app.available_monitors().map_err(|e| tauri::Error::from(e))?;
+    let monitor = monitors.get(monitor_id).ok_or_else(|| tauri::Error::from(std::io::Error::new(std::io::ErrorKind::InvalidInput, "Invalid monitor ID")))?;
+
+    // Position overlay to cover the entire monitor
+    let monitor_pos = monitor.position();
+    let monitor_size = monitor.size();
+    
+    // Set overlay to full screen on the target monitor
+    let overlay_width = monitor_size.width;
+    let overlay_height = monitor_size.height;
+    
+    // Position at the monitor's origin (top-left corner)
+    let overlay_x = monitor_pos.x;
+    let overlay_y = monitor_pos.y;
+    
+    overlay.set_size(tauri::Size::Physical(tauri::PhysicalSize::new(overlay_width, overlay_height)))?;
+    overlay.set_position(tauri::Position::Physical(tauri::PhysicalPosition::new(overlay_x, overlay_y)))?;
+    overlay.set_ignore_cursor_events(true)?; // Start with passthrough enabled
+    
+    Ok(())
+}
+
+#[tauri::command]
+fn destroy_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
+    if let Some(overlay) = app.get_webview_window("overlay") {
+        overlay.close()?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn show_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
+    if let Some(overlay) = app.get_webview_window("overlay") {
+        overlay.show()?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn hide_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
+    if let Some(overlay) = app.get_webview_window("overlay") {
+        overlay.hide()?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn broadcast_to_overlay(app: tauri::AppHandle, message: serde_json::Value) -> tauri::Result<()> {
+    if let Some(overlay) = app.get_webview_window("overlay") {
+        overlay.emit("settings-update", message)?;
+    }
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -134,7 +198,13 @@ pub fn run() {
             list_monitors,
             bind_window_to_monitor,
             minimize_window,
-            get_config_dir
+            get_config_dir,
+            set_passthrough,
+            position_overlay_window,
+            destroy_overlay_window,
+            show_overlay_window,
+            hide_overlay_window,
+            broadcast_to_overlay
         ])
         .setup(|app| {
             if cfg!(debug_assertions) {

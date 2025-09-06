@@ -43,8 +43,8 @@ export function LogProcessorProvider({ children }) {
     }
 
     if (isWatching) {
-      // Start polling every second
-      intervalRef.current = setInterval(processLog, 1000);
+      // Start polling every 2 seconds for better performance
+      intervalRef.current = setInterval(processLog, 2000);
     }
 
     // Cleanup on unmount or when isWatching changes
@@ -58,15 +58,43 @@ export function LogProcessorProvider({ children }) {
 
   const startLogging = useCallback(async () => {
     setIsWatching(true);
+
+    // Auto-start overlay if enabled in settings
+    try {
+      const settings = await loadSettings();
+      if (settings.showOverlay && settings.targetMonitor) {
+        console.log('🎮 Auto-starting overlay for logging session');
+        await invoke('position_overlay_window', { monitorId: settings.targetMonitor.id });
+        await invoke('show_overlay_window');
+      } else if (settings.showOverlay && !settings.targetMonitor) {
+        console.warn('⚠️ Overlay is enabled but no target monitor selected');
+      }
+    } catch (error) {
+      console.error('❌ Failed to auto-start overlay:', error);
+    }
   }, []);
 
-  const stopLogging = useCallback(() => {
+  const stopLogging = useCallback(async () => {
     setIsWatching(false);
+
+    // Only auto-hide overlay if it was auto-started by logging
+    // Don't hide if user manually enabled it in settings
+    try {
+      const settings = await loadSettings();
+      if (settings.showOverlay) {
+        console.log('🎮 Overlay is manually enabled in settings - keeping it visible');
+      } else {
+        await invoke('hide_overlay_window');
+        console.log('🎮 Auto-hiding overlay - logging stopped');
+      }
+    } catch (error) {
+      console.error('❌ Failed to check overlay settings:', error);
+    }
   }, []);
 
   const toggleLogging = useCallback(async () => {
     if (isWatching) {
-      stopLogging();
+      await stopLogging();
     } else {
       await startLogging();
     }

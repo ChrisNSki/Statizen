@@ -7,6 +7,25 @@ export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Function to broadcast settings updates to overlay window
+  const broadcastSettingsUpdate = (updatedSettings) => {
+    try {
+      // Use Tauri API to get the overlay window and send it a message
+      import('@tauri-apps/api/core').then(({ invoke }) => {
+        invoke('broadcast_to_overlay', {
+          message: {
+            type: 'settings-update',
+            settings: updatedSettings,
+          },
+        }).catch((error) => {
+          console.log('Could not broadcast settings to overlay:', error.message);
+        });
+      });
+    } catch (error) {
+      console.log('Could not broadcast settings to overlay:', error.message);
+    }
+  };
+
   useEffect(() => {
     loadSettings().then(async (loadedSettings) => {
       setSettings(loadedSettings);
@@ -25,6 +44,9 @@ export function SettingsProvider({ children }) {
     const updated = { ...settings, [key]: value };
     setSettings(updated);
     await saveSettings(updated);
+
+    // Broadcast settings update to overlay window
+    broadcastSettingsUpdate(updated);
   };
 
   const updateEventTypes = async (key, value) => {
@@ -34,6 +56,9 @@ export function SettingsProvider({ children }) {
     };
     setSettings(updated);
     await saveSettings(updated);
+
+    // Broadcast settings update to overlay window
+    broadcastSettingsUpdate(updated);
   };
 
   const batchUpdateSettings = async (updates) => {
@@ -56,6 +81,9 @@ export function SettingsProvider({ children }) {
 
     setSettings(updated);
     await saveSettings(updated);
+
+    // Broadcast settings update to overlay window
+    broadcastSettingsUpdate(updated);
   };
 
   const value = {

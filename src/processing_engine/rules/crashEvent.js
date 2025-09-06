@@ -4,7 +4,7 @@ import { queueKDUpdate } from '../../lib/utils.js';
 import { reportCrash } from '../../lib/discord/discordUtil.js';
 
 // Debug flag - set to false to disable console logging
-const consoleDebugging = false;
+const consoleDebugging = true;
 
 export async function crashEvent(line) {
   consoleDebugging && console.log('🔍 Processing crashEvent line:', line);
@@ -54,12 +54,14 @@ export async function crashEvent(line) {
 
         // Extract cause information - more robust regex to handle complex player names
         const causeMatch = line.match(/caused by '([^']+)'/);
+        const drivenByMatch = line.match(/driven by '([^']+)'/);
         const cause = causeMatch ? causeMatch[1] : 'Unknown';
+        const drivenBy = drivenByMatch ? drivenByMatch[1] : 'Unknown';
 
         consoleDebugging && console.log('🔍 Destruction cause:', cause);
 
         // Only log if it was caused by the current user
-        if (cause === userName) {
+        if (cause === userName && drivenBy === userName) {
           consoleDebugging && console.log('✅ Vehicle destruction caused by current user');
 
           // Log the vehicle destruction event

@@ -1,8 +1,10 @@
 import { loadUser } from '../../lib/user/userUtil.js';
 import { addNearbyPlayer } from '../../lib/nearby/nearbyUtil.js';
 
+const consoleDebugging = false;
+
 export async function corpse(line) {
-  console.log('corpse.js called');
+  consoleDebugging && console.log('corpse.js called');
   const userData = await loadUser();
   const username = userData.userName;
   const playerName = line.match(/(?<=Player\s').*(?='\s<remote client>)/);

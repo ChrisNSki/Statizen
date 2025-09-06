@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { MapPin, Target, Skull, User, Zap, Clock, UserCheck, Gamepad2, Rocket, Activity, AlertCircle, Play, Square, FileText, BadgePlus, PersonStanding, CircleOff, Settings } from 'lucide-react';
@@ -7,7 +7,6 @@ import { useLogProcessor } from '@/lib/context/logProcessor/logProcessorContext'
 import { useData } from '@/lib/context/data/dataContext';
 import { useSettings } from '@/lib/context/settings/settingsContext';
 import { formatTimeAgo } from '@/lib/utils';
-import { useState, useEffect } from 'react';
 
 // Copy the exact same functions from Discord utility
 const getOutlawRankTitle = (level) => {
@@ -72,7 +71,7 @@ function Dashboard() {
   const { settings } = useSettings();
   const { userData, logInfo, PVEData, PVPData, OrgData, lastKilledBy, lastKilledActor, nearbyPlayers } = useData();
 
-  const startLogging = async () => {
+  const startLogging = useCallback(async () => {
     if (!isWatching) {
       try {
         await toggleLogging();
@@ -82,26 +81,72 @@ function Dashboard() {
     } else {
       await toggleLogging();
     }
-  };
+  }, [isWatching, toggleLogging]);
 
-  const isOutlaw = settings?.faction === 'outlaw';
+  // Memoize expensive calculations
+  const isOutlaw = useMemo(() => settings?.faction === 'outlaw', [settings?.faction]);
 
-  // Calculate level and prestige from XP using real-time data from context (same as Discord webhook)
-  // Combine PVE and PVP XP for total progression
-  const pveXP = PVEData?.xp || 0;
-  const pvpXP = PVPData?.xp || 0;
-  const xp = pveXP + pvpXP;
-  const { level, progressBarUrl, percent, xpInLevel, xpNeeded } = getXPProgressBar(xp);
-  // Calculate prestige from level: every 100 levels = 1 prestige
-  const prestige = Math.floor(level / 100);
-  const factionDisplay = isOutlaw ? 'Outlaw' : 'Peacekeeper';
+  // Memoize XP calculations
+  const xpCalculations = useMemo(() => {
+    const pveXP = PVEData?.xp || 0;
+    const pvpXP = PVPData?.xp || 0;
+    const xp = pveXP + pvpXP;
+    const { level, progressBarUrl, percent, xpInLevel, xpNeeded } = getXPProgressBar(xp);
+    const prestige = Math.floor(level / 100);
+    const rankTitle = getRankTitle(level, isOutlaw);
+    const prestigeTitle = getPrestigeTitle(prestige, isOutlaw);
 
-  // Use exact same calculation as Discord webhook
-  const rankTitle = getRankTitle(level, isOutlaw);
-  const prestigeTitle = getPrestigeTitle(prestige, isOutlaw);
+    return {
+      xp,
+      level,
+      progressBarUrl,
+      percent,
+      xpInLevel,
+      xpNeeded,
+      prestige,
+      rankTitle,
+      prestigeTitle,
+    };
+  }, [PVEData?.xp, PVPData?.xp, isOutlaw]);
 
-  // Simplified logic - check if currentShip has a value
-  const isInShip = userData?.currentShip && userData.currentShip.trim() !== '';
+  const factionDisplay = useMemo(() => (isOutlaw ? 'Outlaw' : 'Peacekeeper'), [isOutlaw]);
+
+  // Memoize ship status
+  const isInShip = useMemo(() => userData?.currentShip && userData.currentShip.trim() !== '', [userData?.currentShip]);
+
+  // Memoize K/D ratios
+  const pvpKDRatio = useMemo(() => (PVPData?.deaths === 0 ? PVPData?.kills : (PVPData?.kills / PVPData?.deaths).toFixed(2)), [PVPData?.kills, PVPData?.deaths]);
+
+  const pveKDRatio = useMemo(() => (PVEData?.deaths === 0 ? PVEData?.kills : (PVEData?.kills / PVEData?.deaths).toFixed(2)), [PVEData?.kills, PVEData?.deaths]);
+
+  // Memoize nearby players rendering
+  const nearbyPlayersList = useMemo(() => {
+    if (!nearbyPlayers || nearbyPlayers.length === 0) {
+      return (
+        <Badge variant='outline'>
+          <CircleOff className='w-4 h-4' /> No players detected
+        </Badge>
+      );
+    }
+
+    return nearbyPlayers.map((player, index) => {
+      let badgeStyle = '';
+      if (player.icon === 'skull') {
+        badgeStyle = 'bg-gray-700 text-white hover:bg-gray-600';
+      } else if (player.icon === 'badge-plus') {
+        badgeStyle = 'bg-blue-100 text-blue-800 hover:bg-blue-200';
+      } else if (player.icon === 'person-standing') {
+        badgeStyle = 'bg-white text-gray-800 border border-gray-300 hover:bg-gray-50';
+      }
+
+      return (
+        <Badge key={`${player.playerName}-${index}`} className={badgeStyle}>
+          {player.icon === 'badge-plus' ? <BadgePlus className='w-4 h-4' /> : player.icon === 'person-standing' ? <PersonStanding className='w-4 h-4' /> : <Skull className='w-4 h-4' />}
+          {player.playerName}
+        </Badge>
+      );
+    });
+  }, [nearbyPlayers]);
 
   return (
     <div className='flex flex-col gap-2 p-5 h-full'>
@@ -127,7 +172,7 @@ function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className='text-xl font-bold text-green-600'>{PVPData?.deaths === 0 ? PVPData?.kills : (PVPData?.kills / PVPData?.deaths).toFixed(2)}</p>
+              <p className='text-xl font-bold text-green-600'>{pvpKDRatio}</p>
               <CardDescription>
                 {PVPData?.kills} kills / {PVPData?.deaths} deaths
               </CardDescription>
@@ -141,7 +186,7 @@ function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className='text-xl font-bold text-orange-600'>{PVEData?.deaths === 0 ? PVEData?.kills : (PVEData?.kills / PVEData?.deaths).toFixed(2)}</p>
+              <p className='text-xl font-bold text-orange-600'>{pveKDRatio}</p>
               <CardDescription>
                 {PVEData?.kills} kills / {PVEData?.deaths} deaths
               </CardDescription>
@@ -188,31 +233,7 @@ function Dashboard() {
                 <div className='flex p-0'>
                   <div>
                     <div className='text-sm font-bold pt-0'>Nearby Players</div>
-                    <div className='flex flex-row gap-2 pt-2 flex-wrap max-h-20 overflow-y-auto'>
-                      {nearbyPlayers && nearbyPlayers.length > 0 ? (
-                        nearbyPlayers.map((player, index) => {
-                          let badgeStyle = '';
-                          if (player.icon === 'skull') {
-                            badgeStyle = 'bg-gray-700 text-white hover:bg-gray-600';
-                          } else if (player.icon === 'badge-plus') {
-                            badgeStyle = 'bg-blue-100 text-blue-800 hover:bg-blue-200';
-                          } else if (player.icon === 'person-standing') {
-                            badgeStyle = 'bg-white text-gray-800 border border-gray-300 hover:bg-gray-50';
-                          }
-
-                          return (
-                            <Badge key={index} className={badgeStyle}>
-                              {player.icon === 'badge-plus' ? <BadgePlus className='w-4 h-4' /> : player.icon === 'person-standing' ? <PersonStanding className='w-4 h-4' /> : <Skull className='w-4 h-4' />}
-                              {player.playerName}
-                            </Badge>
-                          );
-                        })
-                      ) : (
-                        <Badge variant='outline'>
-                          <CircleOff className='w-4 h-4' /> No players detected
-                        </Badge>
-                      )}
-                    </div>
+                    <div className='flex flex-row gap-2 pt-2 flex-wrap max-h-20 overflow-y-auto'>{nearbyPlayersList}</div>
                   </div>
                 </div>
               </div>
@@ -274,30 +295,30 @@ function Dashboard() {
                     <div className='flex flex-row gap-2 items-center'>
                       <div className='text-sm font-bold'>Prestige</div>
                       <div className='text-xs text-[#00CCee]'>
-                        {prestige} - {prestigeTitle}
+                        {xpCalculations.prestige} - {xpCalculations.prestigeTitle}
                       </div>
                     </div>
                     <div className='flex flex-row gap-2 items-center'>
                       <div className='text-sm font-bold'>Rank</div>
                       <div className='text-xs text-[#00CCee]'>
-                        {level} - {rankTitle}
+                        {xpCalculations.level} - {xpCalculations.rankTitle}
                       </div>
                     </div>
                   </div>
                   <div className='w-full mt-2'>
                     <img
-                      src={progressBarUrl}
-                      alt={`Progress bar ${percent}%`}
+                      src={xpCalculations.progressBarUrl}
+                      alt={`Progress bar ${xpCalculations.percent}%`}
                       className='w-full h-4 object-cover rounded'
                       onError={(e) => {
-                        console.error('Failed to load progress bar image:', progressBarUrl);
+                        console.error('Failed to load progress bar image:', xpCalculations.progressBarUrl);
                         e.target.style.display = 'none';
                       }}
                     />
                     <div className='flex justify-between w-full mt-1'>
-                      <div className='text-xs text-muted-foreground mb-1'>Progress to Next Level: {percent}%</div>
+                      <div className='text-xs text-muted-foreground mb-1'>Progress to Next Level: {xpCalculations.percent}%</div>
                       <div className='text-xs text-muted-foreground mb-1'>
-                        XP: {Math.floor(xpInLevel)} / {Math.floor(xpNeeded)}
+                        XP: {Math.floor(xpCalculations.xpInLevel)} / {Math.floor(xpCalculations.xpNeeded)}
                       </div>
                     </div>
                   </div>
@@ -307,7 +328,7 @@ function Dashboard() {
           </Card>
         )}
         <div className={`flex flex-row ${settings?.rpgEnabled ? 'flex-1 justify-center' : ''} items-center`}>
-          <Button onClick={startLogging} variant={isWatching ? 'destructive' : 'default'} className='flex items-center gap-2'>
+          <Button onClick={startLogging} variant={isWatching ? 'destructive' : 'default'} className='flex items-center gap-2 cursor-pointer'>
             {isWatching ? (
               <>
                 <Square className='w-4 h-4' />
@@ -326,4 +347,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default React.memo(Dashboard);

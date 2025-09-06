@@ -8,12 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { getMonitorsWithFallback, findMonitorById, getMonitorDisplayName } from '@/lib/monitor/monitorUtil';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { useToast } from '@/lib/context/toast/toastContext';
+import { Button } from '@/components/ui/button';
+import { Settings } from 'lucide-react';
+import WidgetConfigModal from '@/components/WidgetConfigModal';
 // Removed shadcn ColorPicker - using native HTML color input instead
 
 function OverlaySettings({ settings, updateSettings }) {
   const [monitors, setMonitors] = useState([]);
   const [loadingMonitors, setLoadingMonitors] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isWidgetConfigOpen, setIsWidgetConfigOpen] = useState(false);
+  const { showError, showSuccess } = useToast();
 
   // Load monitors on component mount with hot-plug detection
   useEffect(() => {
@@ -67,6 +73,12 @@ function OverlaySettings({ settings, updateSettings }) {
 
   // Handle overlay toggle
   const handleOverlayToggle = async (showOverlay) => {
+    // If trying to show overlay, validate that target monitor is selected
+    if (showOverlay && !settings.targetMonitor) {
+      showError('Please select a target monitor before enabling the overlay');
+      return; // Don't update settings if validation fails
+    }
+
     updateSettings('showOverlay', showOverlay);
 
     try {
@@ -76,16 +88,20 @@ function OverlaySettings({ settings, updateSettings }) {
           await invoke('position_overlay_window', { monitorId: settings.targetMonitor.id });
           await invoke('show_overlay_window');
           console.log('✅ Overlay window positioned and shown');
+          showSuccess('Overlay enabled successfully');
         } else {
           console.warn('⚠️ No target monitor selected for overlay');
+          showError('No target monitor selected for overlay');
         }
       } else {
         // Hide overlay
         await invoke('hide_overlay_window');
         console.log('✅ Overlay window hidden');
+        showSuccess('Overlay disabled');
       }
     } catch (error) {
       console.error('❌ Failed to toggle overlay:', error);
+      showError('Failed to toggle overlay: ' + error.message);
     }
   };
 
@@ -289,9 +305,26 @@ function OverlaySettings({ settings, updateSettings }) {
                 <span className='text-xs text-muted-foreground'>Game must be set to borderless window mode for the overlay to work.</span>
               </div>
             </div>
+
+            <div className='flex flex-col gap-2 pt-2'>
+              <div className='flex items-center justify-between'>
+                <Label className='text-sm font-medium'>Widget Configuration</Label>
+                <Button variant='outline' size='sm' onClick={() => setIsWidgetConfigOpen(true)} className='flex items-center gap-2'>
+                  <Settings className='w-4 h-4' />
+                  Configure Widgets
+                </Button>
+              </div>
+              <div className='flex flex-row gap-1 items-center'>
+                <InfoIcon className='w-3 h-3' />
+                <span className='text-xs text-muted-foreground'>Choose which widgets to display in the overlay.</span>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Widget Configuration Modal */}
+      <WidgetConfigModal isOpen={isWidgetConfigOpen} onClose={() => setIsWidgetConfigOpen(false)} settings={settings} updateSettings={updateSettings} />
     </div>
   );
 }

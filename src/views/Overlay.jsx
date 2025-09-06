@@ -1,12 +1,27 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { useSettings } from '@/lib/context/settings/settingsContext';
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragOverlay, useDndMonitor, useDraggable, useDroppable } from '@dnd-kit/core';
+import { saveSettings } from '@/lib/settings/settingsUtil';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragOverlay, useDraggable } from '@dnd-kit/core';
 import { createSnapModifier } from '@dnd-kit/modifiers';
 import { CSS } from '@dnd-kit/utilities';
 import OverlayTheme from '@/components/OverlayTheme';
 import { StatusOverlay, PVPKDRatioOverlay, PVEKDRatioOverlay, LogLinesProcessedOverlay, NearbyPlayersOverlay, LastKilledByOverlay, LastKilledOverlay, XPBarOverlay } from '@/overlays';
+import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
+
+// Component mapping for settings
+const componentMap = {
+  StatusOverlay,
+  PVPKDRatioOverlay,
+  PVEKDRatioOverlay,
+  LogLinesProcessedOverlay,
+  NearbyPlayersOverlay,
+  LastKilledByOverlay,
+  LastKilledOverlay,
+  XPBarOverlay,
+};
 
 // Draggable wrapper component for overlay widgets
 const DraggableWidget = ({ id, children, isEditMode, x, y, w, h }) => {
@@ -39,8 +54,8 @@ const Overlay = () => {
   const rootRef = useRef(null);
   const configModeRef = useRef(null);
   const overlayContainerRef = useRef(null);
-  const configRef = useRef(false);
-  const { settings } = useSettings();
+  const { settings: contextSettings } = useSettings();
+  const [settings, setSettings] = useState(contextSettings);
   const [overlayColor, setOverlayColor] = useState(settings?.overlayColor || '#4A8FD460');
   const [isEditMode, setIsEditMode] = useState(false);
   const isEditModeRef = useRef(false);
@@ -48,24 +63,98 @@ const Overlay = () => {
   const toggleInProgressRef = useRef(false);
   const [activeId, setActiveId] = useState(null);
 
-  // Default widget positions - can be saved to settings later
-  const [widgets, setWidgets] = useState([
-    { id: 'status', component: StatusOverlay, x: 20, y: 20, w: 240, h: 180 },
-    { id: 'pvp-kd', component: PVPKDRatioOverlay, x: 280, y: 20, w: 240, h: 180 },
-    { id: 'pve-kd', component: PVEKDRatioOverlay, x: 540, y: 20, w: 240, h: 180 },
-    { id: 'log-lines', component: LogLinesProcessedOverlay, x: 800, y: 20, w: 180, h: 180 },
-    { id: 'nearby', component: NearbyPlayersOverlay, x: 20, y: 220, w: 240, h: 180 },
-    { id: 'last-killed-by', component: LastKilledByOverlay, x: 280, y: 220, w: 240, h: 180 },
-    { id: 'last-killed', component: LastKilledOverlay, x: 540, y: 220, w: 240, h: 180 },
-    { id: 'xp-bar', component: XPBarOverlay, x: 800, y: 220, w: 180, h: 180 },
-  ]);
+  // Widget positions from settings
+  const [widgets, setWidgets] = useState(() => {
+    // Start with empty array - will be populated when settings load
+    console.log('🎯 Initializing widgets - settings loaded:', !!settings?.overlayWidgets);
+    return [];
+  });
+
+  // Sync local settings with context settings
+  useEffect(() => {
+    if (contextSettings) {
+      setSettings(contextSettings);
+    }
+  }, [contextSettings]);
 
   // Grid snapping configuration
-  const [gridSize, setGridSize] = useState(20); // 20px grid for snapping
+  const gridSize = 20; // 20px grid for snapping
   const snapToGrid = useMemo(() => createSnapModifier(gridSize), [gridSize]);
 
   // DnD sensors
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
+
+  // Update widgets when settings change
+  useEffect(() => {
+    console.log('🎯 Settings changed - overlayWidgets:', !!settings?.overlayWidgets, 'widgetVisibility:', settings?.widgetVisibility);
+
+    if (settings?.overlayWidgets) {
+      const filteredWidgets = settings.overlayWidgets
+        .filter((widget) => {
+          const isVisible = settings.widgetVisibility?.[widget.id] !== false;
+          console.log(`🎯 Widget ${widget.id} visibility:`, isVisible, 'setting:', settings.widgetVisibility?.[widget.id]);
+          return isVisible;
+        })
+        .map((widget) => ({
+          ...widget,
+          component: componentMap[widget.component],
+        }));
+      console.log(
+        '🎯 Filtered widgets:',
+        filteredWidgets.map((w) => w.id)
+      );
+      setWidgets(filteredWidgets);
+    } else {
+      // If no settings loaded yet, use fallback positions but don't save them
+      console.log('🎯 No settings loaded yet, using fallback positions (not saved)');
+      const fallbackWidgets = [
+        { id: 'status', component: StatusOverlay, x: 20, y: 20, w: 240, h: 180 },
+        { id: 'pvp-kd', component: PVPKDRatioOverlay, x: 280, y: 20, w: 240, h: 180 },
+        { id: 'pve-kd', component: PVEKDRatioOverlay, x: 540, y: 20, w: 240, h: 180 },
+        { id: 'log-lines', component: LogLinesProcessedOverlay, x: 800, y: 20, w: 180, h: 180 },
+        { id: 'nearby', component: NearbyPlayersOverlay, x: 20, y: 220, w: 240, h: 180 },
+        { id: 'last-killed-by', component: LastKilledByOverlay, x: 280, y: 220, w: 240, h: 180 },
+        { id: 'last-killed', component: LastKilledOverlay, x: 540, y: 220, w: 240, h: 180 },
+        { id: 'xp-bar', component: XPBarOverlay, x: 800, y: 220, w: 180, h: 180 },
+      ];
+      setWidgets(fallbackWidgets);
+    }
+  }, [settings?.overlayWidgets, settings?.widgetVisibility]);
+
+  // Save widget positions to settings
+  const saveWidgetPositions = useCallback(async () => {
+    try {
+      // Only save if we have valid settings loaded
+      if (!settings || !settings.overlayWidgets) {
+        console.log('⚠️ Skipping widget position save - settings not loaded yet');
+        return;
+      }
+
+      const widgetPositions = widgets.map((widget) => {
+        // Find the component name by looking up the component in the componentMap
+        const componentName = Object.keys(componentMap).find((key) => componentMap[key] === widget.component) || 'Unknown';
+
+        return {
+          id: widget.id,
+          component: componentName,
+          x: widget.x,
+          y: widget.y,
+          w: widget.w,
+          h: widget.h,
+        };
+      });
+
+      const updatedSettings = {
+        ...settings,
+        overlayWidgets: widgetPositions,
+      };
+
+      await saveSettings(updatedSettings);
+      console.log('✅ Widget positions saved to settings');
+    } catch (error) {
+      console.error('❌ Failed to save widget positions:', error);
+    }
+  }, [widgets, settings]);
 
   // Listen for settings updates from main window via Tauri events
   useEffect(() => {
@@ -73,8 +162,18 @@ const Overlay = () => {
       try {
         const unlisten = await listen('settings-update', (event) => {
           console.log('🎨 Received settings update from main window:', event.payload);
-          if (event.payload && event.payload.settings && event.payload.settings.overlayColor) {
-            setOverlayColor(event.payload.settings.overlayColor);
+          if (event.payload && event.payload.settings) {
+            const updatedSettings = event.payload.settings;
+            console.log('🎨 Updating overlay settings:', updatedSettings);
+
+            // Update overlay color if it changed
+            if (updatedSettings.overlayColor) {
+              setOverlayColor(updatedSettings.overlayColor);
+            }
+
+            // Update the full settings object to trigger widget filtering
+            // This will cause the useEffect with settings dependency to run
+            setSettings(updatedSettings);
           }
         });
 
@@ -196,7 +295,7 @@ const Overlay = () => {
           console.log('🎮 Current edit mode:', isEditModeRef.current, '-> New edit mode:', newEditMode);
 
           toggleInProgressRef.current = true;
-          toggleConfigMode(newEditMode);
+          toggleConfigModeRef.current(newEditMode);
 
           // Reset the flag after a delay
           setTimeout(() => {
@@ -222,60 +321,77 @@ const Overlay = () => {
       listenerSetupRef.current = false;
       unlistenEditMode();
     };
-  }, []); // Empty dependency array is correct here since we want this to run once
+  }, []); // Empty dependency array - using ref to avoid infinite loop
 
-  const toggleConfigMode = (isConfig) => {
-    console.log('🔧 Toggling config mode:', isConfig, 'Current state:', isEditModeRef.current);
+  const toggleConfigModeRef = useRef();
 
-    // Prevent duplicate toggles
-    if (isEditModeRef.current === isConfig) {
-      console.log('🔧 Already in requested state, skipping toggle');
-      return;
-    }
+  const toggleConfigMode = useCallback(
+    (isConfig) => {
+      console.log('🔧 Toggling config mode:', isConfig, 'Current state:', isEditModeRef.current);
 
-    isEditModeRef.current = isConfig;
-    setIsEditMode(isConfig); // CRITICAL FIX: Update the state that controls pointerEvents!
-
-    if (isConfig) {
-      if (configModeRef.current) configModeRef.current.classList.remove('hidden');
-      if (overlayContainerRef.current) {
-        overlayContainerRef.current.classList.add('border-2', 'border-dashed', 'border-white/50');
+      // Prevent duplicate toggles
+      if (isEditModeRef.current === isConfig) {
+        console.log('🔧 Already in requested state, skipping toggle');
+        return;
       }
-      console.log('🔧 Edit mode enabled - widgets are now draggable');
-    } else {
-      if (configModeRef.current) configModeRef.current.classList.add('hidden');
-      if (overlayContainerRef.current) {
-        overlayContainerRef.current.classList.remove('border-2', 'border-dashed', 'border-white/50');
-      }
-      console.log('🎮 Edit mode disabled - widgets are locked in position');
-    }
 
-    // Toggle passthrough - when edit mode is enabled, disable passthrough (so we can interact)
-    // When edit mode is disabled, enable passthrough (so clicks go through to the game)
-    console.log('🔧 Setting passthrough to:', !isConfig, '(edit mode:', isConfig, ')');
+      isEditModeRef.current = isConfig;
+      setIsEditMode(isConfig); // CRITICAL FIX: Update the state that controls pointerEvents!
 
-    // Add a small delay to ensure the window is fully initialized
-    setTimeout(() => {
       if (isConfig) {
-        // Enable edit mode - disable passthrough and enable interaction
-        console.log('🔧 JavaScript: Enabling edit mode - calling enable_overlay_interaction');
-        invoke('enable_overlay_interaction')
-          .then(() => {
-            console.log('✅ Overlay interaction enabled');
-            // Force focus the window
-            window.focus();
-            console.log('🎯 Window focused');
-          })
-          .catch((error) => console.error('❌ Failed to enable overlay interaction:', error));
+        if (configModeRef.current) configModeRef.current.classList.remove('hidden');
+        if (overlayContainerRef.current) {
+          overlayContainerRef.current.classList.add('border-2', 'border-dashed', 'border-white/50');
+        }
+        console.log('🔧 Edit mode enabled - widgets are now draggable');
       } else {
-        // Disable edit mode - enable passthrough
-        console.log('🔧 JavaScript: Disabling edit mode - calling disable_overlay_interaction');
-        invoke('disable_overlay_interaction')
-          .then(() => console.log('✅ Overlay interaction disabled'))
-          .catch((error) => console.error('❌ Failed to disable overlay interaction:', error));
+        if (configModeRef.current) configModeRef.current.classList.add('hidden');
+        if (overlayContainerRef.current) {
+          overlayContainerRef.current.classList.remove('border-2', 'border-dashed', 'border-white/50');
+        }
+        console.log('🎮 Edit mode disabled - widgets are locked in position');
+
+        // Save widget positions when edit mode is disabled
+        saveWidgetPositions();
       }
-    }, 100);
-  };
+
+      // Toggle passthrough - when edit mode is enabled, disable passthrough (so we can interact)
+      // When edit mode is disabled, enable passthrough (so clicks go through to the game)
+      console.log('🔧 Setting passthrough to:', !isConfig, '(edit mode:', isConfig, ')');
+
+      // Add a small delay to ensure the window is fully initialized
+      setTimeout(() => {
+        if (isConfig) {
+          // Enable edit mode - disable passthrough and enable interaction
+          console.log('🔧 JavaScript: Enabling edit mode - calling enable_overlay_interaction');
+          invoke('enable_overlay_interaction')
+            .then(() => {
+              console.log('✅ Overlay interaction enabled');
+              // Force focus the window
+              window.focus();
+              console.log('🎯 Window focused');
+            })
+            .catch((error) => console.error('❌ Failed to enable overlay interaction:', error));
+        } else {
+          // Disable edit mode - enable passthrough
+          console.log('🔧 JavaScript: Disabling edit mode - calling disable_overlay_interaction');
+          invoke('disable_overlay_interaction')
+            .then(() => console.log('✅ Overlay interaction disabled'))
+            .catch((error) => console.error('❌ Failed to disable overlay interaction:', error));
+        }
+      }, 100);
+    },
+    [saveWidgetPositions]
+  );
+
+  // Store the function in a ref so it can be used in the event listener
+  toggleConfigModeRef.current = toggleConfigMode;
+
+  // Handle disable edit mode button click
+  const handleDisableEditMode = useCallback(() => {
+    console.log('🎮 Disable edit mode button clicked');
+    toggleConfigMode(false);
+  }, [toggleConfigMode]);
 
   console.log('🎮 Overlay component returning JSX...');
 
@@ -351,9 +467,14 @@ const Overlay = () => {
           ref={configModeRef}
         >
           <h3 className='overlay-title mb-2.5'>Overlay Edit Mode</h3>
-          <p className='text-sm opacity-80'>Press Right Ctrl + S to toggle edit mode</p>
           <p className='text-sm opacity-80'>Drag widgets to reposition them</p>
           <p className='text-sm opacity-80'>Widgets are now draggable!</p>
+          <div className='mt-4 flex justify-center'>
+            <Button onClick={handleDisableEditMode} className='flex justify-center items-center gap-2 bg-white hover:bg-gray-300 text-black border-0' size='sm'>
+              <Check className='w-4 h-4' />
+              Save Configuration
+            </Button>
+          </div>
         </div>
       </div>
     </OverlayTheme>

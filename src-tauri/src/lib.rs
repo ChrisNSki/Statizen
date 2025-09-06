@@ -153,10 +153,16 @@ fn disable_overlay_interaction(win: tauri::WebviewWindow) -> tauri::Result<()> {
 
 #[tauri::command]
 fn position_overlay_window(app: tauri::AppHandle, monitor_id: usize) -> tauri::Result<()> {
-    let overlay = app.get_webview_window("overlay").ok_or_else(|| tauri::Error::from(std::io::Error::new(std::io::ErrorKind::NotFound, "Overlay window not found")))?;
+    let overlay = app.get_webview_window("overlay").ok_or_else(|| {
+        println!("❌ Error: Overlay window not found when trying to position it");
+        tauri::Error::from(std::io::Error::new(std::io::ErrorKind::NotFound, "Overlay window not found"))
+    })?;
     
     let monitors = app.available_monitors().map_err(|e| tauri::Error::from(e))?;
-    let monitor = monitors.get(monitor_id).ok_or_else(|| tauri::Error::from(std::io::Error::new(std::io::ErrorKind::InvalidInput, "Invalid monitor ID")))?;
+    let monitor = monitors.get(monitor_id).ok_or_else(|| {
+        println!("❌ Error: Invalid monitor ID: {}", monitor_id);
+        tauri::Error::from(std::io::Error::new(std::io::ErrorKind::InvalidInput, "Invalid monitor ID"))
+    })?;
 
     // Position overlay to cover the entire monitor
     let monitor_pos = monitor.position();
@@ -170,10 +176,13 @@ fn position_overlay_window(app: tauri::AppHandle, monitor_id: usize) -> tauri::R
     let overlay_x = monitor_pos.x;
     let overlay_y = monitor_pos.y;
     
+    println!("🔧 Positioning overlay on monitor {}: {}x{} at ({}, {})", monitor_id, overlay_width, overlay_height, overlay_x, overlay_y);
+    
     overlay.set_size(tauri::Size::Physical(tauri::PhysicalSize::new(overlay_width, overlay_height)))?;
     overlay.set_position(tauri::Position::Physical(tauri::PhysicalPosition::new(overlay_x, overlay_y)))?;
     // Note: passthrough state is now managed by the JavaScript side via set_passthrough command
     
+    println!("✅ Overlay positioned successfully");
     Ok(())
 }
 
@@ -191,6 +200,8 @@ fn show_overlay_window(app: tauri::AppHandle) -> tauri::Result<()> {
         overlay.show()?;
         overlay.set_focus()?;
         println!("🔧 Debug: Overlay window shown and focused");
+    } else {
+        println!("❌ Error: Overlay window not found when trying to show it");
     }
     Ok(())
 }

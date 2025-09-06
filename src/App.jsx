@@ -7,6 +7,7 @@ import { MinimizeOnLaunch } from '@/components/MinimizeOnLaunch';
 import { SettingsProvider } from '@/lib/context/settings/settingsContext';
 import { DataProvider } from '@/lib/context/data/dataContext';
 import { LogProcessorProvider } from '@/lib/context/logProcessor/logProcessorContext';
+import { ToastProvider } from '@/lib/context/toast/toastContext';
 
 // Import all views
 import Dashboard from '@/views/Dashboard';
@@ -114,11 +115,13 @@ function App() {
     <SettingsProvider>
       <LogProcessorProvider>
         <DataProvider>
-          <Router>
-            <Routes>
-              <Route path='/*' element={<AppContent />} />
-            </Routes>
-          </Router>
+          <ToastProvider>
+            <Router>
+              <Routes>
+                <Route path='/*' element={<AppContent />} />
+              </Routes>
+            </Router>
+          </ToastProvider>
         </DataProvider>
       </LogProcessorProvider>
     </SettingsProvider>

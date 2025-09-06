@@ -25,6 +25,26 @@ const defaultSettings = {
   rpgEnabled: false,
   discordLevelData: false,
   minimizeOnLaunch: false,
+  overlayWidgets: [
+    { id: 'status', component: 'StatusOverlay', x: 20, y: 20, w: 240, h: 180 },
+    { id: 'pvp-kd', component: 'PVPKDRatioOverlay', x: 280, y: 20, w: 240, h: 180 },
+    { id: 'pve-kd', component: 'PVEKDRatioOverlay', x: 540, y: 20, w: 240, h: 180 },
+    { id: 'log-lines', component: 'LogLinesProcessedOverlay', x: 800, y: 20, w: 180, h: 180 },
+    { id: 'nearby', component: 'NearbyPlayersOverlay', x: 20, y: 220, w: 240, h: 180 },
+    { id: 'last-killed-by', component: 'LastKilledByOverlay', x: 280, y: 220, w: 240, h: 180 },
+    { id: 'last-killed', component: 'LastKilledOverlay', x: 540, y: 220, w: 240, h: 180 },
+    { id: 'xp-bar', component: 'XPBarOverlay', x: 800, y: 220, w: 180, h: 180 },
+  ],
+  widgetVisibility: {
+    status: true,
+    'pvp-kd': true,
+    'pve-kd': true,
+    'log-lines': true,
+    nearby: true,
+    'last-killed-by': true,
+    'last-killed': true,
+    'xp-bar': true,
+  },
 };
 
 export async function getSettingsPath() {

@@ -4,7 +4,7 @@ import { queueKDUpdate } from '../../lib/utils.js';
 import { reportCrash } from '../../lib/discord/discordUtil.js';
 
 // Debug flag - set to false to disable console logging
-const consoleDebugging = true;
+const consoleDebugging = false;
 
 export async function crashEvent(line) {
   consoleDebugging && console.log('🔍 Processing crashEvent line:', line);

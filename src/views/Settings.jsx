@@ -9,17 +9,20 @@ import DiscordSettings from '@/components/settings/DiscordSettings';
 import AboutSettings from '@/components/settings/AboutSettings';
 import SettingsMenu from '@/components/settings/SettingsMenu';
 
+const consoleDebugging = false;
+
 function Settings() {
   const { settings, loading, updateSettings, updateEventTypes, batchUpdateSettings } = useSettings();
   const [activeSection, setActiveSection] = useState('general');
 
   // Debug: Monitor settings changes
   useEffect(() => {
-    console.log('Settings changed in UI:', {
-      rpgEnabled: settings?.rpgEnabled,
-      discordLevelData: settings?.discordLevelData,
-      levelUps: settings?.eventTypes?.levelUps,
-    });
+    consoleDebugging &&
+      console.log('Settings changed in UI:', {
+        rpgEnabled: settings?.rpgEnabled,
+        discordLevelData: settings?.discordLevelData,
+        levelUps: settings?.eventTypes?.levelUps,
+      });
   }, [settings?.rpgEnabled, settings?.discordLevelData, settings?.eventTypes?.levelUps]);
 
   if (loading || !settings) return <div>Loading Settings...</div>;

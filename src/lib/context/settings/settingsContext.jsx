@@ -3,6 +3,8 @@ import { loadSettings, saveSettings, calculateXPFromKills } from '@/lib/settings
 
 const SettingsContext = createContext();
 
+const consoleDebugging = false;
+
 export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,11 +20,11 @@ export function SettingsProvider({ children }) {
             settings: updatedSettings,
           },
         }).catch((error) => {
-          console.log('Could not broadcast settings to overlay:', error.message);
+          consoleDebugging && console.log('Could not broadcast settings to overlay:', error.message);
         });
       });
     } catch (error) {
-      console.log('Could not broadcast settings to overlay:', error.message);
+      consoleDebugging && console.log('Could not broadcast settings to overlay:', error.message);
     }
   };
 
@@ -35,7 +37,7 @@ export function SettingsProvider({ children }) {
       try {
         await calculateXPFromKills();
       } catch (error) {
-        console.error('Error during automatic XP calculation:', error);
+        consoleDebugging && console.error('Error during automatic XP calculation:', error);
       }
     });
   }, []);

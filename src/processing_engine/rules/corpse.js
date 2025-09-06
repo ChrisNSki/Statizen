@@ -8,7 +8,7 @@ export async function corpse(line) {
   const userData = await loadUser();
   const username = userData.userName;
   const playerName = line.match(/(?<=Player\s').*(?='\s<remote client>)/);
-  console.log(playerName);
+  consoleDebugging && console.log(playerName);
   if (!line.includes(username) && line.includes('IsCorpseEnabled'))
     if (playerName && playerName[0]) {
       await addNearbyPlayer(playerName[0], 'corpse');

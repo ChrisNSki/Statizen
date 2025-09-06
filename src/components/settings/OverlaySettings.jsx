@@ -28,11 +28,9 @@ function OverlaySettings({ settings, updateSettings }) {
         setLoadingMonitors(true);
         const { monitors: detectedMonitors, selectedMonitor, needsUpdate } = await getMonitorsWithFallback(settings.targetMonitor);
         setMonitors(detectedMonitors);
-        console.log('🖥️ Loaded monitors:', detectedMonitors);
 
         // Update settings if monitor changed due to hot-plug
         if (needsUpdate && selectedMonitor) {
-          console.log('🔄 Monitor changed due to hot-plug, updating settings');
           updateSettings('targetMonitor', selectedMonitor);
         }
       } catch (error) {
@@ -51,7 +49,6 @@ function OverlaySettings({ settings, updateSettings }) {
     const setupEditModeListener = async () => {
       try {
         const unlisten = await listen('edit-mode-state', (event) => {
-          console.log('🎮 Received edit mode state from overlay:', event.payload);
           setIsEditMode(event.payload.isEditMode);
         });
         return unlisten;
@@ -87,7 +84,6 @@ function OverlaySettings({ settings, updateSettings }) {
         if (settings.targetMonitor) {
           await invoke('position_overlay_window', { monitorId: settings.targetMonitor.id });
           await invoke('show_overlay_window');
-          console.log('✅ Overlay window positioned and shown');
           showSuccess('Overlay enabled successfully');
         } else {
           console.warn('⚠️ No target monitor selected for overlay');
@@ -96,7 +92,6 @@ function OverlaySettings({ settings, updateSettings }) {
       } else {
         // Hide overlay
         await invoke('hide_overlay_window');
-        console.log('✅ Overlay window hidden');
         showSuccess('Overlay disabled');
       }
     } catch (error) {
@@ -151,7 +146,6 @@ function OverlaySettings({ settings, updateSettings }) {
     const rgbHex = event.target.value;
     const hexWithAlpha = rgbAndAlphaToHexWithAlpha(rgbHex, currentAlpha);
 
-    console.log('🎨 Color changed:', rgbHex, '->', hexWithAlpha);
     updateSettings('overlayColor', hexWithAlpha);
   };
 
@@ -160,7 +154,6 @@ function OverlaySettings({ settings, updateSettings }) {
     const alpha = parseFloat(event.target.value);
     const hexWithAlpha = rgbAndAlphaToHexWithAlpha(colorForInput, alpha);
 
-    console.log('🎨 Opacity changed:', alpha, '->', hexWithAlpha);
     updateSettings('overlayColor', hexWithAlpha);
   };
 
@@ -168,14 +161,12 @@ function OverlaySettings({ settings, updateSettings }) {
   const handleMonitorChange = async (monitorId) => {
     const selectedMonitor = findMonitorById(monitors, parseInt(monitorId));
     if (selectedMonitor) {
-      console.log('🖥️ Monitor selected:', selectedMonitor);
       updateSettings('targetMonitor', selectedMonitor);
 
       // If overlay is currently shown, reposition it on the new monitor
       if (settings.showOverlay) {
         try {
           await invoke('position_overlay_window', { monitorId: selectedMonitor.id });
-          console.log('🔄 Overlay repositioned to new monitor');
         } catch (error) {
           console.error('❌ Failed to reposition overlay:', error);
         }
@@ -185,13 +176,11 @@ function OverlaySettings({ settings, updateSettings }) {
 
   const handleToggleEditMode = async () => {
     try {
-      console.log('🎮 Settings: Sending toggle-edit-mode event to overlay');
       await invoke('broadcast_to_overlay', {
         message: {
           type: 'toggle-edit-mode',
         },
       });
-      console.log('🎮 Settings: Event sent successfully');
     } catch (error) {
       console.error('❌ Failed to toggle edit mode:', error);
     }

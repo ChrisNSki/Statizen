@@ -4,6 +4,8 @@ import { Switch } from '@/components/ui/switch';
 import { InfoIcon } from 'lucide-react';
 import FactionSelector from '@/components/FactionSelector';
 
+const consoleDebugging = false;
+
 function LevelProgressionSettings({ settings, updateSettings, batchUpdateSettings }) {
   return (
     <div className='space-y-6'>
@@ -22,16 +24,17 @@ function LevelProgressionSettings({ settings, updateSettings, batchUpdateSetting
               <Switch
                 checked={settings.rpgEnabled}
                 onCheckedChange={async (val) => {
-                  console.log('RPG toggle clicked:', val);
-                  console.log('Initial settings:', {
-                    rpgEnabled: settings.rpgEnabled,
-                    discordLevelData: settings.discordLevelData,
-                    levelUps: settings.eventTypes?.levelUps,
-                  });
+                  consoleDebugging && console.log('RPG toggle clicked:', val);
+                  consoleDebugging &&
+                    console.log('Initial settings:', {
+                      rpgEnabled: settings.rpgEnabled,
+                      discordLevelData: settings.discordLevelData,
+                      levelUps: settings.eventTypes?.levelUps,
+                    });
 
                   // If disabling RPG system, disable all related settings at once
                   if (!val) {
-                    console.log('Disabling RPG system and related settings...');
+                    consoleDebugging && console.log('Disabling RPG system and related settings...');
 
                     // Use batch update to avoid overwriting issues
                     await batchUpdateSettings({
@@ -40,13 +43,13 @@ function LevelProgressionSettings({ settings, updateSettings, batchUpdateSetting
                       'eventTypes.levelUps': false,
                     });
 
-                    console.log('All RPG-related settings disabled');
+                    consoleDebugging && console.log('All RPG-related settings disabled');
                   } else {
                     // Just enable RPG system
                     await updateSettings('rpgEnabled', true);
                   }
 
-                  console.log('RPG system updated to:', val);
+                  consoleDebugging && console.log('RPG system updated to:', val);
                 }}
               />
             </div>

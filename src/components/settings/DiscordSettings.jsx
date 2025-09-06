@@ -30,8 +30,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
       if (!response.ok) {
         console.error('Failed to send test Discord webhook:', response.status, response.statusText);
-      } else {
-        console.log('Discord webhook test successful!');
       }
     } catch (error) {
       console.error('Error sending test Discord webhook:', error);
@@ -45,8 +43,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
     setTestingEvent('pve');
     try {
-      console.log('🧪 Testing PVE Kill Discord webhook...');
-
       // Create a test embed without calling the real function
       const testEmbed = {
         title: '🎯 NPC Eliminated (PVE) - TEST',
@@ -69,8 +65,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
       if (!response.ok) {
         console.error('❌ PVE Kill test failed:', response.status, response.statusText);
-      } else {
-        console.log('✅ PVE Kill test completed');
       }
     } catch (error) {
       console.error('❌ PVE Kill test failed:', error);
@@ -84,8 +78,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
     setTestingEvent('pvp');
     try {
-      console.log('🧪 Testing PVP Kill Discord webhook...');
-
       // Create a test embed without calling the real function
       const testEmbed = {
         title: '💀 Player Eliminated (PVP) - TEST',
@@ -109,8 +101,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
       if (!response.ok) {
         console.error('❌ PVP Kill test failed:', response.status, response.statusText);
-      } else {
-        console.log('✅ PVP Kill test completed');
       }
     } catch (error) {
       console.error('❌ PVP Kill test failed:', error);
@@ -124,8 +114,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
     setTestingEvent('death');
     try {
-      console.log('🧪 Testing PVP Death Discord webhook...');
-
       // Create a test embed without calling the real function
       const testEmbed = {
         title: '☠️ You Were Eliminated (PVP) - TEST',
@@ -149,8 +137,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
       if (!response.ok) {
         console.error('❌ PVP Death test failed:', response.status, response.statusText);
-      } else {
-        console.log('✅ PVP Death test completed');
       }
     } catch (error) {
       console.error('❌ PVP Death test failed:', error);
@@ -164,8 +150,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
     setTestingEvent('suicide');
     try {
-      console.log('🧪 Testing Suicide Discord webhook...');
-
       // Create a test embed without calling the real function
       const testEmbed = {
         title: '🪦 Suicide Recorded - TEST',
@@ -186,8 +170,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
       if (!response.ok) {
         console.error('❌ Suicide test failed:', response.status, response.statusText);
-      } else {
-        console.log('✅ Suicide test completed');
       }
     } catch (error) {
       console.error('❌ Suicide test failed:', error);
@@ -201,8 +183,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
     setTestingEvent('levelup');
     try {
-      console.log('🧪 Testing Level Up Discord webhook...');
-
       // Create a test embed without calling the real function
       const testEmbed = {
         title: 'RANK UP! - TEST',
@@ -224,8 +204,6 @@ function DiscordSettings({ settings, updateSettings, updateEventTypes }) {
 
       if (!response.ok) {
         console.error('❌ Level Up test failed:', response.status, response.statusText);
-      } else {
-        console.log('✅ Level Up test completed');
       }
     } catch (error) {
       console.error('❌ Level Up test failed:', error);

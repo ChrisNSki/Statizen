@@ -20,6 +20,8 @@ import Settings from '@/views/Settings';
 import LogFileLoader from '@/components/LogFileLoader';
 import PageWrapper from '@/components/PageWrapper';
 
+const consoleDebugging = false;
+
 // Component to conditionally render layout
 function AppContent() {
   const location = useLocation();
@@ -100,7 +102,7 @@ function App() {
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.data === '🎮 Overlay window loaded!') {
-        console.log('✅ Received confirmation that overlay window loaded!');
+        consoleDebugging && console.log('✅ Received confirmation that overlay window loaded!');
       }
     };
 

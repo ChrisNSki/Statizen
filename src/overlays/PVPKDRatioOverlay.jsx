@@ -2,11 +2,7 @@ import React from 'react';
 import { useData } from '@/lib/context/data/dataContext';
 
 const PVPKDRatioOverlay = () => {
-  console.log('🔥 PVPKDRatioOverlay component is rendering!');
-
   const { PVPData } = useData();
-
-  console.log('PVPKDRatioOverlay - PVPData:', PVPData);
 
   // Calculate K/D ratio (same logic as Dashboard)
   const pvpKDRatio = PVPData?.deaths === 0 ? PVPData?.kills : (PVPData?.kills / PVPData?.deaths).toFixed(2);

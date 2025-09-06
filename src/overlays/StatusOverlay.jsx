@@ -2,11 +2,7 @@ import React from 'react';
 import { useData } from '@/lib/context/data/dataContext';
 
 const StatusOverlay = () => {
-  console.log('🔥 StatusOverlay component is rendering!');
-
   const { userData } = useData();
-
-  console.log('StatusOverlay - userData:', userData);
 
   return (
     <div className='overlay-panel backdrop-blur-md border rounded-lg px-4 py-3 text-white text-sm min-w-[200px] shadow-2xl transition-all duration-300'>

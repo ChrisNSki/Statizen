@@ -5,7 +5,6 @@ export async function submitWeaponToDictionary(weaponClass) {
 
   if (settings.allowDictionarySubmit) {
     const myHeaders = new Headers();
-    console.log('submitting weapon to dictionary: ' + weaponClass);
     myHeaders.append('Content-Type', 'application/json');
 
     const raw = JSON.stringify({

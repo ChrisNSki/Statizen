@@ -3,7 +3,7 @@ import { submitNPCtoDictionary } from '../../lib/pve/submitNPCtoDictionary.js';
 import { submitWeaponToDictionary } from '../../lib/pve/submitWeaponToDictionary.js';
 import { loadPVE, savePVE, addPVELogEntry } from '../../lib/pve/pveUtil.js';
 import { loadPVP, savePVP, addPVPLogEntry } from '../../lib/pvp/pvpUtil.js';
-import { loadWeapon, saveWeapon, addWeaponLogEntry, updateWeaponStats } from '../../lib/weapon/weaponUtil.js';
+import { addWeaponLogEntry, updateWeaponStats } from '../../lib/weapon/weaponUtil.js';
 import { reportPVEKill, reportPVPKill, reportPVPDeath, reportSuicide } from '../../lib/discord/discordUtil.js';
 import { queueKDUpdate } from '../../lib/utils.js';
 import { loadSettings } from '../../lib/settings/settingsUtil.js';
@@ -89,7 +89,6 @@ export async function actorDeath(line) {
   consoleDebugging && console.log('🔍 Processing actorDeath line:', line);
   const pveData = await loadPVE();
   const pvpData = await loadPVP();
-  const weaponData = await loadWeapon();
   try {
     let userData = await loadUser();
     const userName = userData.userName;
@@ -173,7 +172,7 @@ export async function actorDeath(line) {
         if (isShipKill) {
           killedShipClass = extractShipClassFromZone(line);
           if (killedShipClass) {
-            console.log('you killed a ship: ' + (shipDictionary.dictionary[killedShipClass]?.name || killedShipClass));
+            consoleDebugging && console.log('you killed a ship: ' + (shipDictionary.dictionary[killedShipClass]?.name || killedShipClass));
           }
         }
 
@@ -227,15 +226,15 @@ export async function actorDeath(line) {
         return; // 🎯 FIX: Add return to prevent fallthrough to PVE death handler
       } else {
         // === PVP KILL HANDLER ===
-        console.log('🔍 Checking for PVP kill pattern...');
+        consoleDebugging && console.log('🔍 Checking for PVP kill pattern...');
         const playerKill = line.match(/(?<=CActor::Kill:\s').*?(?='\s\[\d{9,12})/);
         const shipClass = line.match(/(?<=\]\sin\szone\s').*(?=_[0-9]{9,14}'\skilled\sby)/);
-        console.log('🎯 Player kill match result:', playerKill);
-        console.log('🎯 Ship class match result:', shipClass);
+        consoleDebugging && console.log('🎯 Player kill match result:', playerKill);
+        consoleDebugging && console.log('🎯 Ship class match result:', shipClass);
 
         if (playerKill && playerKill[0]) {
           const playerKillName = playerKill[0];
-          console.log('✅ PVP KILL DETECTED! Player:', playerKillName);
+          consoleDebugging && console.log('✅ PVP KILL DETECTED! Player:', playerKillName);
 
           // Check if this is a ship kill (has VehicleDestruction damage type)
           const isShipKill = line.includes("with damage type 'VehicleDestruction'");
@@ -264,14 +263,14 @@ export async function actorDeath(line) {
             await updateWeaponStats(weaponClassKey, 'win');
             addWeaponLogEntry(weaponClassKey, 'win', 'player');
 
-            console.log('you killed with weapon: ' + (weaponDictionary.dictionary[weaponClassKey]?.name || weaponClassKey));
+            consoleDebugging && console.log('you killed with weapon: ' + (weaponDictionary.dictionary[weaponClassKey]?.name || weaponClassKey));
           }
 
           let shipClassKey = null;
           if (shipClass && shipClass[0]) {
             const extractedShipClass = shipClass[0];
             if (shipDictionary.dictionary[extractedShipClass]) {
-              console.log('you killed the ship ' + shipDictionary.dictionary[extractedShipClass].name);
+              consoleDebugging && console.log('you killed the ship ' + shipDictionary.dictionary[extractedShipClass].name);
               shipClassKey = extractedShipClass;
             }
           }
@@ -284,7 +283,7 @@ export async function actorDeath(line) {
             updatedPVP.kills += 1;
             updatedPVP.currentMonth.kills += 1;
             updatedPVP.xp = (updatedPVP.xp || 0) + 20; // 🎯 XP GAIN
-            console.log('PVP XP Update:', { oldXP: pvpData.xp || 0, newXP: updatedPVP.xp, playerKill: playerKillName });
+            consoleDebugging && console.log('PVP XP Update:', { oldXP: pvpData.xp || 0, newXP: updatedPVP.xp, playerKill: playerKillName });
             await savePVP(updatedPVP);
           });
 
@@ -294,20 +293,20 @@ export async function actorDeath(line) {
     }
 
     // === PVE DEATH HANDLER ===
-    console.log('🔍 Checking for PVE death pattern...');
-    console.log('🔍 Looking for "CActor::Kill: \'' + userName + '\'":', line.includes("CActor::Kill: '" + userName + "'"));
-    console.log('🔍 Line does NOT contain "with damage type \'Suicide\'":', !line.includes("with damage type 'Suicide'"));
-    console.log('🔍 Line does NOT contain "killed by \'' + userName + '\'":', !line.includes("killed by '" + userName + "'"));
+    consoleDebugging && console.log('🔍 Checking for PVE death pattern...');
+    consoleDebugging && console.log('🔍 Looking for "CActor::Kill: \'' + userName + '\'":', line.includes("CActor::Kill: '" + userName + "'"));
+    consoleDebugging && console.log('🔍 Line does NOT contain "with damage type \'Suicide\'":', !line.includes("with damage type 'Suicide'"));
+    consoleDebugging && console.log('🔍 Line does NOT contain "killed by \'' + userName + '\'":', !line.includes("killed by '" + userName + "'"));
 
     if (line.includes("CActor::Kill: '" + userName + "'") && !line.includes("with damage type 'Suicide'") && !line.includes("killed by '" + userName + "'")) {
-      console.log('✅ PVE DEATH DETECTED!');
+      consoleDebugging && console.log('✅ PVE DEATH DETECTED!');
       // Check if killed by NPC (includes debris, AI ships, etc.)
       const enemyPlayer = line.match(/(?<=killed\sby\s').*?(?='\s\[\d{9,13}\]\susing)/);
-      console.log('🎯 Enemy player match result:', enemyPlayer);
+      consoleDebugging && console.log('🎯 Enemy player match result:', enemyPlayer);
 
       // If we can't find a player name pattern, or if the killer has a long ID (like debris/AI), treat as PVE death
       if (!enemyPlayer || !enemyPlayer[0] || enemyPlayer[0].length > 20 || enemyPlayer[0].includes('SCItem_') || enemyPlayer[0].includes('AI_')) {
-        console.log('✅ Confirmed PVE death - killed by NPC/environment');
+        consoleDebugging && console.log('✅ Confirmed PVE death - killed by NPC/environment');
 
         await queueKDUpdate(async () => {
           const updatedPVE = { ...pveData };
@@ -323,7 +322,7 @@ export async function actorDeath(line) {
       // === PVP DEATH HANDLER ===
       if (enemyPlayer && enemyPlayer[0]) {
         const enemyPlayerName = enemyPlayer[0];
-        console.log('✅ PVP DEATH DETECTED! Killed by player:', enemyPlayerName);
+        consoleDebugging && console.log('✅ PVP DEATH DETECTED! Killed by player:', enemyPlayerName);
 
         // Check if this is a ship kill (has VehicleDestruction damage type)
         const isShipKill = line.includes("with damage type 'VehicleDestruction'");
@@ -348,7 +347,7 @@ export async function actorDeath(line) {
             submitWeaponToDictionary(killerWeaponClassKey);
           }
 
-          console.log('you were killed by weapon: ' + (weaponDictionary.dictionary[killerWeaponClassKey]?.name || killerWeaponClassKey));
+          consoleDebugging && console.log('you were killed by weapon: ' + (weaponDictionary.dictionary[killerWeaponClassKey]?.name || killerWeaponClassKey));
         }
 
         // Extract killer's ship class - only if this is a ship kill (not ground kill)
@@ -358,16 +357,16 @@ export async function actorDeath(line) {
           if (killerShipClass && killerShipClass[0]) {
             const extractedKillerShipClass = killerShipClass[0];
             if (shipDictionary.dictionary[extractedKillerShipClass]) {
-              console.log('you were killed by a ' + shipDictionary.dictionary[extractedKillerShipClass].name);
+              consoleDebugging && console.log('you were killed by a ' + shipDictionary.dictionary[extractedKillerShipClass].name);
               killerShipClassKey = extractedKillerShipClass;
             } else {
-              console.log('killed on ground (weapon: ' + extractedKillerShipClass + ')');
+              consoleDebugging && console.log('killed on ground (weapon: ' + extractedKillerShipClass + ')');
             }
           } else {
-            console.log('killed on ground (no ship/weapon info)');
+            consoleDebugging && console.log('killed on ground (no ship/weapon info)');
           }
         } else {
-          console.log('killed on ground (no ship involved)');
+          consoleDebugging && console.log('killed on ground (no ship involved)');
         }
 
         // Use current ship class as victim's ship (null if on ground or no ship)

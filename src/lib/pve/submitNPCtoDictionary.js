@@ -5,7 +5,6 @@ export async function submitNPCtoDictionary(npcClass) {
 
   if (settings.allowDictionarySubmit) {
     const myHeaders = new Headers();
-    console.log('submitting NPC to dictionary: ' + npcClass);
     myHeaders.append('Content-Type', 'application/json');
 
     const raw = JSON.stringify({

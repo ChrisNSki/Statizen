@@ -10,7 +10,6 @@ export async function getMonitors() {
   try {
     /** @type {MonitorInfo[]} */
     const monitors = await invoke('list_monitors');
-    console.log('🖥️ Detected monitors:', monitors);
     return monitors;
   } catch (err) {
     console.error('monitor list failed', err);

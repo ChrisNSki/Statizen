@@ -3,7 +3,7 @@
 
 ## While we are deeply dissapointed in the change, we will not be using malicious means to grab those stats and will be ceasing updates or further improvements until this capability is re-added into the game (If it is added back into the game).
 
-## We understand this may not occur, but we will be honoring the steps CIG has taken to disabled tools like ours in an effort to protect their playerbase.
+## We understand this may not occur, but we will be honoring the steps CIG has taken to disabled tools like ours in an effort to protect their playerbase from griefers (we do not support griefers).
 
 ### Our [discord server](https://discord.gg/fEuxqpGVX9) will remain active for anyone looking to join, and the parent org [Rogue Division](https://discord.gg/8tHn9K7jAj) to this tool is always welcome to new players. Our stance has always been to have fun in the game, and we will be able to still do that, just with a few less org focused gameplay loops or tactical org battles at this time.
 
